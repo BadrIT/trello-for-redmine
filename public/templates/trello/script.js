@@ -1,7 +1,7 @@
-angular.module('app')
+angular.module('trelloRedmine')
 
-.controller('DashboardCtrl', ['$scope', '$timeout',
-	function($scope, $timeout) {
+.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http',
+	function($scope, $timeout, $modal, $http) {
 		$scope.gridsterOptions = {
 			margins: [20, 20],
 			columns: 3,
@@ -15,6 +15,34 @@ angular.module('app')
 		$scope.clear = function() {
 			$scope.widgets = [];
 		};
+
+		$scope.addCard = function(widget) {
+			$modal.open({
+				scope: $scope,
+				templateUrl: 'templates/trello/add_card.html',
+				controller: 'AddCardCtrl',
+				resolve: {
+					widget: function() {
+						return widget;
+					}
+				}
+			});
+		}
+
+		$http.get('/dashboard').success(function(data, status){
+			$scope.widgets = data.dashboard.widgets;
+		}).error(function(data, status){
+			$scope.widgets.push({
+				name: "Error #" + $scope.widgets.length,
+				sizeX: 1,
+				sizeY: 1,
+                cards: [{
+                    name: 'my card'
+                },{
+                    name: 'another one'
+                }]
+			});
+		});
 
 		$scope.addWidget = function() {
 			$scope.widgets.push({
@@ -97,6 +125,23 @@ angular.module('app')
 		$scope.submit = function() {
 			angular.extend(widget, $scope.form);
 
+			$modalInstance.close(widget);
+		};
+
+	}
+])
+
+.controller('AddCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget',
+	function($scope, $timeout, $rootScope, $modalInstance, widget) {
+		$scope.widget = widget;
+		$scope.card = {name: '', thumb: ''};
+
+		$scope.dismiss = function() {
+			$modalInstance.dismiss();
+		};
+
+		$scope.submit = function() {
+			widget.cards.push($scope.card);
 			$modalInstance.close(widget);
 		};
 

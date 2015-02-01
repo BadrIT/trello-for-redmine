@@ -1,0 +1,41 @@
+{
+	"dashboard": {
+		"widgets": [
+		{
+			"title": "Backlog",
+			"sizeX": 1,
+			"sizeY": 2,
+			"cards": [{
+            	"thumb": "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
+                "name": "First TODO"
+            },{
+            	"thumb": "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
+                "name": "Second TODO"
+            }]
+		},
+		{
+			"title": "In Progress",
+			"sizeX": 1,
+			"sizeY": 2,
+			"cards": [{
+            	"thumb": "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
+                "name": "First In Progress"
+            },{
+            	"thumb": "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
+                "name": "Second In Progress"
+            }]
+		},
+		{
+			"title": "Done!",
+			"sizeX": 1,
+			"sizeY": 2,
+			"cards": [{
+            	"thumb": "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
+                "name": "First DONE"
+            },{
+            	"thumb": "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
+                "name": "Second DONE"
+            }]
+		}]
+	}
+}
