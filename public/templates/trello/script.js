@@ -4,7 +4,7 @@ angular.module('trelloRedmine')
 	function($scope, $timeout, $modal, $http) {
 		$scope.gridsterOptions = {
 			margins: [20, 20],
-			columns: 3,
+			columns: 1,
 			draggable: {
 				handle: 'h3'
 			}
@@ -50,8 +50,10 @@ angular.module('trelloRedmine')
 				sizeX: 1,
 				sizeY: 1,
                 cards: [{
+                	thumb: "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
                     name: 'my card'
                 },{
+                	thumb: "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
                     name: 'another one'
                 }]
 			});
