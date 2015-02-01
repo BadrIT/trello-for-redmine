@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Trello for Redmine</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/libs/angular-gridster.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    
+    <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.11/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.11/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.13.3/sortable.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="js/libs/angular-gridster.min.js"></script>
+    
+
+    <script type="text/javascript">
+        (function() {
+        	angular.module('app', ['gridster', 'ui.bootstrap', 'ngRoute', 'ui.sortable'])
+        		.config(['$routeProvider',
+        			function($routeProvider) {
+        				$routeProvider
+                            .when('/trello', {
+                                templateUrl: 'templates/trello/view.html',
+                                controller: 'DashboardCtrl'
+                            })
+                            .otherwise({
+                                redirectTo: '/trello'
+                            });
+                    }
+        		])
+        		.controller('RootCtrl', function($scope) {
+        			$scope.$on('$locationChangeStart', function(e, next, current) {
+        				$scope.page = next.split('/').splice(-1);
+        				$scope.styleUrl = 'templates/' + $scope.page + '/style.css'
+        			});
+        		});
+        })();
+    </script>
+
+    <script src="templates/trello/script.js"></script>
+</head>
+
+<body ng-app="app">
+    <div ng-controller="RootCtrl">
+        <link rel="stylesheet" ng-href="{{ styleUrl }}" />
+
+        <div class="navbar navbar-inverse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-class="{active: page == 'trello'}"><a href="#/trello">Trello</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="container" ng-view></div>
+
+    </div>
+</body>
+
+</html>
