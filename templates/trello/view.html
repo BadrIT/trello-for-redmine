@@ -16,7 +16,11 @@
 				</div>
                 <div class="box-content">
 					<ul class="cards" ui-sortable="{connectWith: '#kanban ul.cards'}" sortable ng-model="widget.cards">
-                      <li class="card" ng-repeat="card in widget.cards"> {{card.name}}
+                      <li class="card" ng-repeat="card in widget.cards">
+						<img src="{{card.thumb}}" />
+						<p>
+							{{card.name}}
+						</p>
                       </li>
                         <li ng-show="widget.cards.length===0">&nbsp;</li>
                   </ul>

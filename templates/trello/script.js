@@ -4,7 +4,7 @@ angular.module('app')
 	function($scope, $timeout) {
 		$scope.gridsterOptions = {
 			margins: [20, 20],
-			columns: 3,
+			columns: 1,
 			draggable: {
 				handle: 'h3'
 			}
@@ -22,8 +22,10 @@ angular.module('app')
 				sizeX: 1,
 				sizeY: 1,
                 cards: [{
+                	thumb: "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
                     name: 'my card'
                 },{
+                	thumb: "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
                     name: 'another one'
                 }]
 			});
