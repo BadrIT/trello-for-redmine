@@ -4,10 +4,14 @@ angular.module('trelloRedmine')
 	function($scope, $timeout, $modal, $http) {
 		$scope.gridsterOptions = {
 			margins: [20, 20],
-			columns: 1,
+			columns: 3,
 			draggable: {
-				handle: 'h3'
-			}
+				handle: '.box-header'
+			},
+			swapping: true,
+			resizable: {
+	           handles: ['s']
+	        }
 		};
 
 		$scope.widgets= [];
