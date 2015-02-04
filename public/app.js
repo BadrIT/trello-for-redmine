@@ -1,7 +1,7 @@
 (function() {
-	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap', 'ngRoute', 'ui.sortable'])
-		.config(['$routeProvider',
-			function($routeProvider) {
+	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap', 'ngRoute', 'ui.sortable', 'ngImg'])
+		.config(['$routeProvider', '$locationProvider',
+			function($routeProvider, $locationProvider) {
 				$routeProvider
                     .when('/trello', {
                         templateUrl: 'templates/trello/view.html',
@@ -10,6 +10,8 @@
                     .otherwise({
                         redirectTo: '/trello'
                     });
+
+                $locationProvider.html5Mode(true);
             }
 		])
 		.controller('RootCtrl', function($scope) {
