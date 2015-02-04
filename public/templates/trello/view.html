@@ -10,6 +10,7 @@
 				<div class="box-header">
 					<h3>{{ widget.title }}</h3>
 					<div class="box-header-btns pull-right">
+						<i>{{widget.cards.length}}</i>
 						<a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
 						<a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
 					</div>
@@ -22,7 +23,7 @@
 							{{card.name}}
 						</p>
                       </li>
-                      <li ng-show="widget.cards.length===0">&nbsp;</li>
+                      <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
                   </ul>
                   <a class="pull-right btn btn-primary" ng-click="addCard(widget)"><i class="glyphicon glyphicon-plus"></i> Add Card</a>
 				</div>

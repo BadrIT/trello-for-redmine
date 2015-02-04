@@ -5,6 +5,7 @@ angular.module('trelloRedmine')
 		$scope.gridsterOptions = {
 			margins: [20, 20],
 			columns: 3,
+			rows: 1,
 			draggable: {
 				handle: '.box-header'
 			},
@@ -20,6 +21,40 @@ angular.module('trelloRedmine')
 			$scope.widgets = [];
 		};
 
+		// on change to widget
+		$scope.$watch(watchWidgetsList, function(newVal, oldVal) {
+			if(!angular.equals(newVal, oldVal)) {
+				// only save dashboard if change happened
+				var dashboard = {
+					"dashboard": {
+						"widgets": $scope.widgets
+					}
+				};
+
+				$http.post('/dashboard/save', dashboard)
+				.success(function(data, status){
+					console.log(status)
+				}).error(function(err, status){
+					console.log(err);
+				});
+
+				console.log(dashboard);
+				delete dashboard;
+			}
+		}, true);
+
+		function watchWidgetsList() {
+		  return $scope.widgets.map(watchCardsList);
+		}
+
+		function watchCardsList (widget) {
+		  return widget.cards.map(cardValue);
+		}
+
+		function cardValue(card) {
+			return card;
+		}
+
 		$scope.addCard = function(widget) {
 			$modal.open({
 				scope: $scope,
@@ -33,7 +68,7 @@ angular.module('trelloRedmine')
 			});
 		}
 
-		$http.get('/dashboard').success(function(data, status){
+		$http.get('/dashboard/load').success(function(data, status){
 			$scope.widgets = data.dashboard.widgets;
 		}).error(function(data, status){
 			$scope.widgets.push({
@@ -48,20 +83,20 @@ angular.module('trelloRedmine')
 			});
 		});
 
-		$scope.addWidget = function() {
-			$scope.widgets.push({
-				name: "Userstory #" + $scope.widgets.length,
-				sizeX: 1,
-				sizeY: 1,
-                cards: [{
-                	thumb: "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
-                    name: 'my card'
-                },{
-                	thumb: "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
-                    name: 'another one'
-                }]
-			});
-		};
+		// $scope.addWidget = function() {
+		// 	$scope.widgets.push({
+		// 		name: "Userstory #" + $scope.widgets.length,
+		// 		sizeX: 1,
+		// 		sizeY: 1,
+  //               cards: [{
+  //               	thumb: "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
+  //                   name: 'my card'
+  //               },{
+  //               	thumb: "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
+  //                   name: 'another one'
+  //               }]
+		// 	});
+		// };
         
         $scope.sortableTemplates = {
             connectWith: '.connectedSortable',
