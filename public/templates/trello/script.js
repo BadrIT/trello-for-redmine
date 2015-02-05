@@ -40,28 +40,28 @@ angular.module('trelloRedmine')
             $scope.widgets = data.dashboard.widgets;
         }).error(function(data, status) {
             $scope.widgets.push({
-                name: "Error #" + $scope.widgets.length,
+                title: "Error #" + $scope.widgets.length,
                 sizeX: 1,
                 sizeY: 1,
                 cards: [{
-                    name: 'my card'
+                    title: 'my card'
                 }, {
-                    name: 'another one'
+                    title: 'another one'
                 }]
             });
         });
 
         $scope.addWidget = function() {
             $scope.widgets.push({
-                name: "Userstory #" + $scope.widgets.length,
+                title: "Userstory #" + $scope.widgets.length,
                 sizeX: 1,
                 sizeY: 1,
                 cards: [{
                     thumb: "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
-                    name: 'my card'
+                    title: 'my card'
                 }, {
                     thumb: "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
-                    name: 'another one'
+                    title: 'another one'
                 }]
             });
         };
@@ -107,7 +107,7 @@ angular.module('trelloRedmine')
         $scope.widget = widget;
 
         $scope.form = {
-            name: widget.name,
+            name: widget.title,
             sizeX: widget.sizeX,
             sizeY: widget.sizeY,
             col: widget.col,
@@ -154,7 +154,7 @@ angular.module('trelloRedmine')
             $scope.card = card;
         else
             $scope.card = {
-                name: '',
+                title: '',
                 thumb: ''
             };
 

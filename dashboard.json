@@ -7,10 +7,11 @@
 			"sizeY": 2,
 			"cards": [{
             	"thumb": "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
-                "name": "First TODO"
+                "title": "First TODO"
+                
             },{
             	"thumb": "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
-                "name": "Second TODO"
+                "title": "Second TODO"
             }]
 		},
 		{
@@ -19,10 +20,10 @@
 			"sizeY": 2,
 			"cards": [{
             	"thumb": "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
-                "name": "First In Progress"
+                "title": "First In Progress"
             },{
             	"thumb": "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
-                "name": "Second In Progress"
+                "title": "Second In Progress"
             }]
 		},
 		{
@@ -31,10 +32,10 @@
 			"sizeY": 2,
 			"cards": [{
             	"thumb": "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
-                "name": "First DONE"
+                "title": "First DONE"
             },{
             	"thumb": "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
-                "name": "Second DONE"
+                "title": "Second DONE"
             }]
 		}]
 	}
