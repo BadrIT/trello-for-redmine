@@ -79,14 +79,8 @@ angular.module('trelloRedmine')
     }
 ])
 
-.controller('CustomWidgetCtrl', ['$scope', '$modal', 'ngDialog',
-    function($scope, $modal, ngDialog) {
-
-        $scope.onCardClick = function() {
-            ngDialog.open({
-                template: 'templates/trello/add_card.html'
-            });
-        };
+.controller('CustomWidgetCtrl', ['$scope', '$modal',
+    function($scope, $modal) {
 
         $scope.remove = function(widget) {
             $scope.widgets.splice($scope.widgets.indexOf(widget), 1);
