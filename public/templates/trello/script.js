@@ -23,7 +23,7 @@ angular.module('trelloRedmine')
         $scope.editCard = function(widget, card) {
             $modal.open({
                 scope: $scope,
-                templateUrl: 'templates/trello/add_card.html',
+                templateUrl: 'templates/trello/edit_card.html',
                 controller: 'EditCardCtrl',
                 resolve: {
                     widget: function() {
