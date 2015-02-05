@@ -1,7 +1,7 @@
 angular.module('trelloRedmine')
 
 .controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http',
- function ($scope, $timeout, $modal, $http) {
+    function($scope, $timeout, $modal, $http) {
         $scope.gridsterOptions = {
             margins: [20, 20],
             columns: 3,
@@ -16,26 +16,29 @@ angular.module('trelloRedmine')
 
         $scope.widgets = [];
 
-        $scope.clear = function () {
+        $scope.clear = function() {
             $scope.widgets = [];
         };
 
-        $scope.addCard = function (widget) {
+        $scope.editCard = function(widget, card) {
             $modal.open({
                 scope: $scope,
                 templateUrl: 'templates/trello/add_card.html',
-                controller: 'AddCardCtrl',
+                controller: 'EditCardCtrl',
                 resolve: {
-                    widget: function () {
+                    widget: function() {
                         return widget;
+                    },
+                    card: function() {
+                        return card;
                     }
                 }
             });
         }
 
-        $http.get('/dashboard').success(function (data, status) {
+        $http.get('/dashboard').success(function(data, status) {
             $scope.widgets = data.dashboard.widgets;
-        }).error(function (data, status) {
+        }).error(function(data, status) {
             $scope.widgets.push({
                 name: "Error #" + $scope.widgets.length,
                 sizeX: 1,
@@ -48,7 +51,7 @@ angular.module('trelloRedmine')
             });
         });
 
-        $scope.addWidget = function () {
+        $scope.addWidget = function() {
             $scope.widgets.push({
                 name: "Userstory #" + $scope.widgets.length,
                 sizeX: 1,
@@ -66,47 +69,47 @@ angular.module('trelloRedmine')
         $scope.sortableTemplates = {
             connectWith: '.connectedSortable',
             dropOnEmpty: true,
-            stop: function (event, ui) {
+            stop: function(event, ui) {
                 $(ui.item).find("#overlay").show();
-                setTimeout(function () {
+                setTimeout(function() {
                     $(ui.item).find("#overlay").hide();
                 }, 1000);
             }
         };
- }
+    }
 ])
 
-.controller('CustomWidgetCtrl', ['$scope', '$modal',
- function ($scope, $modal) {
+.controller('CustomWidgetCtrl', ['$scope', '$modal', 'ngDialog',
+    function($scope, $modal, ngDialog) {
 
-        $scope.onCardClick = function () {
+        $scope.onCardClick = function() {
             ngDialog.open({
-                template: 'add_card.html'
+                template: 'templates/trello/add_card.html'
             });
         };
 
-        $scope.remove = function (widget) {
+        $scope.remove = function(widget) {
             $scope.widgets.splice($scope.widgets.indexOf(widget), 1);
         };
 
-        $scope.openSettings = function (widget) {
+        $scope.openSettings = function(widget) {
             $modal.open({
                 scope: $scope,
                 templateUrl: 'templates/trello/widget_settings.html',
                 controller: 'WidgetSettingsCtrl',
                 resolve: {
-                    widget: function () {
+                    widget: function() {
                         return widget;
                     }
                 }
             });
         };
 
- }
+    }
 ])
 
 .controller('WidgetSettingsCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget',
- function ($scope, $timeout, $rootScope, $modalInstance, widget) {
+    function($scope, $timeout, $rootScope, $modalInstance, widget) {
         $scope.widget = widget;
 
         $scope.form = {
@@ -120,58 +123,62 @@ angular.module('trelloRedmine')
         $scope.sizeOptions = [{
             id: '1',
             name: '1'
-  }, {
+        }, {
             id: '2',
             name: '2'
-  }, {
+        }, {
             id: '3',
             name: '3'
-  }, {
+        }, {
             id: '4',
             name: '4'
-  }];
+        }];
 
-        $scope.dismiss = function () {
+        $scope.dismiss = function() {
             $modalInstance.dismiss();
         };
 
-        $scope.remove = function () {
+        $scope.remove = function() {
             $scope.widgets.splice($scope.widgets.indexOf(widget), 1);
             $modalInstance.close();
         };
 
-        $scope.submit = function () {
+        $scope.submit = function() {
             angular.extend(widget, $scope.form);
 
             $modalInstance.close(widget);
         };
 
- }
+    }
 ])
 
-.controller('AddCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget',
- function ($scope, $timeout, $rootScope, $modalInstance, widget) {
-        $scope.widget = widget;
-        $scope.card = {
-            name: '',
-            thumb: ''
-        };
+.controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card',
 
-        $scope.dismiss = function () {
+    function($scope, $timeout, $rootScope, $modalInstance, widget, card) {
+        $scope.widget = widget;
+        if (card)
+            $scope.card = card;
+        else
+            $scope.card = {
+                name: '',
+                thumb: ''
+            };
+
+        $scope.dismiss = function() {
             $modalInstance.dismiss();
         };
 
-        $scope.submit = function () {
+        $scope.submit = function() {
             widget.cards.push($scope.card);
             $modalInstance.close(widget);
         };
 
- }
+    }
 ])
 
 // helper code
-.filter('object2Array', function () {
-    return function (input) {
+.filter('object2Array', function() {
+    return function(input) {
         var out = [];
         for (i in input) {
             out.push(input[i]);

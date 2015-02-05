@@ -16,7 +16,7 @@
                     </div>
                     <div class="box-content">
                         <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards">
-                            <li class="card" ng-click="onCardClick()" ng-repeat="card in widget.cards">
+                            <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards">
                                 <img class="thumb" ng-src="{{card.thumb}}" />
                                 <p>
                                     {{card.name}}
@@ -29,7 +29,7 @@
                             </li>
                             <li ng-show="widget.cards.length===0 ">&nbsp;</li>
                         </ul>
-                        <a class="pull-right btn btn-primary " ng-click="addCard(widget) "><i class="glyphicon glyphicon-plus "></i> Add Card</a>
+                        <a class="pull-right btn btn-primary " ng-click="editCard(widget, card)"><i class="glyphicon glyphicon-plus "></i> Add Card</a>
                     </div>
                 </div>
             </li>
