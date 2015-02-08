@@ -110,7 +110,7 @@ angular.module('trelloRedmine')
             	var index = ui.item.sortable.index;
             	var targetIndex = ui.item.sortable.dropindex;
             	var moved = ui.item.sortable.received;
-            	if(moved || targetIndex && (targetIndex !== index)) {
+            	if(moved || targetIndex !== undefined && (targetIndex !== index)) {
             		$scope.updateBackend();
             	}
                 $(ui.item).find("#overlay").show();
