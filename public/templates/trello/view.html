@@ -1,34 +1,34 @@
 <div class="page-header">
-	<!-- <a class="pull-right btn btn-primary" ng-click="addWidget()"><i class="glyphicon glyphicon-plus"></i> Add Widget</a> -->
-	<!-- <a class="pull-right btn btn-warning" ng-click="clear()"><i class="glyphicon glyphicon-trash"></i> Clear</a> -->
+    <!-- <a class="pull-right btn btn-primary" ng-click="addWidget()"><i class="glyphicon glyphicon-plus"></i> Add Widget</a> -->
+    <!-- <a class="pull-right btn btn-warning" ng-click="clear()"><i class="glyphicon glyphicon-trash"></i> Clear</a> -->
 </div>
 <div gridster="gridsterOptions">
     <div ng-model="widgets">
-	<ul>
-		<li gridster-item="widget" ng-repeat="widget in widgets">
-			<div class="box" ng-controller="CustomWidgetCtrl">
-				<div class="box-header">
-					<h3>{{ widget.title }}</h3>
-					<div class="box-header-btns pull-right">
-						<i>{{widget.cards.length}}</i>
-						<a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
-						<a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
+		<ul>
+			<li gridster-item="widget" ng-repeat="widget in widgets">
+				<div class="box" ng-controller="CustomWidgetCtrl">
+					<div class="box-header">
+						<h3>{{ widget.title }}</h3>
+						<div class="box-header-btns pull-right">
+							<i>{{widget.cards.length}}</i>
+							<a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
+							<a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
+						</div>
+					</div>
+	                <div class="box-content">
+						<ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards">
+	                      <li class="card" ng-repeat="card in widget.cards">
+							<img ng-src="{{card.thumb}}" />
+							<p>
+								{{card.name}}
+							</p>
+	                      </li>
+	                      <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
+	                  </ul>
+	                  <a class="pull-right btn btn-primary" ng-click="addCard(widget)"><i class="glyphicon glyphicon-plus"></i> Add Card</a>
 					</div>
 				</div>
-                <div class="box-content">
-					<ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards">
-                      <li class="card" ng-repeat="card in widget.cards">
-						<img ng-src="{{card.thumb}}" />
-						<p>
-							{{card.name}}
-						</p>
-                      </li>
-                      <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
-                  </ul>
-                  <a class="pull-right btn btn-primary" ng-click="addCard(widget)"><i class="glyphicon glyphicon-plus"></i> Add Card</a>
-				</div>
-			</div>
-		</li>
-	</ul>
+			</li>
+		</ul>
     </div>
 </div>
