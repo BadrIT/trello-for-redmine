@@ -226,21 +226,28 @@ angular.module('trelloRedmine')
         $scope.submit = function() {
             widget.cards.push($scope.card);
             $modalInstance.close(widget);
+            $scope.updateBackend();
         };
 
     }
 ])
 
-.directive('cardWatch', function() {
-	function link($scope, elem, attributes) {
-		// link function to watch specific dom element
-	}
+// .directive('cardWatch', function() {
+// 	function link($scope, elem, attributes, ngmodel) {
+// 		// link function to watch specific dom element
+// 		console.log(ngmodel);
+// 		$scope.$watch(ngmodel, function(newVal, oldVal){
+// 			console.log('New: ' + newVal);
+// 			console.log('Old: ' + oldVal);
+// 		});
+// 	}
 
-	return({
-		link: link,
-		restrict: 'A'
-	});
-})
+// 	return({
+// 		require: 'ngModel',
+// 		link: link,
+// 		restrict: 'A'
+// 	});
+// })
 
 // helper code
 .filter('object2Array', function() {
