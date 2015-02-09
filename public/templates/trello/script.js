@@ -23,39 +23,6 @@ angular.module('trelloRedmine')
         $scope.startIndex = -1;
         $scope.moved = false;
 
-  //       $scope.$watch(watchWidgetsList, function(newVal, oldVal) {
-		// 	if(!angular.equals(newVal, oldVal)) {
-		// 		// only save dashboard if change happened
-		// 		var dashboard = {
-		// 			"dashboard": {
-		// 				"widgets": $scope.widgets
-		// 			}
-		// 		};
-
-		// 		$http.post('/dashboard/save', dashboard)
-		// 		.success(function(data, status){
-		// 			console.log(status)
-		// 		}).error(function(err, status){
-		// 			console.log(err);
-		// 		});
-
-		// 		console.log(dashboard);
-		// 		delete dashboard;
-		// 	}
-		// }, true);
-
-		// function watchWidgetsList() {
-		//   return $scope.widgets.map(watchCardsList);
-		// }
-
-		// function watchCardsList (widget) {
-		//   return widget.cards.map(cardValue);
-		// }
-
-		// function cardValue(card) {
-		// 	return card;
-		// }
-
         $scope.editCard = function(widget, card) {
             $modal.open({
                 scope: $scope,
@@ -215,8 +182,9 @@ angular.module('trelloRedmine')
             $scope.card = card;
         else
             $scope.card = {
-                title: '',
-                thumb: ''
+                title: 'New Userstory',
+                thumb: '',
+                desc: ''
             };
 
         $scope.dismiss = function() {
@@ -231,24 +199,6 @@ angular.module('trelloRedmine')
 
     }
 ])
-
-// .directive('cardWatch', function() {
-// 	function link($scope, elem, attributes, ngmodel) {
-// 		// link function to watch specific dom element
-// 		console.log(ngmodel);
-// 		$scope.$watch(ngmodel, function(newVal, oldVal){
-// 			console.log('New: ' + newVal);
-// 			console.log('Old: ' + oldVal);
-// 		});
-// 	}
-
-// 	return({
-// 		require: 'ngModel',
-// 		link: link,
-// 		restrict: 'A'
-// 	});
-// })
-
 // helper code
 .filter('object2Array', function() {
     return function(input) {

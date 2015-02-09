@@ -8,7 +8,7 @@
             <li gridster-item="widget" ng-repeat="widget in widgets">
                 <div class="box" ng-controller="CustomWidgetCtrl">
                     <div class="box-header">
-                        <h3>{{ widget.title }}</h3>
+                        <h3 editable-text="widget.title" e-required>{{ widget.title }}</h3>
                         <div class="box-header-btns pull-right">
                         	<i>{{widget.cards.length}}</i>
                             <a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>

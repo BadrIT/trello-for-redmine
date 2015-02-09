@@ -1,21 +1,14 @@
 <div>
-    <form name="_form" class="form-horizontal" ng-submit="submit(_form)">
+    <form editable-form name="_form" class="form-horizontal" ng-submit="submit(_form)">
         <div class="modal-header">
             <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
-            <h3>User Story Settings</h3>
+            <i class="fa fa-desktop fa-4" style="float: left;margin-right: 10px;margin-top: 9px;"></i>
+            <h5 style="float: left;margin-right: 5px;" editable-text="card.title" e-required>  {{card.title}}</h5>
+            <h6> in list <b>{{widget.title}}</b></h6>
         </div>
 
         <div class="modal-body">
             <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-lg-6 col-md-6">Title</label>
-                        <div class="col-lg-6 col-md-6">
-                            <input name="row" ng-model="card.title" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                
                 <div class="col-lg-6 col-md-6">
                     <div class="form-group">
                         <label class="control-label col-lg-6 col-md-6">Desc</label>

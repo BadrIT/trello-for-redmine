@@ -1,5 +1,5 @@
 (function() {
-	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap', 'ngRoute', 'ui.sortable', 'ngImg'])
+	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap', 'ngRoute', 'ui.sortable', 'ngImg', 'xeditable'])
 		.config(['$routeProvider', '$locationProvider',
 			function($routeProvider, $locationProvider) {
 				$routeProvider
@@ -20,4 +20,8 @@
                 $scope.styleUrl = 'templates/' + $scope.page + '/style.css'
             });
         });
+
+    angular.module('trelloRedmine').run(function(editableOptions){
+        editableOptions.theme = 'bs3';
+    })
 })();
