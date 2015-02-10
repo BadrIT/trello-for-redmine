@@ -9,21 +9,69 @@
 
         <div class="modal-body">
             <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-lg-6 col-md-6">Desc</label>
-                        <div class="col-lg-6 col-md-6">
-                            <input name="row" ng-model="card.desc" class="form-control" />
+                <div class="col-lg-9 col-md-9">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3">
+                            Members
+                            <a><i class="fa fa-plus-square-o"></i></a>
+                        </div>
+                        <div class="col-lg-9 col-md-9">
+                            Labels
+                            <a><i class="fa fa-plus-square-o fa-3x"></i></a>
+                        </div>
+                    </div>
+                    <a><i class="fa fa-edit"></i>  Edit the description</a>
+                    </br>
+                    <div style="margin-top: 20px;">
+                        <div>
+                            <i class="fa fa-th-list">  Tasks</i>
+                            <a style="float: right;">Delete....</a>
+                        </div>
+                        <progressbar animate="false" value="20" type="success"><b>20%</b></progressbar>
+                        <div style="margin-top: 10px;">
+                            
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-lg-6 col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-lg-6 col-md-6">Thumb URL</label>
-                        <div class="col-lg-6 col-md-6">
-                            <input name="col" ng-model="card.thumb" class="form-control" />
-                        </div>
+                <div class="col-lg-3 col-md-3">
+                    <div class="row">
+                        <h4><b>Add</b></h4>
+                        <table>
+                            <tr>
+                                <td><div><i class="fa fa-user"></i>  Members</div></td>
+                            </tr>
+                            <tr>
+                                <td><div><i class="fa fa-ticket"></i>  Labels</div></td>
+                            </tr>
+                            <tr>
+                                <td><div><i class="fa fa-list-ul"></i>  Tasks List</div></td>
+                            </tr>
+                            <tr>
+                                <td><div><i class="fa fa-calendar"></i>  Due Date</div></td>
+                            </tr>
+                            <tr>
+                                <td><div><i class="fa fa-paperclip"></i>  Attachment</div></td>
+                            </tr>
+                        </table>
+                    </div>
+                    </br>
+                    <div class="row">
+                        <h4><b>Actions</b></h4>
+                        <table>
+                            <tr>
+                                <td><div><i class="fa fa-arrow-right"></i>  Move</div></td>
+                            </tr>
+                            <tr>
+                                <td><div><i class="fa fa-files-o"></i>  Copy</div></td>
+                            </tr>
+                            <tr>
+                                <td><div><i class="fa fa-eye"></i>  Subscribe</div></td>
+                            </tr>
+                            <tr>
+                                <td><div><i class="fa fa-archive"></i>  Archive</div></td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
                 
