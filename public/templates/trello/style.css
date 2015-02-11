@@ -78,3 +78,7 @@ form {
 .gridster-item {
     z-index: initial;
 }
+
+.backdrop-fix {
+    height: 100%;
+}

@@ -28,6 +28,7 @@ angular.module('trelloRedmine')
                 scope: $scope,
                 templateUrl: 'templates/trello/edit_card.html',
                 controller: 'EditCardCtrl',
+                backdropClass: "backdrop-fix",
                 resolve: {
                     widget: function() {
                         return widget;
@@ -104,7 +105,7 @@ angular.module('trelloRedmine')
                 scope: $scope,
                 templateUrl: 'templates/trello/widget_settings.html',
                 controller: 'WidgetSettingsCtrl',
-                backdrop: true,
+                backdropClass: "backdrop-fix",
                 resolve: {
                     widget: function() {
                         return widget;
