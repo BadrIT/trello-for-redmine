@@ -24,12 +24,16 @@
                     </br>
                     <div style="margin-top: 20px;">
                         <div>
-                            <i class="fa fa-th-list">  Tasks</i>
+                            <i class="fa fa-tasks">  Tasks</i>
                             <a style="float: right;">Delete....</a>
                         </div>
                         <progressbar animate="false" value="20" type="success"><b>20%</b></progressbar>
                         <div style="margin-top: 10px;">
-                            
+                            <table>
+                                <tr ng-repeat="task in card.tasks">
+                                    <td><a ng-href="{{task.redmine_url}}"><i class="fa fa-square"></i>  {{task.title}}</a></td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>

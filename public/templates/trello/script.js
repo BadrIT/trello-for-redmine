@@ -54,21 +54,6 @@ angular.module('trelloRedmine')
             });
         });
 
-        $scope.addWidget = function() {
-            $scope.widgets.push({
-                title: "Userstory #" + $scope.widgets.length,
-                sizeX: 1,
-                sizeY: 1,
-                cards: [{
-                    thumb: "http://cssdeck.com/uploads/media/items/2/2v3VhAp.png",
-                    title: 'my card'
-                }, {
-                    thumb: "http://cssdeck.com/uploads/media/items/6/6f3nXse.png",
-                    title: 'another one'
-                }]
-			});
-		};
-
         $scope.sortableTemplates = {
             connectWith: '.connectedSortable',
             dropOnEmpty: true,
@@ -119,6 +104,7 @@ angular.module('trelloRedmine')
                 scope: $scope,
                 templateUrl: 'templates/trello/widget_settings.html',
                 controller: 'WidgetSettingsCtrl',
+                backdrop: true,
                 resolve: {
                     widget: function() {
                         return widget;
