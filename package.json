@@ -24,6 +24,6 @@
     "morgan": "~1.5.1",
     "ms": "^0.7.0",
     "on-finished": "^2.2.0",
-    "serve-favicon": "~2.2.0"
+    "serve-favicon": "^2.2.0"
   }
 }

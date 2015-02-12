@@ -22,6 +22,9 @@
     <script src="../bower_components/jquery-ui/jquery-ui.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-strap/dist/angular-strap.min.js"></script>
+    <script src="../bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
     <script src="../bower_components/angular-ui-sortable/sortable.js"></script>
     <script src="../bower_components/ngDialog/js/ngDialog.js"></script>
     <script src="../bower_components/angular-xeditable/dist/js/xeditable.js"></script>
@@ -43,12 +46,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <li ng-class="{active: page == 'trello'}"><a href="#/trello">Trello</a>
                 </li>
+                <li style="color:white;">{{dashboard.title}}</li>
+                <li style="color:white;">logged hours: {{dashboard.hours}}</li>
             </ul>
         </div>
 
         <div class="container" ng-view></div>
 
     </div>
+
+    <script type="text/ng-template" id="task_template.html" src="templates/trello/view_task.js"></script>
 </body>
 
 </html>

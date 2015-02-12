@@ -13,10 +13,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-3">
                             Members
-                            <a><i class="fa fa-plus-square-o"></i></a>
-                        </div>
-                        <div class="col-lg-9 col-md-9">
-                            Labels
+                            </br>
                             <a><i class="fa fa-plus-square-o fa-3x"></i></a>
                         </div>
                     </div>
@@ -25,13 +22,13 @@
                     <div style="margin-top: 20px;">
                         <div>
                             <i class="fa fa-tasks">  Tasks</i>
-                            <a style="float: right;">Delete....</a>
                         </div>
                         <progressbar animate="false" value="20" type="success"><b>20%</b></progressbar>
                         <div style="margin-top: 10px;">
                             <table>
                                 <tr ng-repeat="task in card.tasks">
-                                    <td><a ng-href="{{task.redmine_url}}"><i class="fa fa-square"></i>  {{task.title}}</a></td>
+                                    <td><i class="fa fa-square"></i>  <button type="button" class="btn btn-{{task.type === 'defect' ? 'danger' : 'success'}}" popover-placement="bottom" popover-template="task_template.html"> {{task.title}}</button></td>
+                                    <!-- <td><a ng-href="{{task.redmine_url}}" target="_blank"><i class="fa fa-square"></i>  {{task.title}}</a></td> -->
                                 </tr>
                             </table>
                         </div>
@@ -40,22 +37,19 @@
                 
                 <div class="col-lg-3 col-md-3">
                     <div class="row">
-                        <h4><b>Add</b></h4>
+                        <h4><b>Info</b></h4>
                         <table>
                             <tr>
-                                <td><div><i class="fa fa-user"></i>  Members</div></td>
+                                <td><button type="button" class="btn btn-info"><i class="fa fa-user"></i>  Members</button></td>
                             </tr>
                             <tr>
-                                <td><div><i class="fa fa-ticket"></i>  Labels</div></td>
+                                <td><button type="button" class="btn btn-info"><i class="fa fa-list-ul"></i>  Tasks List (RM)</button></td>
                             </tr>
                             <tr>
-                                <td><div><i class="fa fa-list-ul"></i>  Tasks List</div></td>
+                                <td><button type="button" class="btn btn-info"><i class="fa fa-calendar"></i>  Log Time</button></td>
                             </tr>
                             <tr>
-                                <td><div><i class="fa fa-calendar"></i>  Due Date</div></td>
-                            </tr>
-                            <tr>
-                                <td><div><i class="fa fa-paperclip"></i>  Attachment</div></td>
+                                <td><button type="button" class="btn btn-success"><i class="fa fa-paperclip"></i>  Attachment</button></td>
                             </tr>
                         </table>
                     </div>
@@ -64,16 +58,13 @@
                         <h4><b>Actions</b></h4>
                         <table>
                             <tr>
-                                <td><div><i class="fa fa-arrow-right"></i>  Move</div></td>
+                                <td><button type="button" class="btn btn-primary"><i class="fa fa-arrow-right"></i>  Move</button></td>
                             </tr>
                             <tr>
-                                <td><div><i class="fa fa-files-o"></i>  Copy</div></td>
+                                <td><button type="button" class="btn btn-info"><i class="fa fa-files-o"></i>  Copy</button></td>
                             </tr>
                             <tr>
-                                <td><div><i class="fa fa-eye"></i>  Subscribe</div></td>
-                            </tr>
-                            <tr>
-                                <td><div><i class="fa fa-archive"></i>  Archive</div></td>
+                                <td><button type="button" class="btn btn-danger"><i class="fa fa-archive"></i>  Archive</button></td>
                             </tr>
                         </table>
                     </div>

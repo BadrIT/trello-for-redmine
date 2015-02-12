@@ -1,7 +1,7 @@
 angular.module('trelloRedmine')
 
-.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http',
-    function($scope, $timeout, $modal, $http) {
+.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', '$popover',
+    function($scope, $timeout, $modal, $http, $popover) {
         $scope.gridsterOptions = {
             margins: [20, 20],
             columns: 3,
@@ -14,7 +14,7 @@ angular.module('trelloRedmine')
             }
         };
 
-        $scope.widgets = [];
+        $scope.widgets = $scope.dashboard.widgets;
 
         $scope.clear = function() {
             $scope.widgets = [];
@@ -39,21 +39,6 @@ angular.module('trelloRedmine')
                 }
             });
         }
-
-        $http.get('/dashboard/load').success(function(data, status) {
-            $scope.widgets = data.dashboard.widgets;
-        }).error(function(data, status) {
-            $scope.widgets.push({
-                title: "Error #" + $scope.widgets.length,
-                sizeX: 1,
-                sizeY: 1,
-                cards: [{
-                    title: 'my card'
-                }, {
-                    title: 'another one'
-                }]
-            });
-        });
 
         $scope.sortableTemplates = {
             connectWith: '.connectedSortable',
@@ -187,36 +172,30 @@ angular.module('trelloRedmine')
     }
 ])
 
-// .directive('contenteditable', function() {
-//   return {
-//     require: 'ngModel',
-//     link: function(scope, elm, attrs, ctrl) {
-//       // view -> model
-//       elm.bind('blur', function() {
-//         scope.$apply(function() {
-//           ctrl.$setViewValue(elm.html());
-//         });
-//       });
- 
-//       // model -> view
-//       ctrl.render = function(value) {
-//         elm.html(value);
-//       };
- 
-//       // load init value from DOM
-//       ctrl.$setViewValue(elm.html());
-    
-//      elm.bind('keypress', function(e) {
-//          alert('someone press esc');
-//          if (e.charCode === 27) scope.$apply(function() {
-//           ctrl.$setViewValue(elm.html());
-//          });
-//         });
-    
-//     }
-      
-//   };
-// })
+.directive('testDirective', function($compile) {
+    return {
+        restrict: 'A',
+        template: "<a id='pop-over-link' style='position: fixed; top: 100px; left: 100px;'>Show pop-over</a>" +
+                  "<div id='pop-over-content' style='display:none'><button class='btn btn-primary' ng-click='testFunction()'>Ok</button></div>",
+        link: function(scope, elements, attrs) {
+            $("#pop-over-link").popover({
+                'placement': 'top',
+                'trigger': 'click',
+                'html': true,
+                'container': 'body',
+                'content': function() {
+                    return $compile($("#pop-over-content").html())(scope);
+                }
+            });
+  
+            scope.testFunction = function() {
+                alert("it works");
+                console.log("maybe");
+            }
+
+        }
+    }
+})
 // helper code
 .filter('object2Array', function() {
     return function(input) {
