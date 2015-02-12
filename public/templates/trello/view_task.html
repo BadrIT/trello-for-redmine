@@ -1,20 +1,10 @@
-<div class="popover" tabindex="-1">
+<div class="popover" tabindex="-1" style="width: 250px;">
   <div class="arrow"></div>
   <h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>
   <div class="popover-content">
-    <form name="popoverForm">
-      <p ng-bind-html="type" style="min-width:300px;"></p>
-      <pre>2 + 3 = <span ng-cloak>{{ 2 + 3 }}</span></pre>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon">@</div>
-          <input class="form-control" type="email" placeholder="Enter email">
-        </div>
-      </div>
-      <div class="form-actions">
-        <button type="button" class="btn btn-danger" ng-click="$hide()">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="popover.saved=true;$hide()">Save changes</button>
-      </div>
-    </form>
+    <h4>Task Description: {{task.type}}</h4>
+    <h4>Assignee ID: {{task.assignee_id}}</h4>
+    <a ng-href="{{task.redmine_url}}" target="_blank">Explore more on redmine</a>
+    <h5>Status: {{task.completed ? 'completed' : 'not completed'}}</h5>
   </div>
 </div>

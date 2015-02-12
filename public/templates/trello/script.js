@@ -172,29 +172,20 @@ angular.module('trelloRedmine')
     }
 ])
 
-.directive('testDirective', function($compile) {
+.directive('customPopover', function($popover) {
     return {
         restrict: 'A',
-        template: "<a id='pop-over-link' style='position: fixed; top: 100px; left: 100px;'>Show pop-over</a>" +
-                  "<div id='pop-over-content' style='display:none'><button class='btn btn-primary' ng-click='testFunction()'>Ok</button></div>",
-        link: function(scope, elements, attrs) {
-            $("#pop-over-link").popover({
-                'placement': 'top',
-                'trigger': 'click',
-                'html': true,
-                'container': 'body',
-                'content': function() {
-                    return $compile($("#pop-over-content").html())(scope);
-                }
+        scope: {
+            data: '=',
+        },
+        link: function(scope, elem, attrs) {
+            $popover(elem, {
+                title: attrs.title,
+                contentTemplate: attrs.contentTemplate,
+                autoClose: true
             });
-  
-            scope.testFunction = function() {
-                alert("it works");
-                console.log("maybe");
-            }
-
         }
-    }
+    };
 })
 // helper code
 .filter('object2Array', function() {
