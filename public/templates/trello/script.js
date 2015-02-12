@@ -1,7 +1,7 @@
 angular.module('trelloRedmine')
 
-.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', '$popover',
-    function($scope, $timeout, $modal, $http, $popover) {
+.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http',
+    function($scope, $timeout, $modal, $http) {
         $scope.gridsterOptions = {
             margins: [20, 20],
             columns: 3,
