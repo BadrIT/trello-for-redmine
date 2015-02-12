@@ -19,3 +19,40 @@ input {
     float: right;
     padding: 10px;
 }
+.task-component{
+    margin-top: 10px;
+    display: table;
+    width: 100%;
+    text-align: center;
+    display: table;
+    vertical-align: top;
+    background: #DBF4FD;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.task-name{
+    font-size: 14px;
+    font-weight: normal;
+    color: #5E5E5E;
+    text-align: center;
+    margin: 0;
+    display: table-cell;
+    padding-top: 0;
+    vertical-align: middle;
+
+}
+.task-type{
+    width: 10px;
+    background-color: #D05F19;
+    height: 100%;
+    display: table-cell;
+}
+.task-img{
+    height: 24px;
+    overflow: hidden;
+    display: table-cell;
+}
+
+.task-img img{
+    max-width: 31px;
+}
