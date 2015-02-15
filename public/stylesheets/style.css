@@ -37,7 +37,7 @@ input {
     text-align: center;
     margin: 0;
     display: table-cell;
-    padding-top: 0;
+    padding: 8px 0;
     vertical-align: middle;
 
 }
@@ -48,7 +48,7 @@ input {
     display: table-cell;
 }
 .task-img{
-    height: 24px;
+    height:30px;
     overflow: hidden;
     display: table-cell;
 }

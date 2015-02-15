@@ -111,3 +111,10 @@ form {
   border: 1px solid black;
   background:white;
 }
+
+.btn-task-info button{
+    width: 95%;
+    text-align: left;
+    margin-bottom: 5px;
+}
+

@@ -31,6 +31,13 @@
                                     <!-- <td><a ng-href="{{task.redmine_url}}" target="_blank"><i class="fa fa-square"></i>  {{task.title}}</a></td> -->
                                 </tr>
                             </table>
+                            <div class="task-component">
+                                <div class="task-type"></div>
+                                <h3 class="task-name">Task name putting here..</h3>
+                                <div class="pull-right task-img">
+                                    <img src="http://cssdeck.com/uploads/media/items/2/2v3VhAp.png" alt="">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -38,35 +45,21 @@
                 <div class="col-lg-3 col-md-3">
                     <div class="row">
                         <h4><b>Info</b></h4>
-                        <table>
-                            <tr>
-                                <td><button type="button" class="btn btn-info"><i class="fa fa-user"></i>  Members</button></td>
-                            </tr>
-                            <tr>
-                                <td><button type="button" class="btn btn-info"><i class="fa fa-list-ul"></i>  Tasks List (RM)</button></td>
-                            </tr>
-                            <tr>
-                                <td><button type="button" class="btn btn-info"><i class="fa fa-calendar"></i>  Log Time</button></td>
-                            </tr>
-                            <tr>
-                                <td><button type="button" class="btn btn-success"><i class="fa fa-paperclip"></i>  Attachment</button></td>
-                            </tr>
-                        </table>
+                            <ul class="btn-task-info">
+                                <li><button type="button" class="btn btn-info"><i class="fa fa-user"></i>  Members</button></li>
+                                <li><button type="button" class="btn btn-info"><i class="fa fa-list-ul"></i>  Tasks List</button></li>
+                                <li><button type="button" class="btn btn-info"><i class="fa fa-calendar"></i>  Log Time</button></li>
+                                <li><button type="button" class="btn btn-success"><i class="fa fa-paperclip"></i>  Attachment</button></li>
+                            </ul>
                     </div>
                     </br>
                     <div class="row">
                         <h4><b>Actions</b></h4>
-                        <table>
-                            <tr>
-                                <td><button type="button" class="btn btn-primary"><i class="fa fa-arrow-right"></i>  Move</button></td>
-                            </tr>
-                            <tr>
-                                <td><button type="button" class="btn btn-info"><i class="fa fa-files-o"></i>  Copy</button></td>
-                            </tr>
-                            <tr>
-                                <td><button type="button" class="btn btn-danger"><i class="fa fa-archive"></i>  Archive</button></td>
-                            </tr>
-                        </table>
+                        <ul class="btn-task-info">
+                            <li><button type="button" class="btn btn-primary"><i class="fa fa-arrow-right"></i>  Move</button></li>
+                            <li><button type="button" class="btn btn-info"><i class="fa fa-files-o"></i>  Copy</button></li>
+                            <li><button type="button" class="btn btn-danger"><i class="fa fa-archive"></i>  Archive</button></li>
+                        </ul>
                     </div>
                 </div>
                 

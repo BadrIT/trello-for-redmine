@@ -24,6 +24,7 @@
     "morgan": "~1.5.1",
     "ms": "^0.7.0",
     "on-finished": "^2.2.0",
+    "promised-redmine": "^0.2.9",
     "serve-favicon": "^2.2.0"
   }
 }

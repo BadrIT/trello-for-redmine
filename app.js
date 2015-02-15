@@ -7,7 +7,10 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/');
 var dashboard = require('./routes/data.js');
+var redmineConnection = require('./redmine/initConnection');
+redmineConnection.init();
 
+var redmine_api = require('./routes/redmine');
 var app = express();
 
 app.use(logger('dev'));
@@ -19,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/dashboard', dashboard);
+app.use('/redmine', redmine_api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
