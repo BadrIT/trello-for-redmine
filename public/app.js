@@ -1,5 +1,5 @@
 (function() {
-	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngImg', 'xeditable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip'])
+	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip'])
 		.config(['$routeProvider', '$locationProvider',
 			function($routeProvider, $locationProvider) {
 				$routeProvider
@@ -17,7 +17,17 @@
         .controller('RootCtrl', ['$scope', '$http', function($scope, $http) {
             $scope.$on('$locationChangeStart', function(e, next, current) {
                 $scope.page = next.split('/').splice(-1);
-                $scope.styleUrl = 'templates/' + $scope.page + '/style.css'
+                if($scope.page) {
+                    $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
+                }
+                $scope.project_id = 'trello-for-redmine';
+                $scope.load_project = function () {
+                    $http.get('/redmine/projects/' + $scope.project_id).success(function (data) {
+                        $scope.project = data;
+                    }).error(function (err) {
+                        console.log(err);
+                    });
+                };
             });
 
             $http.get('/dashboard/load').success(function(data, status) {
@@ -27,8 +37,4 @@
             });
 
         }]);
-
-    angular.module('trelloRedmine').run(function(editableOptions){
-        editableOptions.theme = 'bs3';
-    })
 })();
