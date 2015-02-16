@@ -56,3 +56,10 @@ input {
 .task-img img{
     max-width: 31px;
 }
+.navbar-nav{
+    width: 100%;
+}
+.project-name,.project-hours{
+    padding: 16px;
+    color: #fff;
+}
