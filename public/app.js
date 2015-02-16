@@ -20,14 +20,26 @@
                 if($scope.page) {
                     $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
                 }
+                $scope.user_id = 'current'; // the one with the api token
+                $scope.user_projects = {};
+                $scope.user_projects = function (user_id) {
+                    $http.get('/users/' + user_id + '/issues').success(function (data) {
+                        $scope.user_projects = data;
+                    }).error(function (err) {
+                        console.log('Fetching user projects error: ' + err);
+                    });
+                };
                 $scope.project_id = 'trello-for-redmine';
-                $scope.load_project = function () {
-                    $http.get('/redmine/projects/' + $scope.project_id).success(function (data) {
-                        $scope.project = data;
+                $scope.load_project = function (project_id) {
+                    $http.get('/redmine/projects/' + project_id + '/issues').success(function (data) {
+                        console.log(data);
+                        $scope.current_project = data.project;
                     }).error(function (err) {
                         console.log(err);
                     });
                 };
+
+                $scope.load_project($scope.project_id);
             });
 
             $http.get('/dashboard/load').success(function(data, status) {
