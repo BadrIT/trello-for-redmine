@@ -20,26 +20,31 @@
                 if($scope.page) {
                     $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
                 }
-                $scope.user_id = 'current'; // the one with the api token
-                $scope.user_projects = {};
-                $scope.user_projects = function (user_id) {
-                    $http.get('/users/' + user_id + '/issues').success(function (data) {
-                        $scope.user_projects = data;
+                $scope.user_id = '99'; // the one with the api token
+                $scope.user_projects = [];
+                $scope.current_project = {};
+
+                $scope.get_user_projects = function (user_id) {
+                    $http.get('/redmine/users/' + user_id + '/projects').success(function (data) {
+                        console.log('user projects: ' + data);
+                        $scope.user_projects = data.user.memberships;
                     }).error(function (err) {
                         console.log('Fetching user projects error: ' + err);
                     });
                 };
+
                 $scope.project_id = 'trello-for-redmine';
-                $scope.load_project = function (project_id) {
-                    $http.get('/redmine/projects/' + project_id + '/issues').success(function (data) {
-                        console.log(data);
+                $scope.get_project = function (project_id) {
+                    $http.get('/redmine/projects/' + project_id).success(function (data) {
+                        console.log(project_id + '  info: ' + data);
                         $scope.current_project = data.project;
                     }).error(function (err) {
                         console.log(err);
                     });
                 };
 
-                $scope.load_project($scope.project_id);
+                $scope.get_user_projects($scope.user_id);
+                $scope.get_project($scope.project_id);
             });
 
             $http.get('/dashboard/load').success(function(data, status) {

@@ -43,7 +43,7 @@ router.get('/users/:user_id/projects', function (req, res, next) {
 		include: 'memberships'
 	}).success(function (data) {
 		console.log(data);
-		res.json(data.user.memberships);
+		res.json(data);
 	}).error(function (err) {
 		console.log(err);
 		res.status(404).json(err);
@@ -94,7 +94,8 @@ router.get('/projects/:project_id/issues/:parent_id', function (req, res, next) 
 router.get('/projects/:project_id/userstories', function (req, res, next) {
 	redmine.get('issues', {
 		project_id: req.params.project_id,
-		tracker_id: '5'
+		tracker_id: '5',
+		limit: 100
 	}).success(function (data) {
 		console.log(data);
 		var result = _.groupBy(data.issues, function(obj) {
@@ -109,9 +110,7 @@ router.get('/projects/:project_id/userstories', function (req, res, next) {
 
 // get information of specific project
 router.get('/projects/:project_id', function (req, res, next) {
-	redmine.get('projects/' + req.params.project_id, {
-		include: 'trackers,issue_statuses,enabled_modules'
-	}).success(function (data) {
+	redmine.getProject(req.params.project_id).success(function (data) {
 		console.log(data);
 		res.json(data);
 	}).error(function (err) {
