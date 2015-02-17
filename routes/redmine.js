@@ -23,6 +23,16 @@ router.get('/issue_statuses', function (req, res, next) {
 	});
 });
 
+router.get('/users/current', function (req, res, next) {
+	redmine.get('/users/current', 'json').success(function (data) {
+		console.log(data);
+		res.json(data.user);
+	}).error(function (err) {
+		console.log(err);
+		res.status(404).json(err);
+	});
+});
+
 // get issues of user in a specific project
 router.get('/users/:user_id/projects/:project_id/issues', function (req, res, next) {
 	redmine.get('issues', {
@@ -98,8 +108,12 @@ router.get('/projects/:project_id/userstories', function (req, res, next) {
 		limit: 100
 	}).success(function (data) {
 		console.log(data);
-		var result = _.groupBy(data.issues, function(obj) {
+		var result = _.sortBy(_.map(_.groupBy(data.issues, function(obj) {
 			return obj.status.name
+		}), function (val, key) {
+			return {title: key, cards: val, sizeX: 1, sizeY: 2};
+		}), function (object){
+			return object.cards[0].status.id;
 		});
 		res.json(result);
 	}).error(function (err) {

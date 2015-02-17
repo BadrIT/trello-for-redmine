@@ -14,8 +14,6 @@ angular.module('trelloRedmine')
             }
         };
 
-        $scope.widgets = $scope.dashboard.widgets;
-
         $scope.clear = function() {
             $scope.widgets = [];
         };
