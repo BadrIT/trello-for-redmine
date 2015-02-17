@@ -18,8 +18,8 @@
                         </div>
                     </div>
                     <div class="box-content">
-                        <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards">
-                            <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards">
+                        <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
+                            <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards" id="{{card.id}}">
                                 <img class="thumb" ng-src="{{card.thumb}}" />
                                 <p>
                                     User Story ID: {{card.id}}

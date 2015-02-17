@@ -111,7 +111,7 @@ router.get('/projects/:project_id/userstories', function (req, res, next) {
 		var result = _.sortBy(_.map(_.groupBy(data.issues, function(obj) {
 			return obj.status.name
 		}), function (val, key) {
-			return {title: key, cards: val, sizeX: 1, sizeY: 2};
+			return {title: key, cards: val, sizeX: 1, sizeY: 2, status_id: val[0].status.id};
 		}), function (object){
 			return object.cards[0].status.id;
 		});
@@ -125,6 +125,17 @@ router.get('/projects/:project_id/userstories', function (req, res, next) {
 // get information of specific project
 router.get('/projects/:project_id', function (req, res, next) {
 	redmine.getProject(req.params.project_id).success(function (data) {
+		console.log(data);
+		res.json(data);
+	}).error(function (err) {
+		console.log(err);
+		res.status(404).json(err);
+	});
+});
+
+// update an issue
+router.put('/issues/:issue_id', function (req, res, next) {
+	redmine.updateIssue(req.params.issue_id, req.body).success(function (data) {
 		console.log(data);
 		res.json(data);
 	}).error(function (err) {

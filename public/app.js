@@ -17,6 +17,7 @@
         .service('redmineService', ['$http', '$q', function ($http, $q){
             var users_url = '/redmine/users/';
             var projects_url = '/redmine/projects/';
+            var issues_url = '/redmine/issues/'
 
             this.getUserInfo = function (user_id) {
                 var query = users_url + user_id;
@@ -73,6 +74,20 @@
 
                 return deferred.promise;
             };
+
+            this.updateIssue = function (issue_id, updated_data) {
+                var query = issues_url + issue_id;
+                var deferred = $q.defer();
+
+                $http.put(query, updated_data)
+                .then(function (result) {
+                    deferred.resolve(result);
+                }, function (error) {
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            };
         }])
         .controller('RootCtrl', ['$scope', 'redmineService', '$http', function($scope, redmineService, $http) {
             $scope.current_user = {};
@@ -91,9 +106,9 @@
                 $scope.page = project_template[0];
                 $scope.project_id = project_template[1];
 
-                if($scope.page) {
-                    $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
-                }
+                if(!$scope.page && !$scope.project_id) return; 
+                
+                $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
 
                 redmineService.getProjectByID($scope.project_id)
                 .then(function (result) {
