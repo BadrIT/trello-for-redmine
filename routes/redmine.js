@@ -15,8 +15,13 @@ router.get('/trackers', function (req, res, next) {
 
 router.get('/issue_statuses', function (req, res, next) {
 	redmine.get('/issue_statuses', 'json').success(function (data) {
-		console.log(data);
-		res.json(data);
+		var result = _.map(_.sortBy(data.issue_statuses, function (object){
+			return object.id;
+		}), function (object){
+			return {title: object.name, cards: [], sizeX: 1, sizeY: 2, status_id: object.id, allowed: false};
+		});
+		console.log(result);
+		res.json(result);
 	}).error(function (err) {
 		console.log(err);
 		res.status(404).json(err);		
@@ -108,12 +113,8 @@ router.get('/projects/:project_id/userstories', function (req, res, next) {
 		limit: 100
 	}).success(function (data) {
 		console.log(data);
-		var result = _.sortBy(_.map(_.groupBy(data.issues, function(obj) {
-			return obj.status.name
-		}), function (val, key) {
-			return {title: key, cards: val, sizeX: 1, sizeY: 2, status_id: val[0].status.id};
-		}), function (object){
-			return object.cards[0].status.id;
+		var result = _.groupBy(data.issues, function(obj) {
+			return obj.status.id;
 		});
 		res.json(result);
 	}).error(function (err) {
@@ -135,7 +136,20 @@ router.get('/projects/:project_id', function (req, res, next) {
 
 // update an issue
 router.put('/issues/:issue_id', function (req, res, next) {
-	redmine.updateIssue(req.params.issue_id, req.body).success(function (data) {
+	redmine.updateIssue(req.params.issue_id, req.body)
+	.success(function (data) {
+		console.log(data);
+		res.json(data);
+	}).error(function (err) {
+		console.log(err);
+		res.status(404).json(err);
+	});
+});
+
+// create new issue (User Story or Task)
+router.post('/create/issue/', function (req, res, next) {
+	redmine.postIssue(req.body)
+	.success(function (data) {
 		console.log(data);
 		res.json(data);
 	}).error(function (err) {

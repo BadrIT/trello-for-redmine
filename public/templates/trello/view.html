@@ -5,7 +5,7 @@
 <div gridster="gridsterOptions">
     <div ng-model="widgets">
         <ul>
-            <li gridster-item="widget" ng-repeat="widget in widgets">
+            <li gridster-item="widget" ng-repeat="widget in widgets | filter: {allowed: true}">
                 <div class="box" ng-controller="CustomWidgetCtrl">
                     <div class="box-header">
                         <section>

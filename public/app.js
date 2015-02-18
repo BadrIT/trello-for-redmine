@@ -17,10 +17,9 @@
         .service('redmineService', ['$http', '$q', function ($http, $q){
             var users_url = '/redmine/users/';
             var projects_url = '/redmine/projects/';
-            var issues_url = '/redmine/issues/'
+            var issues_url = '/redmine/issues/';
 
-            this.getUserInfo = function (user_id) {
-                var query = users_url + user_id;
+            function get (query) {
                 var deferred = $q.defer();
 
                 $http.get(query)
@@ -31,62 +30,49 @@
                 });
 
                 return deferred.promise;
+            }
+
+            function put (query, body) {
+                var deferred = $q.defer();
+
+                $http.put(query, body)
+                .then(function (result) {
+                    deferred.resolve(result);
+                }, function (error) {
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            }
+
+            this.getUserInfo = function (user_id) {
+                var query = users_url + user_id;
+                return get(query);
             };
 
             this.getUserProjects = function (user_id) {
                 var query = users_url + user_id + '/projects';
-                var deferred = $q.defer();
-
-                $http.get(query)
-                .then(function (result) {
-                    deferred.resolve(result);
-                }, function (error) {
-                    deferred.reject(error);
-                });
-
-                return deferred.promise;
+                return get(query);
             };
 
             this.getProjectByID = function (project_id) {
                 var query = projects_url + project_id;
-                var deferred = $q.defer();
-
-                $http.get(query)
-                .then(function (result) {
-                    deferred.resolve(result);
-                }, function (error) {
-                    deferred.reject(error);
-                });
-
-                return deferred.promise;
+                return get(query);
             };
 
             this.getProjectUserStories = function (project_id) {
                 var query = projects_url + project_id + '/userstories';
-                var deferred = $q.defer();
-
-                $http.get(query)
-                .then(function (result) {
-                    deferred.resolve(result);
-                }, function (error) {
-                    deferred.reject(error);
-                });
-
-                return deferred.promise;
+                return get(query);
             };
 
             this.updateIssue = function (issue_id, updated_data) {
                 var query = issues_url + issue_id;
-                var deferred = $q.defer();
+                return put(query, updated_data);
+            };
 
-                $http.put(query, updated_data)
-                .then(function (result) {
-                    deferred.resolve(result);
-                }, function (error) {
-                    deferred.reject(error);
-                });
-
-                return deferred.promise;
+            this.getIssuesStatuses = function () {
+                var query = '/redmine/issue_statuses';
+                return get(query);
             };
         }])
         .controller('RootCtrl', ['$scope', 'redmineService', '$http', function($scope, redmineService, $http) {
@@ -94,11 +80,21 @@
             $scope.user_projects = [];
             $scope.current_project = {};
             $scope.widgets = [];
+            var allowed_statuses = [8, 9, 10];
 
             redmineService.getUserProjects('current')
             .then(function (result) {
                 $scope.current_user = result.data.user;
                 $scope.user_projects = result.data.user.memberships;
+            });
+
+            redmineService.getIssuesStatuses()
+            .then(function (result) {
+                $scope.widgets = result.data;
+                // TODO: do it in better way
+                for(var i = 0; i < allowed_statuses.length; i++) {
+                    $scope.widgets[allowed_statuses[i] - 1].allowed = true;
+                }
             });
 
             $scope.$on('$locationChangeStart', function(e, next, current) {
@@ -115,9 +111,17 @@
                     $scope.current_project = result.data;
                 });
 
+                for(var i = 0; i < $scope.widgets.length; i++) {
+                    $scope.widgets[i].cards = [];
+                }
+
                 redmineService.getProjectUserStories($scope.project_id)
                 .then(function (result) {
-                    $scope.widgets = result.data;
+                    for(var key in result.data) {
+                        if(result.data.hasOwnProperty(key)) {
+                            $scope.widgets[key - 1].cards = result.data[key];
+                        }
+                    }
                 });
             });
         }]);
