@@ -1,7 +1,7 @@
 angular.module('trelloRedmine')
 
-.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http',
-    function($scope, $timeout, $modal, $http) {
+.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService',
+    function($scope, $timeout, $modal, $http, redmineService) {
         $scope.gridsterOptions = {
             margins: [20, 20],
             columns: 3,
@@ -47,13 +47,24 @@ angular.module('trelloRedmine')
             	var targetIndex = ui.item.sortable.dropindex;
             	var moved = ui.item.sortable.received;
             	if(moved || targetIndex !== undefined && (targetIndex !== index)) {
-            		$scope.updateBackend();
+            		$scope.updateIssue(ui.item.attr('id'), {
+                        status_id: ui.item.sortable.droptarget.attr('widget-status')
+                    });
             	}
                 $(ui.item).find("#overlay").show();
                 setTimeout(function() {
                     $(ui.item).find("#overlay").hide();
                 }, 1000);
             }
+        };
+
+        $scope.updateIssue = function(issue_id, updated_data) {
+            redmineService.updateIssue(issue_id, updated_data)
+            .then(function (result) {
+                console.log(result);
+            }, function (error) {
+                console.log(error);
+            });
         };
 
         $scope.updateBackend = function() {
