@@ -1,5 +1,5 @@
-angular.module('trelloRedmine')
 
+angular.module('trelloRedmine')
 .controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService',
     function($scope, $timeout, $modal, $http, redmineService) {
         $scope.gridsterOptions = {

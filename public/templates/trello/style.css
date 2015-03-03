@@ -118,3 +118,10 @@ form {
     margin-bottom: 5px;
 }
 
+.member{
+    width: 35px;
+    height: auto;
+}
+.us-member{
+    float: right;
+}

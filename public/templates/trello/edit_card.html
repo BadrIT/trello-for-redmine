@@ -12,10 +12,20 @@
             <div class="row">
                 <div class="col-lg-9 col-md-9">
                     <div class="row">
-                        <div class="col-lg-3 col-md-3">
-                            Members
-                            </br>
-                            <a><i class="fa fa-plus-square-o fa-3x"></i></a>
+                        <div class="col-lg-6 col-md-3">
+                            <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
+                                     gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
+
+                            <div class="dropdown">
+                              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                Member
+                                <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}</a></li>
+                              </ul>
+                            </div>
+
                         </div>
                     </div>
                     <a><i class="fa fa-edit"></i>  Edit the description</a>
