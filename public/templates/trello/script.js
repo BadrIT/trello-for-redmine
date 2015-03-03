@@ -28,18 +28,21 @@ angular.module('trelloRedmine')
             var subTasks = [];
             var issues = [];
             $scope.subTasks = [];
+            $scope.progress = 0;
+            $scope.finishedTasks = 0;
 
             redmineService.getStoryTasks(projectId, storyId)
             .then(function (result) {
                 issues = result.data.issues;
                 angular.forEach(issues, function(issue) {    
                     if (issue.parent && issue.parent.id == storyId) {
+                        if (issue.status.id == 14) $scope.finishedTasks++;
                         this.push(issue);
                     }
                 }, subTasks);
 
                 $scope.subTasks = subTasks;
-                
+                $scope.progress = ( $scope.finishedTasks / $scope.subTasks.length ) * 100;
                 $modal.open({
                     scope: $scope,
                     templateUrl: 'templates/trello/edit_card.html',
@@ -203,10 +206,13 @@ angular.module('trelloRedmine')
 
         $scope.changeTaskStatus = function(id, state_val) {
             if(state_val) {
+                $scope.finishedTasks++;
                 $scope.updateIssue(id, {status_id: 14});
             } else {
+                $scope.finishedTasks--;
                 $scope.updateIssue(id, {status_id: 9});
             }
+            $scope.progress = ( $scope.finishedTasks / $scope.subTasks.length ) * 100;
         };
 
     }
