@@ -76,7 +76,7 @@
             };
 
             this.getProjectIssues = function(project_id, issue_id) {
-                var query = projects_url + project_id  + '/issues' ;
+                var query = projects_url + project_id  + '/issues/' + issue_id ;
                 return get(query);
             };
         }])

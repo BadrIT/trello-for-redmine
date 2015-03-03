@@ -32,9 +32,9 @@
                                     <!-- <td><a ng-href="{{task.redmine_url}}" target="_blank"><i class="fa fa-square"></i>  {{task.title}}</a></td> -->
                                 </tr>
                             </table>
-                            <div ng-repeat="task in subTasks" class="task-component">
+                            <div ng-repeat="task in subTasks  track by $index" class="task-component">
                                 <div class="task-type"></div>
-                                <input type="checkbox"><h3 class="task-name">{{task.subject}}</h3>
+                                <input type="checkbox" ng-click="changeTaskStatus(task.id, status_val)" ng-model="status_val" ng-checked="task.status.id == 14"><h3 class="task-name">{{task.subject}}</h3>
                                 <div class="pull-right task-img">
                                     <img src="http://cssdeck.com/uploads/media/items/2/2v3VhAp.png" alt="">
                                 </div>

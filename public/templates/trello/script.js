@@ -160,15 +160,17 @@ angular.module('trelloRedmine')
 
     function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService) {
         $scope.widget = widget;
+        $scope.status_val = false;
         var storyId = card.id;
 
         redmineService.getProjectIssues(card.project.id, storyId)
         .then(function (result) {
             var issues = result.data.issues;
             $scope.subTasks = [];
-
+            console.log("issues " + JSON.stringify(issues))
             angular.forEach(issues, function(issue) {    
                 if (issue.parent && issue.parent.id == storyId) {
+                    console.log(JSON.stringify(issue))
                     this.push(issue);
                 }
             }, $scope.subTasks);
@@ -194,6 +196,15 @@ angular.module('trelloRedmine')
             widget.cards.push($scope.card);
             $modalInstance.close(widget);
             $scope.updateBackend();
+        };
+
+        $scope.changeTaskStatus = function(id, state_val) {
+            console.log("id  " + id + "   val " + state_val )
+            if(state_val) {
+                $scope.updateIssue(id, {status_id: 14});
+            } else {
+                $scope.updateIssue(id, {status_id: 9});
+            }
         };
 
     }

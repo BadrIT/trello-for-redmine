@@ -81,7 +81,8 @@ router.get('/users/:user_id/issues', function (req, res, next) {
 // get all issues in a specific project
 router.get('/projects/:project_id/issues', function (req, res, next) {
 	redmine.get('issues', {
-		project_id: req.params.project_id
+		project_id: req.params.project_id,
+		status_id: '*'
 	}).success(function (data) {
 		console.log(data);
 		res.json(data);
@@ -95,7 +96,8 @@ router.get('/projects/:project_id/issues', function (req, res, next) {
 router.get('/projects/:project_id/issues/:parent_id', function (req, res, next) {
 	redmine.get('issues', {
 		project_id: req.params.project_id,
-		parent_issue_id: req.params.parent_id
+		parent_issue_id: req.params.parent_id,
+		status_id: '*'
 	}).success(function (data) {
 		console.log(data);
 		res.json(data);
