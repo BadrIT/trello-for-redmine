@@ -118,3 +118,8 @@ form {
     margin-bottom: 5px;
 }
 
+.member{
+    width: 10%;
+    height: auto;
+    float: right;
+}

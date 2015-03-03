@@ -38,6 +38,17 @@ router.get('/users/current', function (req, res, next) {
 	});
 });
 
+// get user info
+router.get('/users/:user_id/', function (req, res, next) {
+	redmine.get('/users/' + req.params.user_id, 'json').success(function (data) {
+		console.log(data);
+		res.json(data.user);
+	}).error(function (err) {
+		console.log(err);
+		res.status(404).json(err);
+	});
+});
+
 // get issues of user in a specific project
 router.get('/users/:user_id/projects/:project_id/issues', function (req, res, next) {
 	redmine.get('issues', {

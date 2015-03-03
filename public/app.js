@@ -1,5 +1,6 @@
 (function() {
-	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip'])
+	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip',
+                                    'ui.gravatar'])
 		.config(['$routeProvider', '$locationProvider',
 			function($routeProvider, $locationProvider) {
 				$routeProvider
@@ -49,7 +50,7 @@
                 var query = users_url + user_id;
                 return get(query);
             };
-
+            
             this.getUserProjects = function (user_id) {
                 var query = users_url + user_id + '/projects';
                 return get(query);
@@ -96,7 +97,8 @@
                     $scope.widgets[allowed_statuses[i] - 1].allowed = true;
                 }
             });
-
+            
+            
             $scope.$on('$locationChangeStart', function(e, next, current) {
                 var project_template = next.split('/').splice(-2);
                 $scope.page = project_template[0];
@@ -120,9 +122,25 @@
                     for(var key in result.data) {
                         if(result.data.hasOwnProperty(key)) {
                             $scope.widgets[key - 1].cards = result.data[key];
+                            
+                            //get user data
+                            for(var card_key in $scope.widgets[key - 1].cards) {
+                                var card = $scope.widgets[key - 1].cards[card_key];
+                                
+                                var retrieve_user_info = function(card){
+                                    var assign_to_id = card.assigned_to.id;
+                                    redmineService.getUserInfo(assign_to_id)
+                                    .then(function (result) {
+                                        card.assigned_to = result.data;
+                                    });
+                                }
+                                retrieve_user_info(card);
+                            }
+                            
                         }
                     }
                 });
+                
             });
         }]);
 })();
