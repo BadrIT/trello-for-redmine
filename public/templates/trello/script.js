@@ -21,21 +21,41 @@ angular.module('trelloRedmine')
         $scope.startIndex = -1;
         $scope.moved = false;
 
-        $scope.editCard = function(widget, card) {
-            console.log("card ... " + JSON.stringify(card))
-            $modal.open({
-                scope: $scope,
-                templateUrl: 'templates/trello/edit_card.html',
-                controller: 'EditCardCtrl',
-                backdropClass: "backdrop-fix",
-                resolve: {
-                    widget: function() {
-                        return widget;
-                    },
-                    card: function() {
-                        return card;
+        $scope.editCard = function(widget, card) { 
+            // I think it need more restructure to improve performence 
+            var storyId = card.id;
+            var projectId = card.project.id;
+            var subTasks = [];
+            var issues = [];
+            $scope.subTasks = [];
+
+            redmineService.getStoryTasks(projectId, storyId)
+            .then(function (result) {
+                issues = result.data.issues;
+                angular.forEach(issues, function(issue) {    
+                    if (issue.parent && issue.parent.id == storyId) {
+                        this.push(issue);
                     }
-                }
+                }, subTasks);
+
+                $scope.subTasks = subTasks;
+                
+                $modal.open({
+                    scope: $scope,
+                    templateUrl: 'templates/trello/edit_card.html',
+                    controller: 'EditCardCtrl',
+                    backdropClass: "backdrop-fix",
+                    resolve: {
+                        widget: function() {
+                            return widget;
+                        },
+                        card: function() {
+                            return card;
+                        }
+                    }
+                });
+            }, function (error) {
+                console.log(error);
             });
         }
 
@@ -161,23 +181,6 @@ angular.module('trelloRedmine')
     function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService) {
         $scope.widget = widget;
         $scope.status_val = false;
-        var storyId = card.id;
-
-        redmineService.getProjectIssues(card.project.id, storyId)
-        .then(function (result) {
-            var issues = result.data.issues;
-            $scope.subTasks = [];
-            console.log("issues " + JSON.stringify(issues))
-            angular.forEach(issues, function(issue) {    
-                if (issue.parent && issue.parent.id == storyId) {
-                    console.log(JSON.stringify(issue))
-                    this.push(issue);
-                }
-            }, $scope.subTasks);
-
-        }, function (error) {
-             console.log(error);
-        });
 
         if (card)
             $scope.card = card;
@@ -199,7 +202,6 @@ angular.module('trelloRedmine')
         };
 
         $scope.changeTaskStatus = function(id, state_val) {
-            console.log("id  " + id + "   val " + state_val )
             if(state_val) {
                 $scope.updateIssue(id, {status_id: 14});
             } else {
