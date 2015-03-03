@@ -21,7 +21,7 @@
 
             function get (query) {
                 var deferred = $q.defer();
-
+                console.log("query .... " + query)
                 $http.get(query)
                 .then(function (result) {
                     deferred.resolve(result);
@@ -72,6 +72,11 @@
 
             this.getIssuesStatuses = function () {
                 var query = '/redmine/issue_statuses';
+                return get(query);
+            };
+
+            this.getProjectIssues = function(project_id, issue_id) {
+                var query = projects_url + project_id  + '/issues' ;
                 return get(query);
             };
         }])

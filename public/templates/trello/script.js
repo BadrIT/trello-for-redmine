@@ -22,6 +22,7 @@ angular.module('trelloRedmine')
         $scope.moved = false;
 
         $scope.editCard = function(widget, card) {
+            console.log("card ... " + JSON.stringify(card))
             $modal.open({
                 scope: $scope,
                 templateUrl: 'templates/trello/edit_card.html',
@@ -155,10 +156,27 @@ angular.module('trelloRedmine')
     }
 ])
 
-.controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card',
+.controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService',
 
-    function($scope, $timeout, $rootScope, $modalInstance, widget, card) {
+    function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService) {
         $scope.widget = widget;
+        var storyId = card.id;
+
+        redmineService.getProjectIssues(card.project.id, storyId)
+        .then(function (result) {
+            var issues = result.data.issues;
+            $scope.subTasks = [];
+
+            angular.forEach(issues, function(issue) {    
+                if (issue.parent && issue.parent.id == storyId) {
+                    this.push(issue);
+                }
+            }, $scope.subTasks);
+
+        }, function (error) {
+             console.log(error);
+        });
+
         if (card)
             $scope.card = card;
         else
