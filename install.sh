@@ -1,6 +1,6 @@
 sudo npm install
 cd public
 bower install
-cd pubic/bower_components/angular_ui_bootstrap/
+cd bower_components/angular-ui-bootstrap/
 sudo npm install
 grunt
