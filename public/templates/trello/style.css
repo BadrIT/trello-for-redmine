@@ -119,7 +119,9 @@ form {
 }
 
 .member{
-    width: 10%;
+    width: 35px;
     height: auto;
+}
+.us-member{
     float: right;
 }

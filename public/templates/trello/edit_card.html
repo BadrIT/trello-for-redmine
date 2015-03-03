@@ -15,7 +15,9 @@
                         <div class="col-lg-3 col-md-3">
                             Members
                             </br>
-                            <a><i class="fa fa-plus-square-o fa-3x"></i></a>
+                            <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
+                                         gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
+                            <a><i class="fa fa-plus-square-o fa-2x"></i></a>
                         </div>
                     </div>
                     <a><i class="fa fa-edit"></i>  Edit the description</a>
