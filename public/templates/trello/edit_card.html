@@ -1,5 +1,5 @@
 <div>
-    <form editable-form name="_form" class="form-horizontal" ng-submit="submit(_form)">
+    <!--<form editable-form name="_form" class="form-horizontal" ng-submit="submit(_form)"> -->
         <div class="modal-header">
             <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
             <i class="fa fa-desktop fa-4" style="float: left;margin-right: 10px;margin-top: 9px;"></i>
@@ -49,6 +49,7 @@
                                     <img src="http://cssdeck.com/uploads/media/items/2/2v3VhAp.png" alt="">
                                 </div>
                             </div>
+                            <a href="#" onaftersave="createNewTask()" editable-text="newTask.subject" >{{ newTask.subject || 'Add a task'}}</a>
                         </div>
                     </div>
                 </div>
@@ -77,9 +78,9 @@
             </div>
         </div>
 
-        <div class="modal-footer">
+        <!--<div class="modal-footer">
             <a ng-click="dismiss()" class="btn btn-default" tabindex="-1"><i class="glyphicon glyphicon-remove"></i>Cancel</a>
             <button type="submit" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-ok"></i>Save</button>
         </div>
-    </form>
+    </form>-->
 </div>

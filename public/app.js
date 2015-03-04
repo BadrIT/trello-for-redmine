@@ -1,6 +1,6 @@
 (function() {
 	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip',
-                                    'ui.gravatar'])
+                                    'ui.gravatar', 'xeditable'])
 		.config(['$routeProvider', '$locationProvider',
 			function($routeProvider, $locationProvider) {
 				$routeProvider
@@ -46,6 +46,19 @@
                 return deferred.promise;
             }
 
+            function post (query, body) {
+                var deferred = $q.defer();
+
+                $http.post(query, body)
+                .then(function (result) {
+                    deferred.resolve(result);
+                }, function (error) {
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            }
+
             this.getUserInfo = function (user_id) {
                 var query = users_url + user_id;
                 return get(query);
@@ -79,6 +92,11 @@
             this.getStoryTasks = function(project_id, issue_id) {
                 var query = projects_url + project_id  + '/issues/' + issue_id ;
                 return get(query);
+            };
+
+            this.createTask = function (data) {
+                var query = '/redmine/create/issue/';
+                return post(query, data);
             };
         }])
         .controller('RootCtrl', ['$scope', 'redmineService', '$http', function($scope, redmineService, $http) {
@@ -147,5 +165,8 @@
                 });
                 
             });
-        }]);
+        }])
+        .run(function(editableOptions) {
+            editableOptions.theme = 'bs3';
+        });
 })();

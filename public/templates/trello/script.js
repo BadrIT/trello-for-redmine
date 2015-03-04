@@ -37,6 +37,7 @@ angular.module('trelloRedmine')
                 angular.forEach(issues, function(issue) {    
                     if (issue.parent && issue.parent.id == storyId) {
                         if (issue.status.id == 14) $scope.finishedTasks++;
+                        console.log("I" + JSON.stringify(issue))
                         this.push(issue);
                     }
                 }, subTasks);
@@ -200,6 +201,12 @@ angular.module('trelloRedmine')
         console.log("CARD " + JSON.stringify(card))
         $scope.widget = widget;
         $scope.status_val = false;
+        $scope.newTask = {
+            subject: "",
+            project_id: card.project.id,
+            parent_issue_id: card.id,
+            tracker_id: 4
+        };
 
         if (card)
             $scope.card = card;
@@ -229,6 +236,17 @@ angular.module('trelloRedmine')
                 $scope.updateIssue(id, {status_id: 9});
             }
             $scope.progress = ( $scope.finishedTasks / $scope.subTasks.length ) * 100;
+        };
+
+        $scope.createNewTask = function() {
+            redmineService.createTask($scope.newTask)
+            .then(function (result) {
+                var issue = result.data.issue;
+                $scope.subTasks.push(issue);
+              console.log(result);
+            }, function (error) {
+                console.log(error);
+            });
         };
 
     }
