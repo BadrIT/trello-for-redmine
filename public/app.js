@@ -151,11 +151,13 @@
                                 var card = $scope.widgets[key - 1].cards[card_key];
                                 
                                 var retrieve_user_info = function(card){
-                                    var assign_to_id = card.assigned_to.id;
-                                    redmineService.getUserInfo(assign_to_id)
-                                    .then(function (result) {
-                                        card.assigned_to = result.data;
-                                    });
+                                    if(card.assigned_to) {
+                                        var assign_to_id = card.assigned_to.id;
+                                        redmineService.getUserInfo(assign_to_id)
+                                        .then(function (result) {
+                                            card.assigned_to = result.data;
+                                        });
+                                    } 
                                 }
                                 retrieve_user_info(card);
                             }
