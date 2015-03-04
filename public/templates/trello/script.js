@@ -204,7 +204,8 @@ angular.module('trelloRedmine')
             subject: "",
             project_id: card.project.id,
             parent_issue_id: card.id,
-            tracker_id: 4
+            tracker_id: 4,
+            assigned_to_id: card.assigned_to.id
         };
 
         if (card)
