@@ -42,7 +42,8 @@ angular.module('trelloRedmine')
                 }, subTasks);
 
                 $scope.subTasks = subTasks;
-                $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
+                $scope.calculateProgress();
+
                 $modal.open({
                     scope: $scope,
                     templateUrl: 'templates/trello/edit_card.html',
@@ -61,6 +62,10 @@ angular.module('trelloRedmine')
                 console.log(error);
             });
         }
+
+        $scope.calculateProgress = function () {
+            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
+        };
 
         $scope.sortableTemplates = {
             connectWith: '.connectedSortable',
@@ -253,7 +258,7 @@ angular.module('trelloRedmine')
                 $scope.finishedTasks--;
                 $scope.updateIssue(id, {status_id: 9});
             }
-            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
+            $scope.calculateProgress();
         };
 
         $scope.createNewTask = function() {
@@ -261,7 +266,7 @@ angular.module('trelloRedmine')
             .then(function (result) {
                 var issue = result.data.issue;
                 $scope.subTasks.push(issue);
-                $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
+                $scope.calculateProgress();
             }, function (error) {
                 console.log(error);
             });
@@ -276,8 +281,7 @@ angular.module('trelloRedmine')
             var task_index = $scope.subTasks.indexOf(task);
             $scope.subTasks.splice(task_index, 1);
             redmineService.deleteTask(task.id);
-            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
-            
+            $scope.calculateProgress();   
         };
     }
 ])
