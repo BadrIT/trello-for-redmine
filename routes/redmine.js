@@ -171,4 +171,15 @@ router.post('/create/issue/', function (req, res, next) {
 	});
 });
 
+// delete an issue
+router.delete('/issues/:issue_id', function (req, res, next) {
+	redmine.deleteIssue(req.params.issue_id)
+	.success(function () {
+		res.status(200);
+	}).error(function (err) {
+		console.log(err);
+		res.status(404).json(err);
+	});
+});
+
 module.exports = router;

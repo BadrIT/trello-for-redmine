@@ -58,6 +58,19 @@
                 return deferred.promise;
             }
 
+            function remove (query) {
+                var deferred = $q.defer();
+
+                $http.delete(query)
+                .then(function (result) {
+                    deferred.resolve(result);
+                }, function (error) {
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            }
+
             this.getUserInfo = function (user_id) {
                 var query = users_url + user_id;
                 return get(query);
@@ -96,6 +109,11 @@
             this.createTask = function (data) {
                 var query = '/redmine/create/issue/';
                 return post(query, data);
+            };
+
+            this.deleteTask = function (issue_id) {
+                var query = issues_url + issue_id;
+                return remove(query);
             };
         }])
         .controller('RootCtrl', ['$scope', 'redmineService', '$http', function($scope, redmineService, $http) {

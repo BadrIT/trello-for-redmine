@@ -253,7 +253,7 @@ angular.module('trelloRedmine')
                 $scope.finishedTasks--;
                 $scope.updateIssue(id, {status_id: 9});
             }
-            $scope.progress = parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
+            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
         };
 
         $scope.createNewTask = function() {
@@ -270,6 +270,13 @@ angular.module('trelloRedmine')
             $scope.updateIssue(task.id, task);
         };
 
+        $scope.deleteTask = function(task) {
+            // TODO: find way to handle success and error
+            var task_index = $scope.subTasks.indexOf(task);
+            $scope.subTasks.splice(task_index, 1);
+            redmineService.deleteTask(task.id);
+            
+        };
     }
 ])
 
@@ -368,4 +375,18 @@ angular.module('trelloRedmine')
         }
         return out;
     }
-});
+})
+.directive('ngConfirmClick', [
+    function(){
+        return {
+            link: function (scope, element, attr) {
+                var msg = attr.ngConfirmClick || "Are you sure?";
+                var clickAction = attr.confirmedClick;
+                element.bind('click',function (event) {
+                    if ( window.confirm(msg) ) {
+                        scope.$eval(clickAction)
+                    }
+                });
+            }
+        };
+}]);
