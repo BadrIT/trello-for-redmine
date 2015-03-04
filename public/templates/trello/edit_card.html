@@ -44,8 +44,8 @@
                             </table>
                             <div ng-repeat="task in subTasks  track by $index" class="task-component">
                                 <div class="task-type"></div>
-                                <input type="checkbox" ng-click="changeTaskStatus(task.id, status_val)" ng-model="status_val" ng-checked="task.status.id == 14">
-                                    <a onaftersave="updateTask(task)" editable-text="task.subject" e-form="textBtnForm" ng-href="http://{{config.host}}/issues/{{task.id}}" target="_blank">{{task.subject}}</a>
+                                <input class="pull-left" type="checkbox" ng-click="changeTaskStatus(task.id, status_val)" ng-model="status_val" ng-checked="task.status.id == 14">
+                                    <a class="pull-left" onaftersave="updateTask(task)" editable-text="task.subject" e-form="textBtnForm" ng-href="http://{{config.host}}/issues/{{task.id}}" target="_blank">{{task.subject}}</a>
                                     <a ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
                                         <i class="fa fa-edit"></i> edit
                                     </a>
