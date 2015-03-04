@@ -107,7 +107,22 @@ angular.module('trelloRedmine')
 
 			console.log(dashboard);
 			delete dashboard;
-        }
+        };
+
+        $scope.getConfigData = function() {
+            $http.get('/settings/config')
+            .success(function(data, status){
+                console.log(data.host);
+                $scope.config = data;
+            }).error(function(err, status){
+                console.log(err);
+            });
+
+           // console.log(dashboard);
+        };
+
+        //get config data
+        $scope.getConfigData();
     }
 ])
 
@@ -182,6 +197,7 @@ angular.module('trelloRedmine')
 .controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService',
 
     function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService) {
+        console.log("CARD " + JSON.stringify(card))
         $scope.widget = widget;
         $scope.status_val = false;
 

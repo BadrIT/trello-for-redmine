@@ -24,7 +24,8 @@
                                 <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
                                      gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
                                 <p>
-                                    {{card.subject}}
+                                    <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>
+                                    
                                 </p>
 
                                 <div id="overlay">

@@ -26,6 +26,7 @@
     "on-finished": "^2.2.0",
     "promised-redmine": "^0.2.9",
     "serve-favicon": "^2.2.0",
-    "underscore-node": "^0.1.2"
+    "underscore-node": "^0.1.2",
+    "forever": "~0.14.1"
   }
 }
