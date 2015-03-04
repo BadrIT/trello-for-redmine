@@ -214,7 +214,6 @@ angular.module('trelloRedmine')
 .controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService',
 
     function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService) {
-        console.log("CARD " + JSON.stringify(card))
         $scope.widget = widget;
         $scope.status_val = false;
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
@@ -265,6 +264,10 @@ angular.module('trelloRedmine')
             }, function (error) {
                 console.log(error);
             });
+        };
+
+        $scope.updateTask = function(task) {
+            $scope.updateIssue(task.id, task);
         };
 
     }
