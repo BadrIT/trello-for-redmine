@@ -22,7 +22,6 @@
 
             function get (query) {
                 var deferred = $q.defer();
-                console.log("query .... " + query)
                 $http.get(query)
                 .then(function (result) {
                     deferred.resolve(result);

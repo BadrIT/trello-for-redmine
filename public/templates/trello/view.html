@@ -35,7 +35,7 @@
                             </li>
                             <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
                         </ul>
-                        <a class="pull-right btn btn-primary " ng-click="editCard(widget, card)"><i class="glyphicon glyphicon-plus "></i> Add Card</a>
+                        <a class="pull-right btn btn-primary " e-placeholder="card title" editable-text="newCard.subject" onaftersave="addNewCard(widget)"><i class="glyphicon glyphicon-plus "></i> Add a card</a>
                     </div>
                 </div>
             </li>

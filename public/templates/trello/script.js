@@ -42,7 +42,7 @@ angular.module('trelloRedmine')
                 }, subTasks);
 
                 $scope.subTasks = subTasks;
-                $scope.progress = parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
+                $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
                 $modal.open({
                     scope: $scope,
                     templateUrl: 'templates/trello/edit_card.html',
@@ -117,8 +117,6 @@ angular.module('trelloRedmine')
             }).error(function(err, status){
                 console.log(err);
             });
-
-           // console.log(dashboard);
         };
 
         //get config data
@@ -126,11 +124,14 @@ angular.module('trelloRedmine')
     }
 ])
 
-.controller('CustomWidgetCtrl', ['$scope', '$modal',
-    function($scope, $modal) {
-        
+.controller('CustomWidgetCtrl', ['$scope', '$modal', 'redmineService',
+    function($scope, $modal, redmineService) {
+
         $scope.newCard = {
-            subject: ""
+            subject: "",
+            project_id: $scope.project_id,
+            tracker_id: 5,
+            status_id: ''
         };
 
         $scope.remove = function(widget) {
@@ -152,9 +153,15 @@ angular.module('trelloRedmine')
         };
 
         $scope.addNewCard = function(widget) {
-            console.log(console.log(widget));
-           
-            console.log($scope.newCard)
+            $scope.newCard.status_id = widget.status_id;
+            redmineService.createTask($scope.newCard)
+            .then(function (result) {
+                var issue = result.data.issue;
+                var widget_index = $scope.widgets.indexOf(widget);
+                $scope.widgets[widget_index].cards.push(issue);
+            }, function (error) {
+                console.log(error);
+            });
         };
 
     }
