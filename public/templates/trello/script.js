@@ -261,6 +261,7 @@ angular.module('trelloRedmine')
             .then(function (result) {
                 var issue = result.data.issue;
                 $scope.subTasks.push(issue);
+                $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
             }, function (error) {
                 console.log(error);
             });
@@ -275,6 +276,7 @@ angular.module('trelloRedmine')
             var task_index = $scope.subTasks.indexOf(task);
             $scope.subTasks.splice(task_index, 1);
             redmineService.deleteTask(task.id);
+            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
             
         };
     }
