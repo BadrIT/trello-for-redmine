@@ -128,6 +128,10 @@ angular.module('trelloRedmine')
 
 .controller('CustomWidgetCtrl', ['$scope', '$modal',
     function($scope, $modal) {
+        
+        $scope.newCard = {
+            subject: ""
+        };
 
         $scope.remove = function(widget) {
             $scope.widgets.splice($scope.widgets.indexOf(widget), 1);
@@ -145,6 +149,12 @@ angular.module('trelloRedmine')
                     }
                 }
             });
+        };
+
+        $scope.addNewCard = function(widget) {
+            console.log(console.log(widget));
+           
+            console.log($scope.newCard)
         };
 
     }
@@ -200,22 +210,24 @@ angular.module('trelloRedmine')
         console.log("CARD " + JSON.stringify(card))
         $scope.widget = widget;
         $scope.status_val = false;
-        $scope.newTask = {
-            subject: "",
-            project_id: card.project.id,
-            parent_issue_id: card.id,
-            tracker_id: 4,
-            assigned_to_id: card.assigned_to.id
-        };
+        var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
 
-        if (card)
+        if (card) {
             $scope.card = card;
-        else
+            $scope.newTask = {
+                subject: "",
+                project_id: card.project.id,
+                parent_issue_id: card.id,
+                tracker_id: 4,
+                assigned_to_id: assigned_to_id
+            };
+        } else {
             $scope.card = {
                 title: 'New Userstory',
                 thumb: '',
                 desc: ''
             };
+        }
 
         $scope.dismiss = function() {
             $modalInstance.dismiss();
