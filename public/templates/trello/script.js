@@ -42,7 +42,7 @@ angular.module('trelloRedmine')
                 }, subTasks);
 
                 $scope.subTasks = subTasks;
-                $scope.calculateProgress();
+              
 
                 $modal.open({
                     scope: $scope,
@@ -82,10 +82,6 @@ angular.module('trelloRedmine')
                 });
             };
         }
-
-        $scope.calculateProgress = function () {
-            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
-        };
 
         $scope.sortableTemplates = {
             connectWith: '.connectedSortable',
@@ -259,6 +255,12 @@ angular.module('trelloRedmine')
                 desc: ''
             };
         }
+
+        $scope.calculateProgress = function () {
+            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
+        };
+
+        $scope.calculateProgress();
 
         $scope.dismiss = function() {
             $modalInstance.dismiss();
