@@ -147,19 +147,6 @@ router.get('/projects/:project_id', function (req, res, next) {
 	});
 });
 
-// GET an issue
-router.get('/issues/:issue_id', function (req, res, next) {
-	redmine.getIssue(req.params.issue_id)
-	.success(function (data) {
-		console.log(data);
-		res.json(data);
-	}).error(function (err) {
-		console.log(err);
-		res.status(404).json(err);
-	});
-});
-
-
 // update an issue
 router.put('/issues/:issue_id', function (req, res, next) {
 	redmine.updateIssue(req.params.issue_id, req.body)
@@ -189,6 +176,18 @@ router.delete('/issues/:issue_id', function (req, res, next) {
 	redmine.deleteIssue(req.params.issue_id)
 	.success(function () {
 		res.status(200);
+	}).error(function (err) {
+		console.log(err);
+		res.status(404).json(err);
+	});
+});
+
+// GET project members
+router.get('/projects/:project_id/memberships', function (req, res, next) {
+	redmine.getProjectMembers(req.params.project_id)
+	.success(function (data) {
+		console.log(data)
+		res.json(data);
 	}).error(function (err) {
 		console.log(err);
 		res.status(404).json(err);

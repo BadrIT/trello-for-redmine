@@ -116,8 +116,8 @@
                 return remove(query);
             };
 
-            this.getTask = function (issue_id) {
-                var query = issues_url + issue_id;
+            this.getProjectMembers = function (project_id) {
+                var query = projects_url + project_id + '/memberships'
                 return get(query);
             };
         }])

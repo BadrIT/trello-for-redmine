@@ -30,6 +30,20 @@ angular.module('trelloRedmine')
             $scope.subTasks = [];
             $scope.progress = 0;
             $scope.finishedTasks = 0;
+            $scope.projectMembers = [];
+
+            redmineService.getProjectMembers(projectId)
+            .then(function (result) {
+                angular.forEach(result.data.memberships, function(membership) {  
+                    var member = {
+                        "id": membership.user.id,
+                        "name": membership.user.name
+                    };
+                    this.push(member);
+                }, $scope.projectMembers);
+            }, function (error) {
+                console.log(error);
+            });
 
             redmineService.getStoryTasks(projectId, storyId)
             .then(function (result) {
@@ -42,7 +56,6 @@ angular.module('trelloRedmine')
                 }, subTasks);
 
                 $scope.subTasks = subTasks;
-              
 
                 $modal.open({
                     scope: $scope,
@@ -76,9 +89,7 @@ angular.module('trelloRedmine')
             function getUserInfo(index, assign_to_id) {
                 redmineService.getUserInfo(assign_to_id)
                 .then(function (result) {
-                    console.log(index)
                     $scope.subTasks[index].assigned_to = result.data;
-                    console.log(JSON.stringify($scope.subTasks[index].assigned_to.mail))
                 });
             };
         }
@@ -232,12 +243,13 @@ angular.module('trelloRedmine')
     }
 ])
 
-.controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService',
+.controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService', 'filterFilter',
 
-    function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService) {
+    function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter) {
         $scope.widget = widget;
         $scope.status_val = false;
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
+
 
         if (card) {
             $scope.card = card;
@@ -304,6 +316,15 @@ angular.module('trelloRedmine')
             $scope.subTasks.splice(task_index, 1);
             redmineService.deleteTask(task.id);
             $scope.calculateProgress();   
+        };
+
+        $scope.showName = function(task) {
+            var selected = filterFilter($scope.projectMembers, {id: task.assigned_to.id});
+            return (task.assigned_to.id && selected.length) ? selected[0].name : 'Not set';
+        };
+
+        $scope.updateTaskDetails = function(taskid) {
+            console.log(taskid)
         };
     }
 ])

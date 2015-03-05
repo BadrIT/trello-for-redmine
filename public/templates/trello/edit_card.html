@@ -46,7 +46,12 @@
                             <div ng-repeat="task in subTasks  track by $index" class="task-component">
                                 <div class="task-type"></div>
                                 <input class="pull-left" type="checkbox" ng-click="changeTaskStatus(task.id, status_val)" ng-model="status_val" ng-checked="task.status.id == 14">
-                                    <div class="pull-left" onaftersave="updateTask(task)" editable-text="task.subject" e-form="textBtnForm" ng-href="http://{{config.host}}/issues/{{task.id}}" target="_blank"> <accordion-group heading="{{task.subject}}">dbhbf</accordion-group></div>
+                                    <div class="pull-left" onaftersave="updateTask(task)" editable-text="task.subject" e-form="textBtnForm"> <accordion-group heading="{{task.subject}}">priority: {{task.priority.name}}<br>assigned to: 
+
+                                        <a href="#" onaftersave="updateTask(task)" editable-select="task.assigned_to_id" e-ng-options="m.id as m.name for m in projectMembers">
+                                                {{ showName(task) }}
+                                         </a>
+                                    </accordion-group></div>
                                     <a ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
                                         <i class="fa fa-edit"></i> edit
                                     </a>
