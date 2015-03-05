@@ -53,8 +53,7 @@
                                         <i class="fa fa-remove"></i>
                                     </a>
                                 <div class="pull-right task-img">
-                                     <img class="us-member member" title="{{task.assigned_to.firstname}} {{task.assigned_to.lastname}}"
-                                     gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
+                                    <img class="us-member member" title="{{task.assigned_to.firstname}} {{task.assigned_to.lastname}}" gravatar-src="task.assigned_to.mail" gravatar-size="100" />
                                 </div>
                             </div>
                             <a href="#" onaftersave="createNewTask()" editable-text="newTask.subject" > Add a task</a>

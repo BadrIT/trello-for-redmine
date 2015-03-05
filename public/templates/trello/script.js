@@ -27,7 +27,6 @@ angular.module('trelloRedmine')
             var projectId = card.project.id;
             var subTasks = [];
             var issues = [];
-            var _self;
             $scope.subTasks = [];
             $scope.progress = 0;
             $scope.finishedTasks = 0;
@@ -38,14 +37,6 @@ angular.module('trelloRedmine')
                 angular.forEach(issues, function(issue) {    
                     if (issue.parent && issue.parent.id == storyId) {
                         if (issue.status.id == 14) $scope.finishedTasks++;
-                        
-                        if (issue.assigned_to) {
-                            _self = this;
-                            redmineService.getUserInfo(issue.assigned_to.id)
-                            .then(function (result) {
-                                _self[_self.indexOf(issue)].assigned_to = result.data;
-                            });
-                        };
                         this.push(issue);
                     }
                 }, subTasks);
@@ -70,6 +61,26 @@ angular.module('trelloRedmine')
             }, function (error) {
                 console.log(error);
             });
+
+            $scope.$watchCollection('subTasks', function(newSubTasks, oldSubTasks) {
+                if(newSubTasks.length > 0 ) {
+                    for (var i = 0; i < newSubTasks.length; i++) {
+                        if(newSubTasks[i].assigned_to) {
+                            var assign_to_id = newSubTasks[i].assigned_to.id;
+                            getUserInfo(i, assign_to_id);
+                        } 
+                    };
+                }
+            });
+
+            function getUserInfo(index, assign_to_id) {
+                redmineService.getUserInfo(assign_to_id)
+                .then(function (result) {
+                    console.log(index)
+                    $scope.subTasks[index].assigned_to = result.data;
+                    console.log(JSON.stringify($scope.subTasks[index].assigned_to.mail))
+                });
+            };
         }
 
         $scope.calculateProgress = function () {
