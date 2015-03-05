@@ -1,5 +1,5 @@
 (function() {
-	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip',
+	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.accordion', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip',
                                     'ui.gravatar', 'xeditable'])
 		.config(['$routeProvider', '$locationProvider',
 			function($routeProvider, $locationProvider) {
@@ -114,6 +114,11 @@
             this.deleteTask = function (issue_id) {
                 var query = issues_url + issue_id;
                 return remove(query);
+            };
+
+            this.getTask = function (issue_id) {
+                var query = issues_url + issue_id;
+                return get(query);
             };
         }])
         .controller('RootCtrl', ['$scope', 'redmineService', '$http', function($scope, redmineService, $http) {

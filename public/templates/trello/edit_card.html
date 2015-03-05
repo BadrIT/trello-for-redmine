@@ -42,20 +42,23 @@
                                     <!-- <td><a ng-href="{{task.redmine_url}}" target="_blank"><i class="fa fa-square"></i>  {{task.title}}</a></td> -->
                                 </tr>
                             </table>
+                            <accordion close-others="true">
                             <div ng-repeat="task in subTasks  track by $index" class="task-component">
                                 <div class="task-type"></div>
                                 <input class="pull-left" type="checkbox" ng-click="changeTaskStatus(task.id, status_val)" ng-model="status_val" ng-checked="task.status.id == 14">
-                                    <a class="pull-left" onaftersave="updateTask(task)" editable-text="task.subject" e-form="textBtnForm" ng-href="http://{{config.host}}/issues/{{task.id}}" target="_blank">{{task.subject}}</a>
+                                    <div class="pull-left" onaftersave="updateTask(task)" editable-text="task.subject" e-form="textBtnForm" ng-href="http://{{config.host}}/issues/{{task.id}}" target="_blank"> <accordion-group heading="{{task.subject}}">dbhbf</accordion-group></div>
                                     <a ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
                                         <i class="fa fa-edit"></i> edit
                                     </a>
                                     <a confirmed-click="deleteTask(task)" ng-confirm-click="Are you sure about deleting this task?">
                                         <i class="fa fa-remove"></i>
                                     </a>
+                                    <a ng-href="http://{{config.host}}/issues/{{task.id}}" target="_blank">redmine link</a>
                                 <div class="pull-right task-img">
                                     <img class="us-member member" title="{{task.assigned_to.firstname}} {{task.assigned_to.lastname}}" gravatar-src="task.assigned_to.mail" gravatar-size="100" />
                                 </div>
                             </div>
+                            </accordion>
                             <a href="#" onaftersave="createNewTask()" editable-text="newTask.subject" > Add a task</a>
                         </div>
                     </div>
