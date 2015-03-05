@@ -27,6 +27,7 @@ angular.module('trelloRedmine')
             var projectId = card.project.id;
             var subTasks = [];
             var issues = [];
+            var _self;
             $scope.subTasks = [];
             $scope.progress = 0;
             $scope.finishedTasks = 0;
@@ -37,6 +38,14 @@ angular.module('trelloRedmine')
                 angular.forEach(issues, function(issue) {    
                     if (issue.parent && issue.parent.id == storyId) {
                         if (issue.status.id == 14) $scope.finishedTasks++;
+                        
+                        if (issue.assigned_to) {
+                            _self = this;
+                            redmineService.getUserInfo(issue.assigned_to.id)
+                            .then(function (result) {
+                                _self[_self.indexOf(issue)].assigned_to = result.data;
+                            });
+                        };
                         this.push(issue);
                     }
                 }, subTasks);
