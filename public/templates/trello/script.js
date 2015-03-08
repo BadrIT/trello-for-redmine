@@ -86,12 +86,7 @@ angular.module('trelloRedmine')
                 }
             });
 
-            function getUserInfo(index, assign_to_id) {
-                redmineService.getUserInfo(assign_to_id)
-                .then(function (result) {
-                    $scope.subTasks[index].assigned_to = result.data;
-                });
-            };
+            
         }
 
         $scope.sortableTemplates = {
@@ -118,6 +113,9 @@ angular.module('trelloRedmine')
             redmineService.updateIssue(issue_id, updated_data)
             .then(function (result) {
                 console.log(result);
+                var task_index = $scope.subTasks.indexOf(updated_data);
+                $scope.subTasks[task_index] = result.config.data;
+                if(result.config.data.assigned_to_id) getUserInfo(task_index, result.config.data.assigned_to_id);
             }, function (error) {
                 console.log(error);
             });
@@ -153,6 +151,13 @@ angular.module('trelloRedmine')
 
         //get config data
         $scope.getConfigData();
+
+        function getUserInfo(index, assign_to_id) {
+            redmineService.getUserInfo(assign_to_id)
+            .then(function (result) {
+                $scope.subTasks[index].assigned_to = result.data;
+            });
+        };
     }
 ])
 
@@ -307,7 +312,7 @@ angular.module('trelloRedmine')
         };
 
         $scope.updateTask = function(task) {
-            $scope.updateIssue(task.id, task);
+            $scope.updateIssue(task.id, task)
         };
 
         $scope.deleteTask = function(task) {
@@ -321,10 +326,6 @@ angular.module('trelloRedmine')
         $scope.showName = function(task) {
             var selected = filterFilter($scope.projectMembers, {id: task.assigned_to.id});
             return (task.assigned_to.id && selected.length) ? selected[0].name : 'Not set';
-        };
-
-        $scope.updateTaskDetails = function(taskid) {
-            console.log(taskid)
         };
     }
 ])

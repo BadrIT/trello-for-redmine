@@ -43,7 +43,7 @@
                                 </tr>
                             </table>
                             <accordion close-others="true">
-                            <div ng-repeat="task in subTasks  track by $index" class="task-component">
+                            <div ng-repeat="task in subTasks track by $index" class="task-component">
                                 <div class="task-type"></div>
                                 <input class="pull-left" type="checkbox" ng-click="changeTaskStatus(task.id, status_val)" ng-model="status_val" ng-checked="task.status.id == 14">
                                     <div class="pull-left" onaftersave="updateTask(task)" editable-text="task.subject" e-form="textBtnForm"> <accordion-group heading="{{task.subject}}">priority: {{task.priority.name}}<br>assigned to: 
