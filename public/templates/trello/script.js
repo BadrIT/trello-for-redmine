@@ -51,6 +51,7 @@ angular.module('trelloRedmine')
                 angular.forEach(issues, function(issue) {    
                     if (issue.parent && issue.parent.id == storyId) {
                         if (issue.status.id == 14) $scope.finishedTasks++;
+                        console.log(JSON.stringify(issue))
                         this.push(issue);
                     }
                 }, subTasks);
@@ -248,9 +249,9 @@ angular.module('trelloRedmine')
     }
 ])
 
-.controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService', 'filterFilter',
+.controller('EditCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService', 'filterFilter', '$sce',
 
-    function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter) {
+    function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter, $sce) {
         $scope.widget = widget;
         $scope.status_val = false;
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
@@ -326,6 +327,10 @@ angular.module('trelloRedmine')
         $scope.showName = function(task) {
             var selected = filterFilter($scope.projectMembers, {id: task.assigned_to.id});
             return (task.assigned_to.id && selected.length) ? selected[0].name : 'Not set';
+        };
+
+        $scope.parseTrustSnippt = function(html) {
+            return $sce.trustAsHtml(html) || 'no description provided';
         };
     }
 ])

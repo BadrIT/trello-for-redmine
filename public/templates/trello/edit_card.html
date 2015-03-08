@@ -51,6 +51,8 @@
                                         <a href="#" onaftersave="updateTask(task)" editable-select="task.assigned_to_id" e-ng-options="m.id as m.name for m in projectMembers">
                                                 {{ showName(task) }}
                                          </a>
+                                        <br>description:
+                                            <div ng-bind-html="parseTrustSnippt(task.description)"></div>
                                     </accordion-group></div>
                                     <a ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible">
                                         <i class="fa fa-edit"></i> edit
