@@ -14,12 +14,15 @@ redmineConnection.init();
 var redmine_api = require('./routes/redmine');
 var app = express();
 
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.all('/*', [require('./services/validateRequest')]);
 
 app.use('/', routes);
 app.use('/dashboard', dashboard);
@@ -32,6 +35,8 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
+
+
 
 // error handlers
 

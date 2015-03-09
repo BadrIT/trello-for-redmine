@@ -11,4 +11,9 @@ router.get('/trello/:project_id', function(req, res, next) {
 	res.sendFile(index, { root: __dirname + "/../" });
 });
 
+
+router.get('/login', function(req, res, next) {
+	res.sendFile(index, { root: __dirname + "/../" });
+});
+
 module.exports = router;

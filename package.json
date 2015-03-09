@@ -27,6 +27,7 @@
     "promised-redmine": "^0.2.9",
     "serve-favicon": "^2.2.0",
     "underscore-node": "^0.1.2",
-    "forever": "~0.14.1"
+    "forever": "~0.14.1",
+    "redis": "~0.12.1"
   }
 }

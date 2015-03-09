@@ -1,7 +1,7 @@
 
 angular.module('trelloRedmine')
-.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService',
-    function($scope, $timeout, $modal, $http, redmineService) {
+.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService', '$localStorage',
+    function($scope, $timeout, $modal, $http, redmineService, $localStorage) {
         $scope.gridsterOptions = {
             margins: [20, 20],
             columns: 3,
@@ -51,7 +51,6 @@ angular.module('trelloRedmine')
                 angular.forEach(issues, function(issue) {    
                     if (issue.parent && issue.parent.id == storyId) {
                         if (issue.status.id == 14) $scope.finishedTasks++;
-                        console.log(JSON.stringify(issue))
                         this.push(issue);
                     }
                 }, subTasks);
@@ -141,7 +140,7 @@ angular.module('trelloRedmine')
         };
 
         $scope.getConfigData = function() {
-            $http.get('/settings/config')
+            $http.get('/settings/config/' + $localStorage.current_api_key)
             .success(function(data, status){
                 console.log(data.host);
                 $scope.config = data;
