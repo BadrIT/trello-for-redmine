@@ -216,9 +216,6 @@ router.post('/login/user', function (req, res, next) {
 	var data = req.body;
 	request("http://" + data.username + ":" + data.password + "@redmine.badrit.com/users/current.json", function (error, response, body) {
   		if (!error && response.statusCode == 200) {
-    		
-    		console.log(body)
-
     		var user_data = JSON.parse(body);
     		redis_client.set(user_data.user.api_key, body);
     		req.session.current_api_key = user_data.user.api_key;
@@ -237,7 +234,6 @@ router.post('/login/user', function (req, res, next) {
 
   		} else {
   			var err = {"msg" : "unauthorized user"}
-  			console.log("unauthorized user")
   			res.status(404).json(err);
   		}
 	})

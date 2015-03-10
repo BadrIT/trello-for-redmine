@@ -30,7 +30,6 @@ angular.module('trelloRedmine')
 
         var project_template = $location.path().split('/');
         $scope.project_id = project_template[2];
-        console.log(project_template)
         if(!$scope.project_id) return; 
         
         $scope.styleUrl = 'templates/style.css';
