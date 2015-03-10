@@ -3,7 +3,7 @@ var express = require('express'),
 	fs = require('fs');
 
 // GET config data
-router.get('/config', function(req, res, next) {
+router.get('/config/:api_key', function(req, res, next) {
 	var config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
 	res.json(config);
 });

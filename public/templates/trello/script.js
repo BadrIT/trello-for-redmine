@@ -1,7 +1,76 @@
 
 angular.module('trelloRedmine')
-.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService', '$localStorage',
-    function($scope, $timeout, $modal, $http, redmineService, $localStorage) {
+.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService', '$localStorage', '$location',
+    function($scope, $timeout, $modal, $http, redmineService, $localStorage, $location) {
+        $scope.current_user = {};
+        $scope.user_projects = [];
+        $scope.current_project = {};
+        $scope.widgets = [];
+       
+        var allowed_statuses = [8, 9, 10];
+
+        $scope.setCurrentUser = function (api_key) {
+            $localStorage.current_api_key = api_key;
+        };
+
+        redmineService.getUserProjects('current')
+        .then(function (result) {
+            $scope.current_user = result.data.user;
+            $scope.user_projects = result.data.user.memberships;
+        });
+
+        redmineService.getIssuesStatuses()
+        .then(function (result) {
+            $scope.widgets = result.data;
+            // TODO: do it in better way
+            for(var i = 0; i < allowed_statuses.length; i++) {
+                $scope.widgets[allowed_statuses[i] - 1].allowed = true;
+            }
+        });
+
+        var project_template = $location.path().split('/');
+        $scope.page = project_template[1];
+        $scope.project_id = project_template[2];
+        console.log(project_template)
+        if(!$scope.page && !$scope.project_id) return; 
+        
+        $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
+
+        redmineService.getProjectByID($scope.project_id)
+        .then(function (result) {
+            $scope.current_project = result.data;
+        });
+
+        for(var i = 0; i < $scope.widgets.length; i++) {
+            $scope.widgets[i].cards = [];
+        }
+
+        redmineService.getProjectUserStories($scope.project_id)
+        .then(function (result) {
+            for(var key in result.data) {
+                if(result.data.hasOwnProperty(key)) {
+                    $scope.widgets[key - 1].cards = result.data[key];
+                    
+                    //get user data
+                    for(var card_key in $scope.widgets[key - 1].cards) {
+                        var card = $scope.widgets[key - 1].cards[card_key];
+                        
+                        var retrieve_user_info = function(card){
+                            if(card.assigned_to) {
+                                var assign_to_id = card.assigned_to.id;
+                                redmineService.getUserInfo(assign_to_id)
+                                .then(function (result) {
+                                    card.assigned_to = result.data;
+                                });
+                            } 
+                        }
+                        retrieve_user_info(card);
+                    }
+                    
+                }
+            }
+        });
+      
         $scope.gridsterOptions = {
             margins: [20, 20],
             columns: 3,

@@ -13,7 +13,7 @@
                         controller: 'DashboardCtrl'
                     })
                     .otherwise({
-                        redirectTo: '/trello/trello-for-redmine'
+                        redirectTo: '/login'
                     });
 
                 $locationProvider.html5Mode(true);
@@ -133,77 +133,77 @@
             };
         }])
         .controller('RootCtrl', ['$scope', 'redmineService', '$http', '$localStorage', function($scope, redmineService, $http, $localStorage) {
-            $scope.current_user = {};
-            $scope.user_projects = [];
-            $scope.current_project = {};
-            $scope.widgets = [];
+            // $scope.current_user = {};
+            // $scope.user_projects = [];
+            // $scope.current_project = {};
+            // $scope.widgets = [];
            
-            var allowed_statuses = [8, 9, 10];
+            // var allowed_statuses = [8, 9, 10];
 
-            $scope.setCurrentUser = function (api_key) {
-                $localStorage.current_api_key = api_key;
-            };
+            // $scope.setCurrentUser = function (api_key) {
+            //     $localStorage.current_api_key = api_key;
+            // };
 
-            redmineService.getUserProjects('current')
-            .then(function (result) {
-                $scope.current_user = result.data.user;
-                $scope.user_projects = result.data.user.memberships;
-            });
+            // redmineService.getUserProjects('current')
+            // .then(function (result) {
+            //     $scope.current_user = result.data.user;
+            //     $scope.user_projects = result.data.user.memberships;
+            // });
 
-            redmineService.getIssuesStatuses()
-            .then(function (result) {
-                $scope.widgets = result.data;
-                // TODO: do it in better way
-                for(var i = 0; i < allowed_statuses.length; i++) {
-                    $scope.widgets[allowed_statuses[i] - 1].allowed = true;
-                }
-            });
+            // redmineService.getIssuesStatuses()
+            // .then(function (result) {
+            //     $scope.widgets = result.data;
+            //     // TODO: do it in better way
+            //     for(var i = 0; i < allowed_statuses.length; i++) {
+            //         $scope.widgets[allowed_statuses[i] - 1].allowed = true;
+            //     }
+            // });
 
-            $scope.$on('$locationChangeStart', function(e, next, current) {
-                var project_template = next.split('/').splice(-2);
-                $scope.page = project_template[0];
-                $scope.project_id = project_template[1];
+            // $scope.$on('$locationChangeStart', function(e, next, current) {
+            //     var project_template = next.split('/').splice(-2);
+            //     $scope.page = project_template[0];
+            //     $scope.project_id = project_template[1];
 
-                if(!$scope.page && !$scope.project_id) return; 
+            //     if(!$scope.page && !$scope.project_id) return; 
                 
-                $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
+            //     $scope.styleUrl = 'templates/' + $scope.page + '/style.css';
 
-                redmineService.getProjectByID($scope.project_id)
-                .then(function (result) {
-                    $scope.current_project = result.data;
-                });
+            //     redmineService.getProjectByID($scope.project_id)
+            //     .then(function (result) {
+            //         $scope.current_project = result.data;
+            //     });
 
-                for(var i = 0; i < $scope.widgets.length; i++) {
-                    $scope.widgets[i].cards = [];
-                }
+            //     for(var i = 0; i < $scope.widgets.length; i++) {
+            //         $scope.widgets[i].cards = [];
+            //     }
 
-                redmineService.getProjectUserStories($scope.project_id)
-                .then(function (result) {
-                    for(var key in result.data) {
-                        if(result.data.hasOwnProperty(key)) {
-                            $scope.widgets[key - 1].cards = result.data[key];
+            //     redmineService.getProjectUserStories($scope.project_id)
+            //     .then(function (result) {
+            //         for(var key in result.data) {
+            //             if(result.data.hasOwnProperty(key)) {
+            //                 $scope.widgets[key - 1].cards = result.data[key];
                             
-                            //get user data
-                            for(var card_key in $scope.widgets[key - 1].cards) {
-                                var card = $scope.widgets[key - 1].cards[card_key];
+            //                 //get user data
+            //                 for(var card_key in $scope.widgets[key - 1].cards) {
+            //                     var card = $scope.widgets[key - 1].cards[card_key];
                                 
-                                var retrieve_user_info = function(card){
-                                    if(card.assigned_to) {
-                                        var assign_to_id = card.assigned_to.id;
-                                        redmineService.getUserInfo(assign_to_id)
-                                        .then(function (result) {
-                                            card.assigned_to = result.data;
-                                        });
-                                    } 
-                                }
-                                retrieve_user_info(card);
-                            }
+            //                     var retrieve_user_info = function(card){
+            //                         if(card.assigned_to) {
+            //                             var assign_to_id = card.assigned_to.id;
+            //                             redmineService.getUserInfo(assign_to_id)
+            //                             .then(function (result) {
+            //                                 card.assigned_to = result.data;
+            //                             });
+            //                         } 
+            //                     }
+            //                     retrieve_user_info(card);
+            //                 }
                             
-                        }
-                    }
-                });
+            //             }
+            //         }
+            //     });
                 
-            });
+            // });
         }])
         .controller('AuthCtrl', ['$scope', 'redmineService', '$location', '$localStorage',
             function($scope, redmineService, $location, $localStorage) {

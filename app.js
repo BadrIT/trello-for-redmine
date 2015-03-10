@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var redis = require("redis"),
+    redis_client = redis.createClient();
+var session = require('cookie-session');
 
 var routes = require('./routes/');
 var dashboard = require('./routes/data.js');
@@ -21,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ store: redis_client, secret: 'callofduty@badrit.com-2015'}));
 
 app.all('/*', [require('./services/validateRequest')]);
 
