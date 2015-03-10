@@ -38,7 +38,7 @@
                         <div style="margin-top: 10px;">
                             <table>
                                 <tr ng-repeat="task in card.tasks">
-                                    <td><i class="fa fa-square"></i>  <button type="button" class="btn btn-{{task.type === 'defect' ? 'danger' : 'success'}}" title="{{task.title}}" data-content="{{task}}" data-template="templates/trello/view_task.html" data-animation="am-flip-x" data-auto-close="1" bs-popover> {{task.title}}</button></td>
+                                    <td><i class="fa fa-square"></i>  <button type="button" class="btn btn-{{task.type === 'defect' ? 'danger' : 'success'}}" title="{{task.title}}" data-content="{{task}}" data-template="templates/view_task.html" data-animation="am-flip-x" data-auto-close="1" bs-popover> {{task.title}}</button></td>
                                     <!-- <td><a ng-href="{{task.redmine_url}}" target="_blank"><i class="fa fa-square"></i>  {{task.title}}</a></td> -->
                                 </tr>
                             </table>
