@@ -5,11 +5,11 @@
 			function($routeProvider, $locationProvider) {
 				$routeProvider
                     .when('/login', {
-                        templateUrl: 'templates/login.html',
+                        templateUrl: 'views/templates/login.html',
                         controller: 'AuthCtrl'
                     })
                     .when('/trello/:project_id', {
-                        templateUrl: 'templates/view.html',
+                        templateUrl: 'views/templates/view.html',
                         controller: 'DashboardCtrl'
                     })
                     .otherwise({

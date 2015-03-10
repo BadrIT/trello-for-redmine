@@ -32,7 +32,7 @@ angular.module('trelloRedmine')
         $scope.project_id = project_template[2];
         if(!$scope.project_id) return; 
         
-        $scope.styleUrl = 'templates/style.css';
+        $scope.styleUrl = 'views/templates/style.css';
 
         redmineService.getProjectByID($scope.project_id)
         .then(function (result) {
@@ -126,7 +126,7 @@ angular.module('trelloRedmine')
 
                 $modal.open({
                     scope: $scope,
-                    templateUrl: 'templates/edit_card.html',
+                    templateUrl: 'views/templates/edit_card.html',
                     controller: 'EditCardCtrl',
                     backdropClass: "backdrop-fix",
                     resolve: {
@@ -245,7 +245,7 @@ angular.module('trelloRedmine')
         $scope.openSettings = function(widget) {
             $modal.open({
                 scope: $scope,
-                templateUrl: 'templates/widget_settings.html',
+                templateUrl: 'views/templates/widget_settings.html',
                 controller: 'WidgetSettingsCtrl',
                 backdropClass: "backdrop-fix",
                 resolve: {
