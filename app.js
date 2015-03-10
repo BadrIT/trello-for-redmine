@@ -22,7 +22,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(favicon(__dirname + '/public/assets/images/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ store: redis_client, secret: 'callofduty@badrit.com-2015'}));
 
