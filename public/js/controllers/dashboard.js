@@ -178,10 +178,18 @@ angular.module('trelloRedmine')
         $scope.updateIssue = function(issue_id, updated_data) {
             redmineService.updateIssue(issue_id, updated_data)
             .then(function (result) {
-                console.log(result);
-                var task_index = $scope.subTasks.indexOf(updated_data);
+                var task_index = 0;
+                for (var i = 0; i < $scope.subTasks.length; i++) {
+                    if ($scope.subTasks[i].id == updated_data.id ){
+                        task_index = i;
+                        break;
+                    } 
+                };
                 $scope.subTasks[task_index] = result.config.data;
                 if(result.config.data.assigned_to_id) getUserInfo(task_index, result.config.data.assigned_to_id);
+                if(result.config.data.status_id) {
+                     $scope.subTasks[task_index].status.id = result.config.data.status_id;
+                }
             }, function (error) {
                 console.log(error);
             });

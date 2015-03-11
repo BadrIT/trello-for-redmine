@@ -40,14 +40,15 @@ angular.module('trelloRedmine')
             $scope.updateBackend();
         };
 
-        $scope.changeTaskStatus = function(id, state_val) {
+        $scope.changeTaskStatus = function(task, state_val) {
             if(state_val) {
                 $scope.finishedTasks++;
-                $scope.updateIssue(id, {status_id: 14});
+                task.status_id = 14;
             } else {
                 $scope.finishedTasks--;
-                $scope.updateIssue(id, {status_id: 9});
+                task.status_id = 9;
             }
+            $scope.updateTask(task);
             $scope.calculateProgress();
         };
 
@@ -81,6 +82,17 @@ angular.module('trelloRedmine')
 
         $scope.parseTrustSnippt = function(html) {
             return $sce.trustAsHtml(html) || 'no description provided';
+        };
+
+        $scope.getTaskColor = function(status_id) {
+            switch(status_id) {
+                case 8:
+                    return "#ECA21B";
+                case 9:
+                    return "#1BEC3D";
+                case 14:
+                    return "#FF001D";
+            }
         };
     }
 ]);
