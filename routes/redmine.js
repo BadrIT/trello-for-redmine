@@ -7,7 +7,7 @@ var express = require('express'),
 
 // list all trackers in redmine
 router.get('/trackers/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('trackers', 'json').success(function (data) {
 		console.log(data);
 		res.json(data);
@@ -18,7 +18,7 @@ router.get('/trackers/:api_key', function (req, res, next) {
 });
 
 router.get('/issue_statuses/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('/issue_statuses', 'json').success(function (data) {
 		var result = _.map(_.sortBy(data.issue_statuses, function (object){
 			return object.id;
@@ -34,7 +34,7 @@ router.get('/issue_statuses/:api_key', function (req, res, next) {
 });
 
 router.get('/users/current/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('/users/current', 'json').success(function (data) {
 		console.log(data);
 		res.json(data.user);
@@ -46,7 +46,7 @@ router.get('/users/current/:api_key', function (req, res, next) {
 
 // get user info
 router.get('/users/:user_id/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('/users/' + req.params.user_id, 'json').success(function (data) {
 		console.log(data);
 		res.json(data.user);
@@ -58,7 +58,7 @@ router.get('/users/:user_id/:api_key', function (req, res, next) {
 
 // get issues of user in a specific project
 router.get('/users/:user_id/projects/:project_id/issues/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('issues', {
 		project_id: req.params.project_id,
 		assigned_to_id: req.params.user_id
@@ -73,7 +73,7 @@ router.get('/users/:user_id/projects/:project_id/issues/:api_key', function (req
 
 // get projects of specific user
 router.get('/users/:user_id/projects/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('users/' + req.params.user_id, {
 		include: 'memberships'
 	}).success(function (data) {
@@ -87,7 +87,7 @@ router.get('/users/:user_id/projects/:api_key', function (req, res, next) {
 
 // get issues assigned to specific user
 router.get('/users/:user_id/issues/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('issues' , {
 		assigned_to_id: req.params.user_id
 	}).success(function (data) {
@@ -101,7 +101,7 @@ router.get('/users/:user_id/issues/:api_key', function (req, res, next) {
 
 // get all issues in a specific project
 router.get('/projects/:project_id/issues/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('issues', {
 		project_id: req.params.project_id,
 		status_id: '*'
@@ -116,7 +116,7 @@ router.get('/projects/:project_id/issues/:api_key', function (req, res, next) {
 
 // get all issues in a specific project
 router.get('/projects/:project_id/issues/:parent_id/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('issues', {
 		project_id: req.params.project_id,
 		parent_issue_id: req.params.parent_id,
@@ -132,7 +132,7 @@ router.get('/projects/:project_id/issues/:parent_id/:api_key', function (req, re
 
 // get all issues in a specific project
 router.get('/projects/:project_id/userstories/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('issues', {
 		project_id: req.params.project_id,
 		tracker_id: '5',
@@ -151,7 +151,7 @@ router.get('/projects/:project_id/userstories/:api_key', function (req, res, nex
 
 // get information of specific project
 router.get('/projects/:project_id/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.getProject(req.params.project_id).success(function (data) {
 		console.log(data);
 		res.json(data);
@@ -163,7 +163,7 @@ router.get('/projects/:project_id/:api_key', function (req, res, next) {
 
 // update an issue
 router.put('/issues/:issue_id/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.updateIssue(req.params.issue_id, req.body)
 	.success(function (data) {
 		console.log(data);
@@ -176,7 +176,7 @@ router.put('/issues/:issue_id/:api_key', function (req, res, next) {
 
 // create new issue (User Story or Task)
 router.post('/create/issue/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.postIssue(req.body)
 	.success(function (data) {
 		console.log(data);
@@ -189,7 +189,7 @@ router.post('/create/issue/:api_key', function (req, res, next) {
 
 // delete an issue
 router.delete('/issues/:issue_id/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.deleteIssue(req.params.issue_id)
 	.success(function () {
 		res.status(200);
@@ -201,7 +201,7 @@ router.delete('/issues/:issue_id/:api_key', function (req, res, next) {
 
 // GET project members
 router.get('/projects/:project_id/memberships/:api_key', function (req, res, next) {
-	setApiKey(req.params.api_key || req.session.current_api_key);
+	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.getProjectMembers(req.params.project_id)
 	.success(function (data) {
 		console.log(data)

@@ -13,6 +13,7 @@ angular.module('trelloRedmine')
             .then(function(result){
                 console.log(JSON.stringify(result))
                 $localStorage.current_api_key =  result.data.user.api_key;
+                $localStorage.first_project_id = result.data.first_project_id;
                 $location.path('/trello/' + result.data.first_project_id);
             }, function (error) {
                 alert(error.data.msg);
