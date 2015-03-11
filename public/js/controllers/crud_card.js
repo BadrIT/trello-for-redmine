@@ -87,11 +87,11 @@ angular.module('trelloRedmine')
         $scope.getTaskColor = function(status_id) {
             switch(status_id) {
                 case 8:
-                    return "#ECA21B";
-                case 9:
-                    return "#1BEC3D";
-                case 14:
                     return "#FF001D";
+                case 9:
+                    return "#ECA21B";
+                case 14:
+                    return "#1BEC3D";
             }
         };
     }
