@@ -3,7 +3,10 @@ var express = require('express'),
 	request = require('request'),
 	router = express.Router(),
 	redis = require("redis"),
-    redis_client = redis.createClient();
+    redis_client = redis.createClient(),
+    http = require('http'),
+    fs = require('fs'),
+    querystring = require('querystring');
 
 // list all trackers in redmine
 router.get('/trackers/:api_key', function (req, res, next) {
@@ -238,6 +241,38 @@ router.post('/login/user', function (req, res, next) {
   		}
 	})
 	
+});
+
+router.post('/upload/file/:issue_id', function (req, res, next) {
+	var api_key = req.session.current_api_key;
+	var issue_id = req.params.issue_id;
+	var file = req.files.file;
+    fs.readFile(file.path, function (err,file_data) {
+  		if (err) {
+  			console.log(err)
+    		return console.log(err);
+  		}
+  		request.post({
+  			headers: {'content-type' : 'application/octet-stream', 'X-Redmine-API-Key': api_key},
+  			url:     'http://redmine.badrit.com/uploads.json',
+  			body:    file_data
+		}, function(error, response, body){
+  			var parsed_data = JSON.parse(body);
+		    setApiKey(api_key);
+		    redmine.updateIssue(issue_id, {"uploads":[{"token": parsed_data.upload.token, "filename": file.name, "content_type": file.type}]})
+			.success(function (data) {
+				fs.unlink(file.path, function (err) {
+					if (err) throw err;
+					console.log('successfully deleted');
+				});
+				res.json(data);
+			}).error(function (err) {
+				console.log(err);
+				res.status(404).json(err);
+			});
+		});
+	});
+    
 });
 
 function setApiKey(key) {

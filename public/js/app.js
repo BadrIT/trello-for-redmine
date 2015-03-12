@@ -1,6 +1,6 @@
 (function() {
 	angular.module('trelloRedmine', ['gridster', 'ui.bootstrap.accordion', 'ui.bootstrap.tpls', 'ui.bootstrap.modal', 'ngRoute', 'ui.sortable', 'ngAnimate', 'mgcrea.ngStrap.popover', 'mgcrea.ngStrap.tooltip',
-                                    'ui.gravatar', 'xeditable', 'ngSanitize', 'ngStorage'])
+                                    'ui.gravatar', 'xeditable', 'ngSanitize', 'ngStorage', 'angularFileUpload'])
 		.config(['$routeProvider', '$locationProvider',
 			function($routeProvider, $locationProvider) {
 				$routeProvider

@@ -36,12 +36,10 @@
                         </div>
                         <progressbar animate="false" value="20" type="success"><b>{{progress}}%</b></progressbar>
                         <div style="margin-top: 10px;">
-                            <table>
-                                <tr ng-repeat="task in card.tasks">
-                                    <td><i class="fa fa-square"></i>  <button type="button" class="btn btn-{{task.type === 'defect' ? 'danger' : 'success'}}" title="{{task.title}}" data-content="{{task}}" data-template="views/templates/view_task.html" data-animation="am-flip-x" data-auto-close="1" bs-popover> {{task.title}}</button></td>
-                                    <!-- <td><a ng-href="{{task.redmine_url}}" target="_blank"><i class="fa fa-square"></i>  {{task.title}}</a></td> -->
-                                </tr>
-                            </table>
+                            <div ng-file-drop="" ng-file-select="" ng-model="files" ng-model-rejected="rejFiles" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" class="drop-box" ng-multiple="true" allow-dir="true">
+                                Drop Images or PDFs<div>or click to select</div>
+                            </div>
+                            <div ng-no-file-drop="" class="drop-box">File Farg&amp;Drop not supported on your browser</div>
                             <accordion close-others="true">
                             <div ng-repeat="task in subTasks track by $index" class="task-component">
                                 <div class="task-type" style="background-color: {{getTaskColor(task.status.id)}}"></div>

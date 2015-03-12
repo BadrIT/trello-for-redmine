@@ -15,6 +15,7 @@ var redmineConnection = require('./redmine/initConnection');
 redmineConnection.init();
 
 var redmine_api = require('./routes/redmine');
+var multipart = require('connect-multiparty');
 var app = express();
 
 
@@ -27,6 +28,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ store: redis_client, secret: 'callofduty@badrit.com-2015'}));
 
 app.all('/*', [require('./services/validateRequest')]);
+
+app.use(multipart({
+    uploadDir: './uploads/'
+}));
 
 app.use('/', routes);
 app.use('/dashboard', dashboard);
