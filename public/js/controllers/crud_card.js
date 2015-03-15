@@ -4,6 +4,7 @@ angular.module('trelloRedmine')
     function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter, $sce, $upload, $localStorage) {
         $scope.widget = widget;
         $scope.status_val = false;
+        $scope.lineThroughState = "";
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
 
        redmineService.getIssueAttachments(card.id)
@@ -97,6 +98,14 @@ angular.module('trelloRedmine')
                     return "#ECA21B";
                 case 14:
                     return "#1BEC3D";
+            }
+        };
+
+        $scope.getlineThroughState = function(status_id) {
+            if(status_id == 14) {
+                return "text-decoration:line-through";
+            } else {
+                return "";
             }
         };
 
