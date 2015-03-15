@@ -243,8 +243,8 @@ router.post('/login/user', function (req, res, next) {
 	
 });
 
-router.post('/upload/file/:issue_id', function (req, res, next) {
-	var api_key = req.session.current_api_key;
+router.post('/upload/file/:issue_id/:api_key', function (req, res, next) {
+	var api_key = req.session.current_api_key || req.params.api_key;
 	var issue_id = req.params.issue_id;
 	var file = req.files.file;
     fs.readFile(file.path, function (err,file_data) {
@@ -258,6 +258,7 @@ router.post('/upload/file/:issue_id', function (req, res, next) {
   			body:    file_data
 		}, function(error, response, body){
   			var parsed_data = JSON.parse(body);
+  			console.log(parsed_data)
 		    setApiKey(api_key);
 		    redmine.updateIssue(issue_id, {"uploads":[{"token": parsed_data.upload.token, "filename": file.name, "content_type": file.type}]})
 			.success(function (data) {

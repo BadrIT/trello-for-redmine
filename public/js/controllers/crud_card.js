@@ -1,7 +1,7 @@
 angular.module('trelloRedmine')
-.controller('CrudCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService', 'filterFilter', '$sce', '$upload',
+.controller('CrudCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService', 'filterFilter', '$sce', '$upload', '$localStorage',
 
-    function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter, $sce, $upload) {
+    function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter, $sce, $upload, $localStorage) {
         $scope.widget = widget;
         $scope.status_val = false;
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
@@ -109,7 +109,7 @@ angular.module('trelloRedmine')
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
                     $upload.upload({
-                        url: '/redmine/upload/file/' + $scope.card.id,
+                        url: '/redmine/upload/file/' + $scope.card.id + "/" + $localStorage.current_api_key,
                         file: file
                     }).progress(function (evt) {
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
