@@ -115,7 +115,15 @@ angular.module('trelloRedmine')
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                         console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                     }).success(function (data, status, headers, config) {
-                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                        $scope.attachments = [];
+                        redmineService.getIssueAttachments($scope.card.id)
+                        .then(function (result) {
+                            $scope.attachments = result.data.issue.attachments;
+                        }, function (error) {
+                            console.log(error);
+                        });
+                        console.log(JSON.stringify(config))
+                        console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
                     });
                 }
             }
