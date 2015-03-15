@@ -97,7 +97,8 @@ angular.module('trelloRedmine')
             $scope.progress = 0;
             $scope.finishedTasks = 0;
             $scope.projectMembers = [];
-
+            $scope.attachments = [];
+            
             redmineService.getProjectMembers(projectId)
             .then(function (result) {
                 angular.forEach(result.data.memberships, function(membership) {  

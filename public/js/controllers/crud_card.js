@@ -6,7 +6,12 @@ angular.module('trelloRedmine')
         $scope.status_val = false;
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
 
-
+       redmineService.getIssueAttachments(card.id)
+       .then(function (result) {
+            $scope.attachments = result.data.issue.attachments;
+        }, function (error) {
+            console.log(error);
+        });
         if (card) {
             $scope.card = card;
             $scope.newTask = {

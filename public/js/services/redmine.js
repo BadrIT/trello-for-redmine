@@ -111,4 +111,9 @@ angular.module('trelloRedmine')
         var query = '/redmine/login/user';
         return post(query, data);
     };
+
+    this.getIssueAttachments = function(issue_id) {
+        var query = '/redmine/issue/' +  issue_id +'/attachments/' + current_api_key;
+        return get(query);
+    };
 }]);

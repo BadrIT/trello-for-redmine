@@ -32,6 +32,11 @@
                     </br>
                     <div style="margin-top: 20px;">
                         <div>
+                            <span ng-repeat="attach in attachments track by $index">
+                                <a href="{{attach.content_url}}" target="_blank">{{attach.filename}}</a><br>
+                            </span>
+                        </div>
+                        <div>
                             <i class="fa fa-tasks">  Tasks</i>
                         </div>
                         <progressbar animate="false" value="20" type="success"><b>{{progress}}%</b></progressbar>
