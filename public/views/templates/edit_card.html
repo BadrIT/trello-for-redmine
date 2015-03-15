@@ -41,7 +41,7 @@
                         </div>
                         <progressbar animate="false" value="20" type="success"><b>{{progress}}%</b></progressbar>
                         <div style="margin-top: 10px;">
-                            <div ng-file-drop="" ng-file-select="" ng-model="files" ng-model-rejected="rejFiles" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" class="drop-box" ng-multiple="true" allow-dir="true">
+                            <div ng-show="dropAreaState" ng-file-drop="" ng-file-select="" ng-model="files" ng-model-rejected="rejFiles" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" class="drop-box" ng-multiple="true" allow-dir="true">
                                 Drop Images or PDFs<div>or click to select</div>
                             </div>
                             <div ng-no-file-drop="" class="drop-box">File Farg&amp;Drop not supported on your browser</div>
@@ -79,7 +79,7 @@
                         <h4><b>Info</b></h4>
                             <ul class="btn-task-info">
                                 <li><button type="button" class="btn btn-info"><i class="fa fa-calendar"></i>  Log Time</button></li>
-                                <li><button type="button" class="btn btn-success"><i class="fa fa-paperclip"></i>  Attachment</button></li>
+                                <li><button type="button" ng-click="showDropArea()" class="btn btn-success"><i class="fa fa-paperclip"></i>  Attachment</button></li>
                             </ul>
                     </div>
                     </br>

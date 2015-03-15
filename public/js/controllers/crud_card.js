@@ -1,18 +1,19 @@
 angular.module('trelloRedmine')
 .controller('CrudCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService', 'filterFilter', '$sce', '$upload', '$localStorage',
-
     function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter, $sce, $upload, $localStorage) {
         $scope.widget = widget;
         $scope.status_val = false;
-        $scope.lineThroughState = "";
+        $scope.dropAreaState = false;
+
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
 
-       redmineService.getIssueAttachments(card.id)
-       .then(function (result) {
+        redmineService.getIssueAttachments(card.id)
+        .then(function (result) {
             $scope.attachments = result.data.issue.attachments;
         }, function (error) {
             console.log(error);
         });
+
         if (card) {
             $scope.card = card;
             $scope.newTask = {
@@ -70,7 +71,7 @@ angular.module('trelloRedmine')
         };
 
         $scope.updateTask = function(task) {
-            $scope.updateIssue(task.id, task)
+            $scope.updateIssue(task.id, task);
         };
 
         $scope.deleteTask = function(task) {
@@ -107,6 +108,10 @@ angular.module('trelloRedmine')
             } else {
                 return "";
             }
+        };
+
+        $scope.showDropArea = function() {
+            $scope.dropAreaState = !$scope.dropAreaState;
         };
 
         $scope.$watch('files', function () {
