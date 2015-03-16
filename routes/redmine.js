@@ -290,6 +290,18 @@ router.get('/issue/:issue_id/attachments/:api_key', function (req, res, next) {
 	});
 });
 
+router.delete('/attachments/:attachment_id/:api_key', function (req, res, next) {
+	var api_key = req.session.current_api_key ||  req.params.api_key;
+	var attachment_id = req.params.attachment_id;
+	request.del({
+		headers: {'X-Redmine-API-Key': api_key},
+		url:     'http://redmine.badrit.com/attachments/' + attachment_id +'.json'
+	}, function(error, response, body){
+		res.json(body);
+	});
+});
+
+
 
 function setApiKey(key) {
 	redmine.setApiKey(key);

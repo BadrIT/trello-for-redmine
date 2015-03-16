@@ -52,6 +52,16 @@ angular.module('trelloRedmine')
                     for(var card_key in $scope.widgets[key - 1].cards) {
                         var card = $scope.widgets[key - 1].cards[card_key];
                         
+                        var getAttachments = function(card) {
+                            redmineService.getIssueAttachments(card.id)
+                            .then(function (result) {
+                                card.attachments = result.data.issue.attachments;
+                                $scope.getLastImage(card)
+                            }, function (error) {
+                                console.log(error);
+                            });
+                        }
+
                         var retrieve_user_info = function(card){
                             if(card.assigned_to) {
                                 var assign_to_id = card.assigned_to.id;
@@ -61,6 +71,8 @@ angular.module('trelloRedmine')
                                 });
                             } 
                         }
+
+                        getAttachments(card);
                         retrieve_user_info(card);
                     }
                     
@@ -233,5 +245,21 @@ angular.module('trelloRedmine')
                 $scope.subTasks[index].assigned_to = result.data;
             });
         };
+
+        $scope.getImageLink = function(card) {
+            if(card.last_image) {
+                return card.last_image.content_url;
+            } else {
+                return "http://blog.no-panic.at/wp-content/uploads/2011/04/redmine_logo_v1.png";
+            }
+        };
+
+        $scope.getLastImage = function(card) {
+            angular.forEach(card.attachments, function(attach) {
+                if(attach.content_type.search("image/") >= 0) {
+                    card.last_image = attach;
+                }
+            }, card.last_image);
+        }
     }
 ]);

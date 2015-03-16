@@ -52,7 +52,7 @@
                     <div class="box-content">
                         <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
                             <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards" id="{{card.id}}">
-                                <img class="thumb" ng-src="http://blog.no-panic.at/wp-content/uploads/2011/04/redmine_logo_v1.png" />
+                                <img class="thumb" ng-src="{{getImageLink(card)}}" />
                                 <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
                                      gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
                                 <p>

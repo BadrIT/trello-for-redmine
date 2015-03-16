@@ -6,6 +6,7 @@
             <!-- <h5 style="float: left;margin-right: 5px;">  {{card.title}}</h5> -->
             <span inline="card.title"></span>
             <h6> in list <b>{{widget.title}}</b></h6>
+            <img style="width: 50%; height: 50%; " ng-src="{{getImageLink(card)}}" />
         </div>
 
         <div class="modal-body">
@@ -32,8 +33,12 @@
                     </br>
                     <div style="margin-top: 20px;">
                         <div>
-                            <span ng-repeat="attach in attachments track by $index">
-                                <a href="{{attach.content_url}}" target="_blank">{{attach.filename}}</a><br>
+                            <span ng-repeat="attach in card.attachments track by $index">
+                                <a href="{{attach.content_url}}" target="_blank">{{attach.filename}}</a>
+                                 <a confirmed-click="deleteAttachment(attach.id)" ng-confirm-click="Are you sure about deleting this attachment?">
+                                    <i class="fa fa-remove"></i>
+                                </a>
+                                <br>
                             </span>
                         </div>
                         <div>

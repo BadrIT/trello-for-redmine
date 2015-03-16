@@ -7,13 +7,6 @@ angular.module('trelloRedmine')
 
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
 
-        redmineService.getIssueAttachments(card.id)
-        .then(function (result) {
-            $scope.attachments = result.data.issue.attachments;
-        }, function (error) {
-            console.log(error);
-        });
-
         if (card) {
             $scope.card = card;
             $scope.newTask = {
@@ -114,6 +107,15 @@ angular.module('trelloRedmine')
             $scope.dropAreaState = !$scope.dropAreaState;
         };
 
+        $scope.deleteAttachment = function(attachment_id) {
+            redmineService.deleteAttachment(attachment_id)
+            .then(function (result) {
+                console.log(result);
+            }, function (error) {
+                console.log(error);
+            });
+        };
+
         $scope.$watch('files', function () {
             $scope.upload($scope.files);
         });
@@ -132,7 +134,8 @@ angular.module('trelloRedmine')
                         $scope.attachments = [];
                         redmineService.getIssueAttachments($scope.card.id)
                         .then(function (result) {
-                            $scope.attachments = result.data.issue.attachments;
+                            $scope.card.attachments = result.data.issue.attachments;
+                            $scope.getLastImage($scope.card);
                         }, function (error) {
                             console.log(error);
                         });

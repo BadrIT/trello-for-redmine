@@ -116,4 +116,10 @@ angular.module('trelloRedmine')
         var query = '/redmine/issue/' +  issue_id +'/attachments/' + current_api_key;
         return get(query);
     };
+
+    this.deleteAttachment = function(attachment_id) {
+        var query = '/redmine/attachments/' + attachment_id + '/' + current_api_key;
+        return remove(query);
+    };
+
 }]);
