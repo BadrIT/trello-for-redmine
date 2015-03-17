@@ -4,8 +4,12 @@
             <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
             <i class="fa fa-desktop fa-4" style="float: left;margin-right: 10px;margin-top: 9px;"></i>
             <!-- <h5 style="float: left;margin-right: 5px;">  {{card.title}}</h5> -->
-            <span inline="card.title"></span>
+            <span><a href="#" onaftersave="updateTask(card)" editable-text="card.subject">{{ card.subject}}</a></span>
+
             <h6> in list <b>{{widget.title}}</b></h6>
+            <span>estimate size: <a href="#" onaftersave="updateTask(card)" editable-select="card.estimated_size" e-ng-options="s  for s in estimateSizes">
+                {{ card.estimated_size || 'Not set'}}</a>
+            </span><br>
             <img style="width: 50%; height: 50%; " ng-src="{{getImageLink(card)}}" />
         </div>
 
@@ -59,6 +63,8 @@
                                         <a href="#" onaftersave="updateTask(task)" editable-select="task.assigned_to_id" e-ng-options="m.id as m.name for m in projectMembers">
                                                 {{ showName(task) }}
                                          </a>
+                                        <br>estimate hour:
+                                             <a href="#" onaftersave="updateTask(task)" editable-text="task.estimated_hours">{{ task.estimated_hours || 'Not set' }}</a>
                                         <br>description:
                                             <div ng-bind-html="parseTrustSnippt(task.description)"></div>
                                     </accordion-group></div>

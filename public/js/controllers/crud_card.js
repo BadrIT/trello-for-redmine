@@ -4,6 +4,7 @@ angular.module('trelloRedmine')
         $scope.widget = widget;
         $scope.status_val = false;
         $scope.dropAreaState = false;
+        $scope.estimateSizes = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 60, 100, 200];
 
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
 
@@ -64,6 +65,14 @@ angular.module('trelloRedmine')
         };
 
         $scope.updateTask = function(task) {
+            if(task.estimated_size){
+               for (var i = task.custom_fields.length - 1; i >= 0; i--) {
+                  if(task.custom_fields[i].name == "Story-Size"){
+                    task.custom_fields[i].value = task.estimated_size;
+                    break;
+                  }
+               };
+            }
             $scope.updateIssue(task.id, task);
         };
 
