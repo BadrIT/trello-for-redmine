@@ -107,10 +107,17 @@ angular.module('trelloRedmine')
             $scope.dropAreaState = !$scope.dropAreaState;
         };
 
-        $scope.deleteAttachment = function(attachment_id) {
+        $scope.deleteAttachment = function(attachment_id, id) {
+            $scope.card.attachments.splice(id, 1); 
             redmineService.deleteAttachment(attachment_id)
             .then(function (result) {
                 console.log(result);
+                if($scope.card.attachments.length == 0) {
+                    $scope.card.last_image = null;
+                } else {
+                    $scope.getLastImage($scope.card);
+                }
+                
             }, function (error) {
                 console.log(error);
             });
@@ -131,7 +138,6 @@ angular.module('trelloRedmine')
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                         console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                     }).success(function (data, status, headers, config) {
-                        $scope.attachments = [];
                         redmineService.getIssueAttachments($scope.card.id)
                         .then(function (result) {
                             $scope.card.attachments = result.data.issue.attachments;

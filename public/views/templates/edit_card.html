@@ -35,7 +35,7 @@
                         <div>
                             <span ng-repeat="attach in card.attachments track by $index">
                                 <a href="{{attach.content_url}}" target="_blank">{{attach.filename}}</a>
-                                 <a confirmed-click="deleteAttachment(attach.id)" ng-confirm-click="Are you sure about deleting this attachment?">
+                                 <a confirmed-click="deleteAttachment(attach.id, $index)" ng-confirm-click="Are you sure about deleting this attachment?">
                                     <i class="fa fa-remove"></i>
                                 </a>
                                 <br>

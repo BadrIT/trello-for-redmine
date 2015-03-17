@@ -5,7 +5,9 @@ angular.module('trelloRedmine')
         $scope.user_projects = [];
         $scope.current_project = {};
         $scope.widgets = [];
-       
+        $scope.card = {};
+        $scope.card.attachments = [];
+
         var allowed_statuses = [8, 9, 10];
 
         $scope.setCurrentUser = function (api_key) {
