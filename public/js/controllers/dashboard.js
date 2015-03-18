@@ -8,11 +8,30 @@ angular.module('trelloRedmine')
         $scope.card = {};
         $scope.card.attachments = [];
 
-        var allowed_statuses = [8, 9, 10];
+        $scope.allowed_statuses = [8, 9, 10];
+
+        
 
         $scope.setCurrentUser = function (api_key) {
             $localStorage.current_api_key = api_key;
         };
+
+        $scope.getUserLists = function() {
+            $http.get('/settings/config/lists/' + $localStorage.current_api_key)
+            .success(function(data, status){
+                console.log(data)
+                if(data) {
+                    $scope.allowed_statuses = data.split(",");
+                } else {
+                    $scope.allowed_statuses = [8,9,10];
+                }
+            }).error(function(err, status){
+                $scope.allowed_statuses = [8,9,10];
+                console.log(err);
+            });
+        };
+
+        $scope.getUserLists();
 
         redmineService.getUserProjects('current')
         .then(function (result) {
@@ -24,8 +43,8 @@ angular.module('trelloRedmine')
         .then(function (result) {
             $scope.widgets = result.data;
             // TODO: do it in better way
-            for(var i = 0; i < allowed_statuses.length; i++) {
-                $scope.widgets[allowed_statuses[i] - 1].allowed = true;
+            for(var i = 0; i < $scope.allowed_statuses.length; i++) {
+                $scope.widgets[$scope.allowed_statuses[i] - 1].allowed = true;
             }
         });
 
@@ -238,6 +257,17 @@ angular.module('trelloRedmine')
             });
         };
 
+       
+
+        $scope.saveUserLists = function() {
+            $http.post('/settings/config/lists/' + $localStorage.current_api_key, $scope.allowed_statuses)
+            .success(function(data, status){
+                console.log(status);
+            }).error(function(err, status){
+                console.log(err);
+            });
+        };
+
         //get config data
         $scope.getConfigData();
 
@@ -262,6 +292,22 @@ angular.module('trelloRedmine')
                     card.last_image = attach;
                 }
             }, card.last_image);
+        };
+
+        $scope.addNewAllowedStatus = function(id, state) {
+            if(state) {
+                $scope.allowed_statuses.push(id+1);
+            } else {
+                for (var i = 0; i <  $scope.allowed_statuses.length; i++) {
+                    if($scope.allowed_statuses[i]-1 == id){
+                        $scope.allowed_statuses.splice(i, 1);
+                        break;
+                    }
+                };
+            }
+            $scope.saveUserLists();
         }
+
+        
     }
 ]);

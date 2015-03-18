@@ -1,4 +1,4 @@
- <div ng-controller="RootCtrl">
+ <div ng-controller="DashboardCtrl">
         <link rel="stylesheet" ng-href="{{ styleUrl }}" />
 
         <div class="navbar navbar-inverse">
@@ -15,7 +15,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Available Status Lists<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="widget in widgets track by $index">
-                        <span>{{widget.title}}  <input type="checkbox" ng-model="widget.allowed"></span>
+                        <span>{{widget.title}}  <input type="checkbox" ng-click="addNewAllowedStatus($index, widget.allowed)" ng-model="widget.allowed"></span>
                     </li>
                   </ul>
                 </li>
