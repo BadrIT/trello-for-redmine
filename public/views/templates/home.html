@@ -54,7 +54,7 @@
                             <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards" id="{{card.id}}">
                                 <img class="thumb" ng-src="{{getImageLink(card)}}" />
                                 <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
-                                     gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
+                                     gravatar-src="card.assigned_to.mail" gravatar-size="100" />
                                 <p>
                                     <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>
                                     
