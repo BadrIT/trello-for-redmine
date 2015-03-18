@@ -15,7 +15,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Available Status Lists<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li ng-repeat="widget in widgets track by $index">
-                        <span>{{widget.title}}  <input type="checkbox" ng-click="addNewAllowedStatus($index, widget.allowed)" ng-model="widget.allowed"></span>
+                        <span>{{widget.title}}  <input type="checkbox" ng-change="addNewAllowedStatus($index, widget.allowed)" ng-model="widget.allowed"></span>
                     </li>
                   </ul>
                 </li>
@@ -29,4 +29,50 @@
                 </form>
             </ul>
         </div>
-  </div>
+
+<div class="page-header">
+    <!-- <a class="pull-right btn btn-primary" ng-click="addWidget()"><i class="glyphicon glyphicon-plus"></i> Add Widget</a> -->
+    <!-- <a class="pull-right btn btn-warning" ng-click="clear()"><i class="glyphicon glyphicon-trash"></i> Clear</a> -->
+</div>
+<div gridster="gridsterOptions">
+    <div ng-model="widgets">
+        <ul>
+            <li gridster-item="widget" ng-repeat="widget in widgets | filter: {allowed: true}">
+                <div class="box" ng-controller="CustomWidgetCtrl">
+                    <div class="box-header">
+                        <section>
+                            <h3>{{widget.title}}</h3>
+                        </section>
+                        <div class="box-header-btns pull-right">
+                          <i>{{widget.cards.length}}</i>
+                            <a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
+                            <a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
+                        </div>
+                    </div>
+                    <div class="box-content">
+                        <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
+                            <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards" id="{{card.id}}">
+                                <img class="thumb" ng-src="{{getImageLink(card)}}" />
+                                <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
+                                     gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
+                                <p>
+                                    <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>
+                                    
+                                </p>
+
+                                <div id="overlay">
+                                    <img id="loading" src="http://bit.ly/pMtW1K ">
+                                    </img>
+                                </div>
+                            </li>
+                            <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
+                        </ul>
+                        <a class="pull-right btn btn-primary " e-placeholder="card title" editable-text="newCard.subject" onaftersave="addNewCard(widget)"><i class="glyphicon glyphicon-plus "></i> Add a card</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+    </div>

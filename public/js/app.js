@@ -9,7 +9,7 @@
                         controller: 'AuthCtrl'
                     })
                     .when('/trello/:project_id', {
-                        templateUrl: 'views/templates/view.html',
+                        templateUrl: 'views/templates/home.html',
                         controller: 'DashboardCtrl'
                     })
                     .otherwise({
