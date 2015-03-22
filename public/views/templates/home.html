@@ -53,13 +53,10 @@
                         <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
                             <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards" id="{{card.id}}">
                                 <img class="thumb" ng-src="{{getImageLink(card)}}" />
-                                <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
-                                     gravatar-src="card.assigned_to.mail" gravatar-size="100" />
+                                <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="card.assigned_to.mail" gravatar-size="100" />
                                 <p>
-                                    <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>
-                                    
+                                    <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>  
                                 </p>
-
                                 <div id="overlay">
                                     <img id="loading" src="http://bit.ly/pMtW1K ">
                                     </img>
@@ -67,12 +64,56 @@
                             </li>
                             <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
                         </ul>
-                        <a class="pull-right btn btn-primary " e-placeholder="card title" editable-text="newCard.subject" onaftersave="addNewCard(widget)"><i class="glyphicon glyphicon-plus "></i> Add a card</a>
+                        
+                        <form editable-form name="editableForm" onaftersave="addNewCard(widget)">
+                        <span ng-show="editableForm.$visible">
+                        <div>
+                          <span class="title">subject: </span>
+                          <span editable-text="newCard.subject" e-name="subject" e-required></span>
+                        </div> 
+
+                        <div>
+                          <span class="title">priority: </span>
+                          <span editable-select="newCard.priority_id" e-name="priority_id" e-ng-options="p.id as p.name for p in priorities">
+                          </span>
+                        </div>  
+
+                        <div>
+                          <span class="title">status: </span>
+                          <span editable-select="newCard.status_id" e-name="status_id" e-ng-options="s.status_id as s.title for s in statuses">
+                          </span>
+                        </div>  
+                        </span>
+                        <div class="buttons">
+                          <button type="button" class="btn btn-default" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">
+                            Add a card
+                          </button>
+                          <span ng-show="editableForm.$visible">
+                            <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                              Save
+                            </button>
+                            <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                              Cancel
+                            </button>
+                          </span>
+                        </div>
+                      </form>  
                     </div>
+                </div>
+            </li>
+            <li gridster-item="widget">
+                <div class="box-header">
+                    <section>
+                        <h3>Project Activities</h3>
+                    </section>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li ng-repeat="activity in activities">{{activity}}</li>
+                    </ul>
                 </div>
             </li>
         </ul>
     </div>
 </div>
-
-    </div>
+</div>

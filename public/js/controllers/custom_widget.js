@@ -6,8 +6,31 @@ angular.module('trelloRedmine')
             subject: "",
             project_id: $scope.project_id,
             tracker_id: 5,
-            status_id: ''
+            status_id: '',
+            priority_id : '',
+            parent_issue_id : '',
+            is_private: 0,
+            assigned_to_id: ''
         };
+
+        $scope.isNewCard = false;
+        $scope.priorities = [];
+        $scope.statuses = [];
+
+        redmineService.getIssuePriorities()
+        .then(function (result) {
+            $scope.priorities = result.data.issue_priorities;
+        }, function (error) {
+            console.log(error);
+        });
+
+        redmineService.getIssuesStatuses()
+        .then(function (result) {
+            console.log(JSON.stringify(result))
+            $scope.statuses = result.data;
+        }, function (error) {
+            console.log(error);
+        });
 
         $scope.remove = function(widget) {
             $scope.widgets.splice($scope.widgets.indexOf(widget), 1);
@@ -38,6 +61,5 @@ angular.module('trelloRedmine')
                 console.log(error);
             });
         };
-
     }
 ]);
