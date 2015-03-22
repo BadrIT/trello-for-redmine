@@ -93,7 +93,8 @@ angular.module('trelloRedmine')
     };
 
     this.createTask = function (data) {
-        var query = '/redmine/create/issue' + "/" + current_api_key;
+        console.log(JSON.stringify(data))
+        var query = '/redmine/create/issue/' + current_api_key;
         return post(query, data);
     };
 
@@ -120,6 +121,16 @@ angular.module('trelloRedmine')
     this.deleteAttachment = function(attachment_id) {
         var query = '/redmine/attachments/' + attachment_id + '/' + current_api_key;
         return remove(query);
+    };
+
+    this.getActivities = function(project_id) {
+        var query = '/redmine/activities/' + project_id + "/" + current_api_key;
+        return get(query);
+    };
+
+    this.getIssuePriorities = function () {
+        var query = '/redmine/enumerations/issue_priorities/' + current_api_key;
+        return get(query);
     };
 
 }]);

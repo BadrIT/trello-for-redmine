@@ -26,7 +26,6 @@ angular.module('trelloRedmine')
 
         redmineService.getIssuesStatuses()
         .then(function (result) {
-            console.log(JSON.stringify(result))
             $scope.statuses = result.data;
         }, function (error) {
             console.log(error);

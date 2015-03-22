@@ -6,7 +6,8 @@ var express = require('express'),
     redis_client = redis.createClient(),
     http = require('http'),
     fs = require('fs'),
-    querystring = require('querystring');
+    querystring = require('querystring'),
+    Parser = require('../services/feedParser');
 
 // list all trackers in redmine
 router.get('/trackers/:api_key', function (req, res, next) {
@@ -301,7 +302,31 @@ router.delete('/attachments/:attachment_id/:api_key', function (req, res, next) 
 	});
 });
 
+router.get('/activities/:project_id/:api_key', function (req, res, next) {
+	var api_key = req.session.current_api_key ||  req.params.api_key;
+	var project_id = req.params.project_id;
+	var url = "http://redmine.badrit.com/projects/" + project_id + "/activity.json";
+	request.get({
+		headers: {'X-Redmine-API-Key': api_key},
+		url:     url
+	}, function(error, response, body){
+		res.json(body);
+	});
 
+});
+
+router.get('/enumerations/issue_priorities/:api_key', function (req, res, next) {
+	var api_key = req.session.current_api_key ||  req.params.api_key;
+	setApiKey(api_key);
+	redmine.get('/enumerations/issue_priorities')
+	.success(function (data) {	
+		res.json(data);
+	}).error(function (err) {
+		console.log(err);
+		res.status(404).json(err);
+	});
+	
+});
 
 function setApiKey(key) {
 	redmine.setApiKey(key);

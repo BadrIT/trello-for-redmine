@@ -1,16 +1,15 @@
 angular.module('trelloRedmine')
-.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService', '$localStorage', '$location',
-    function($scope, $timeout, $modal, $http, redmineService, $localStorage, $location) {
+.controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService', '$localStorage', '$location', '$sce',
+    function($scope, $timeout, $modal, $http, redmineService, $localStorage, $location, $sce) {
         $scope.current_user = {};
         $scope.user_projects = [];
         $scope.current_project = {};
         $scope.widgets = [];
         $scope.card = {};
         $scope.card.attachments = [];
+        $scope.activities = [];
 
         $scope.allowed_statuses = [8, 9, 10];
-
-        
 
         $scope.setCurrentUser = function (api_key) {
             $localStorage.current_api_key = api_key;
@@ -310,6 +309,17 @@ angular.module('trelloRedmine')
             $scope.saveUserLists();
         }
 
-        
+        $scope.parseTrustSnippt = function(html) {
+            return $sce.trustAsHtml(html) || 'no description provided';
+        };
+
+
+        redmineService.getActivities($scope.project_id)
+        .then(function (result) {
+            var data = JSON.parse(result.data);
+            angular.forEach(data.activities, function(activity){
+                this.push(activity);
+            }, $scope.activities)
+        });
     }
 ]);

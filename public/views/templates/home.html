@@ -109,7 +109,7 @@
                 </div>
                 <div class="box-content">
                     <ul>
-                        <li ng-repeat="activity in activities">{{activity}}</li>
+                        <li ng-repeat="activity in activities track by $index">{{activity.author.name}}<br>{{activity.time}}<br>{{activity.title}}<br><div ng-bind-html="parseTrustSnippt(activity.description)"></div><br></li>
                     </ul>
                 </div>
             </li>

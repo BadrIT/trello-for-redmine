@@ -66,12 +66,12 @@ angular.module('trelloRedmine')
 
         $scope.updateTask = function(task) {
             if(task.estimated_size){
-               for (var i = task.custom_fields.length - 1; i >= 0; i--) {
-                  if(task.custom_fields[i].name == "Story-Size"){
-                    task.custom_fields[i].value = task.estimated_size;
-                    break;
-                  }
-               };
+                for (var i = task.custom_fields.length - 1; i >= 0; i--) {
+                    if(task.custom_fields[i].name == "Story-Size"){
+                        task.custom_fields[i].value = task.estimated_size;
+                        break;
+                    }
+                };
             }
             $scope.updateIssue(task.id, task);
         };
@@ -87,10 +87,6 @@ angular.module('trelloRedmine')
         $scope.showName = function(task) {
             var selected = filterFilter($scope.projectMembers, {id: task.assigned_to.id});
             return (task.assigned_to.id && selected.length) ? selected[0].name : 'Not set';
-        };
-
-        $scope.parseTrustSnippt = function(html) {
-            return $sce.trustAsHtml(html) || 'no description provided';
         };
 
         $scope.getTaskColor = function(status_id) {
@@ -154,7 +150,6 @@ angular.module('trelloRedmine')
                         }, function (error) {
                             console.log(error);
                         });
-                        console.log(JSON.stringify(config))
                         console.log('file ' + config.file.name + ' uploaded. Response: ' + data);
                     });
                 }
