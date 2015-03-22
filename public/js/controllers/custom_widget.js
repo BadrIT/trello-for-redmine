@@ -4,6 +4,7 @@ angular.module('trelloRedmine')
 
         $scope.newCard = {
             subject: "",
+            description: "",
             project_id: $scope.project_id,
             tracker_id: 5,
             status_id: '',

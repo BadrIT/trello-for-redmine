@@ -6,8 +6,7 @@ var express = require('express'),
     redis_client = redis.createClient(),
     http = require('http'),
     fs = require('fs'),
-    querystring = require('querystring'),
-    Parser = require('../services/feedParser');
+    querystring = require('querystring');
 
 // list all trackers in redmine
 router.get('/trackers/:api_key', function (req, res, next) {
