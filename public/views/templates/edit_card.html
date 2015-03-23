@@ -21,16 +21,6 @@
                             <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}"
                                      gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
 
-                            <div class="dropdown">
-                              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                Member
-                                <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}</a></li>
-                              </ul>
-                            </div>
-
                         </div>
                     </div>
                     <a><i class="fa fa-edit"></i>  Edit the description</a>
@@ -89,7 +79,6 @@
                     <div class="row">
                         <h4><b>Info</b></h4>
                             <ul class="btn-task-info">
-                                <li><button type="button" class="btn btn-info"><i class="fa fa-calendar"></i>  Log Time</button></li>
                                 <li><button type="button" ng-click="showDropArea()" class="btn btn-success"><i class="fa fa-paperclip"></i>  Attachment</button></li>
                             </ul>
                     </div>

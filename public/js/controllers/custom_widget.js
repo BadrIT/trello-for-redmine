@@ -1,6 +1,6 @@
 angular.module('trelloRedmine')
-.controller('CustomWidgetCtrl', ['$scope', '$modal', 'redmineService',
-    function($scope, $modal, redmineService) {
+.controller('CustomWidgetCtrl', ['$scope', '$modal', 'redmineService', '$localStorage',
+    function($scope, $modal, redmineService, $localStorage) {
 
         $scope.newCard = {
             subject: "",
@@ -11,7 +11,7 @@ angular.module('trelloRedmine')
             priority_id : '',
             parent_issue_id : '',
             is_private: 0,
-            assigned_to_id: ''
+            assigned_to_id: $localStorage.user_id
         };
 
         $scope.isNewCard = false;
