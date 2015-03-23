@@ -12,6 +12,7 @@ angular.module('trelloRedmine')
             $scope.card = card;
             $scope.newTask = {
                 subject: "",
+                description: "",
                 project_id: card.project.id,
                 parent_issue_id: card.id,
                 tracker_id: 4,
@@ -67,6 +68,7 @@ angular.module('trelloRedmine')
         $scope.updateTask = function(task) {
             if(task.estimated_size){
                 for (var i = task.custom_fields.length - 1; i >= 0; i--) {
+                    console.log(JSON.stringify(task))
                     if(task.custom_fields[i].name == "Story-Size"){
                         task.custom_fields[i].value = task.estimated_size;
                         break;
