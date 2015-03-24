@@ -121,11 +121,9 @@ router.get('/projects/:project_id/issues/:api_key', function (req, res, next) {
 router.get('/projects/:project_id/issues/:parent_id/:api_key', function (req, res, next) {
 	setApiKey(req.session.current_api_key ||  req.params.api_key);
 	redmine.get('issues', {
-		project_id: req.params.project_id,
-		parent_issue_id: req.params.parent_id,
+		parent_id: req.params.parent_id,
 		status_id: '*'
 	}).success(function (data) {
-		console.log(data);
 		res.json(data);
 	}).error(function (err) {
 		console.log(err);
