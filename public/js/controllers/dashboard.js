@@ -11,13 +11,22 @@ angular.module('trelloRedmine')
         $scope.activities = [];
 
         $scope.styleUrl = 'assets/stylesheets/cards_style.css';
-        
-        $scope.allowed_statuses = [8, 9, 10];
+        // TODO: make it dynamic
+        $scope.allowed_statuses = [8, 9, 10, 11];
+       
 
         $scope.setCurrentUser = function (api_key) {
             $localStorage.current_api_key = api_key;
         };
 
+        var project_url = $location.path().split('/');
+        $scope.project_id = project_url[2];
+        if(!$scope.project_id) return; 
+
+
+
+
+        /*$scope.allowed_statuses = [8, 9, 10];
         $scope.getUserLists = function() {
             $http.get('/settings/config/lists/' + $localStorage.current_api_key)
             .success(function(data, status){
@@ -25,7 +34,7 @@ angular.module('trelloRedmine')
                 if(data) {
                     $scope.allowed_statuses = data.split(",");
                 } else {
-                    $scope.allowed_statuses = [8,9,10];
+                    $scope.allowed_statuses = [8,9,10,11];
                 }
             }).error(function(err, status){
                 $scope.allowed_statuses = [8,9,10];
@@ -33,7 +42,9 @@ angular.module('trelloRedmine')
             });
         };
 
-        $scope.getUserLists();
+        $scope.getUserLists();*/
+        
+
 
         redmineService.getUserProjects('current')
         .then(function (result) {
@@ -44,15 +55,14 @@ angular.module('trelloRedmine')
         redmineService.getIssuesStatuses()
         .then(function (result) {
             $scope.widgets = result.data;
+            console.log($scope.widgets)
             // TODO: do it in better way
             for(var i = 0; i < $scope.allowed_statuses.length; i++) {
                 $scope.widgets[$scope.allowed_statuses[i] - 1].allowed = true;
             }
         });
 
-        var project_template = $location.path().split('/');
-        $scope.project_id = project_template[2];
-        if(!$scope.project_id) return; 
+        
         
         
 
