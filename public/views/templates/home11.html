@@ -1,0 +1,836 @@
+<div ng-controller="DashboardCtrl">
+          <link rel="stylesheet" ng-href="{{ styleUrl }}" />
+
+          <div class="navbar navbar-inverse">
+              <ul class="nav navbar-nav navbar-left">
+                  <div class="choise-select">
+                    <span>Release</span>
+                    <select class="selectpicker">
+                      <option>Mustard</option>
+                      <option>Ketchup</option>
+                      <option>Relish</option>
+                    </select>
+                  </div>
+                  <div class="choise-select">
+                    <span>Sprint</span>
+                    <select class="selectpicker">
+                      <option>Mustard</option>
+                      <option>Ketchup</option>
+                      <option>Relish</option>
+                    </select>
+                  </div>
+
+                  <a href="#">Scrummer</a>
+                  
+                  <!--<li class="dropdown" ng-class="{active: page == 'trello'}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{current_project.project.name}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li ng-repeat="project in user_projects track by $index">
+                          <a ng-href="/trello/{{project.project.id}}">{{project.project.name}}</a>
+                      </li>
+                    </ul>
+                  </li>-->
+                  <!--<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Available Status Lists<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li ng-repeat="widget in widgets track by $index">
+                          <span>{{widget.title}}  <input type="checkbox" ng-change="addNewAllowedStatus($index, widget.allowed)" ng-model="widget.allowed"></span>
+                      </li>
+                    </ul>
+                  </li>-->
+
+                  <!--<li class="project-name"><span>{{dashboard.title}}</span></li>
+                  <li class="project-hours"><span>logged hours: {{dashboard.hours}}</span></li>
+                  <form class="navbar-form navbar-right" role="search">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" ng-model="project_id">
+                      </div>
+                      <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </form>-->
+              </ul>
+          </div>
+
+  <div class="page-header">
+    <div class="col-headers col-lg-3 col-md-3 col-xs-3">
+      <span>Defined</span>
+    </div>
+    <div class="col-headers col-lg-3 col-md-3 col-xs-3">
+      <span>Inprogress</span>
+    </div>
+    <div class="col-headers col-lg-3 col-md-3 col-xs-3">
+      <span>Complete</span>
+    </div>
+    <div class="col-headers col-lg-3 col-md-3 col-xs-3">
+      <span>Accepted</span>
+    </div>
+      <!--<a class="pull-right btn btn-primary" ng-click="addWidget()"><i class="glyphicon glyphicon-plus"></i> Add Widget</a>
+      <a class="pull-right btn btn-warning" ng-click="clear()"><i class="glyphicon glyphicon-trash"></i> Clear</a>-->
+  </div>
+
+  <div gridster="gridsterOptions">
+      <div ng-model="widgets">
+          <ul>
+              <li class="column" gridster-item="widget" ng-repeat="widget in widgets | filter: {allowed: true}">
+                  <div class="box column-box" ng-controller="CustomWidgetCtrl">
+                      <div class="box-header">
+                          <section>
+                              <h3>{{widget.title}}</h3>
+                          </section>
+                          <div class="box-header-btns pull-right">
+                            <i>{{widget.cards.length}}</i>
+                              <a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
+                              <a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
+                          </div>
+                      </div>
+                      <div class="box-content">
+                          <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
+                              <li class="card"  ng-repeat="card in widget.cards" id="{{card.id}}">
+                                  <div class="card-header heigh">
+                                    <a class="id">#123</a>
+                                    <h5>Main title of the task</h5>
+                                  </div>
+                                  
+                                  <div class="realted-tasks">
+                                    <div class="task-line">
+                                      <div class="task-line-info">
+                                        <a class="id">#362</a>
+                                        <p>This is a paragraph apdfkasdm,asdfasd fasdp[am dsfasdm asdfaklpsd adpflmad </p>
+                                      </div>
+                                      <div class="related-task-image">
+                                         <img src="../assets/images/hazem.jpg" alt="">
+                                      </div>
+                                    </div>
+                                    <div class="related-task-icons">
+                                      <ul>
+                                        <li><a href="" data-toggle="modal" data-target="#relatedTask-modal"><i class="fa fa-arrows-alt"></i></a></li>
+                                        <div class="modal fade" id="relatedTask-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Task name</h4>
+                                              </div>
+                                              <div class="modal-body">
+
+                                                <div class="row">
+                                                  <div class="col-lg-12">
+                                                    <div class="userstory-edit-img">
+                                                      <img src="../assets/images/hazem.jpg" alt="">
+                                                    </div>
+                                                    <p><b>Added by: </b>Hazem.Hagrass</p>
+                                                    <p><b>From: </b>One year ago</p>
+                                                    <p><b>Updated: </b>One year ago</p>
+                                                  </div>
+                                                </div>
+                                               
+                                                
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Description: </b>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante. </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Status: </b>Completed </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Priority: </b>Normal </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Assignee: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <li><a href="" data-toggle="modal" data-target="#relatedTask-editModal"><i class="fa fa-wrench"></i></a></li>
+                                        <div class="modal fade" id="relatedTask-editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Edit story</h4>
+                                              </div>
+                                              <div class="modal-body">
+
+                                                <div class="row">
+                                                  <div class="col-lg-12">
+                                                    <div class="userstory-edit-img">
+                                                      <img src="../assets/images/hazem.jpg" alt="">
+                                                    </div>
+                                                    <p><b>Added by: </b>Hazem.Hagrass</p>
+                                                    <p><b>From: </b>One year ago</p>
+                                                    <p><b>Updated: </b>One year ago</p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Description: </b></p>
+                                                    <textarea>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante.  
+                                                    </textarea>
+                                                  </div>
+                                                </div>
+                                                <div class="modal-row-width">
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Status: </b></p>
+                                                      <select class="selectpicker">
+                                                        <option>Completed</option>
+                                                        <option>Inprogress</option>
+                                                        <option>Defined</option>
+                                                      </select>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Priority: </b></p>
+                                                      <select class="selectpicker">
+                                                        <option>Normal</option>
+                                                        <option>Inprogress</option>
+                                                        <option>Defined</option>
+                                                      </select>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Assignee: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Category: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Notes: </b></p>
+                                                      <textarea></textarea>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <li><a href=""><i class="fa fa-question"></i></a></li>
+                                        <li><a href=""><i class="fa fa-question"></i></a></li>
+                                        <li><a href=""><i class="fa fa-trash-o"></i></a></li>
+                                      </ul>
+                                    </div>
+
+                                    <div class="task-line">
+                                      <div class="task-line-info">
+                                        <a class="id">#362</a>
+                                        <p>This is a paragraph</p>
+                                      </div>
+                                      <div class="related-task-image">
+                                         <img src="../assets/images/hazem.jpg" alt="">
+                                      </div>
+                                    </div>
+                                    <div class="related-task-icons">
+                                      <ul>
+                                        <li><a href="" data-toggle="modal" data-target="#relatedTask-modal"><i class="fa fa-arrows-alt"></i></a></li>
+                                        <div class="modal fade" id="relatedTask-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Task name</h4>
+                                              </div>
+                                              <div class="modal-body">
+
+                                                <div class="row">
+                                                  <div class="col-lg-12">
+                                                    <div class="userstory-edit-img">
+                                                      <img src="../assets/images/hazem.jpg" alt="">
+                                                    </div>
+                                                    <p><b>Added by: </b>Hazem.Hagrass</p>
+                                                    <p><b>From: </b>One year ago</p>
+                                                    <p><b>Updated: </b>One year ago</p>
+                                                  </div>
+                                                </div>
+                                               
+                                                
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Description: </b>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante. </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Status: </b>Completed </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Priority: </b>Normal </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Assignee: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <li><a href="" data-toggle="modal" data-target="#relatedTask-editModal"><i class="fa fa-wrench"></i></a></li>
+                                        <div class="modal fade" id="relatedTask-editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Task name</h4>
+                                              </div>
+                                              <div class="modal-body">
+
+                                                <div class="row">
+                                                  <div class="col-lg-12">
+                                                    <div class="userstory-edit-img">
+                                                      <img src="../assets/images/hazem.jpg" alt="">
+                                                    </div>
+                                                    <p><b>Added by: </b>Hazem.Hagrass</p>
+                                                    <p><b>From: </b>One year ago</p>
+                                                    <p><b>Updated: </b>One year ago</p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Description: </b></p>
+                                                    <textarea>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante.  
+                                                    </textarea>
+                                                  </div>
+                                                </div>
+                                                <div class="modal-row-width">
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Status: </b></p>
+                                                      <select class="selectpicker">
+                                                        <option>Completed</option>
+                                                        <option>Inprogress</option>
+                                                        <option>Defined</option>
+                                                      </select>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Priority: </b></p>
+                                                      <select class="selectpicker">
+                                                        <option>Normal</option>
+                                                        <option>Inprogress</option>
+                                                        <option>Defined</option>
+                                                      </select>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Assignee: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Category: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Notes: </b></p>
+                                                      <textarea></textarea>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <li><a href=""><i class="fa fa-question"></i></a></li>
+                                        <li><a href=""><i class="fa fa-question"></i></a></li>
+                                        <li><a href=""><i class="fa fa-trash-o"></i></a></li>
+                                      </ul>
+                                    </div>
+
+                                  </div>
+
+                                  <div class="card-footer">
+                                    <div class="task-user">
+                                      <div class="task-user-img">
+                                        <img src="../assets/images/hazem.jpg" alt="">
+                                      </div>
+                                        <span>Ahmad Ali</span>
+                                        <span>Time:</span>
+                                    </div>
+                                    <div class="card-btns">
+                                      <ul>
+                                        <li><a href="#" class=""><i class="fa fa-paperclip"></i></a></li>
+                                        <li><a href="#" class="" data-toggle="modal" data-target="#myModal"><i class="fa fa-wrench"></i></a></li>
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Edit story</h4>
+                                              </div>
+                                              <div class="modal-body">
+
+                                                <div class="row">
+                                                  <div class="col-lg-12">
+                                                    <div class="userstory-edit-img">
+                                                      <img src="../assets/images/hazem.jpg" alt="">
+                                                    </div>
+                                                    <p><b>Added by: </b>Hazem.Hagrass</p>
+                                                    <p><b>From: </b>One year ago</p>
+                                                    <p><b>Updated: </b>One year ago</p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Description: </b></p>
+                                                    <textarea>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante.  
+                                                    </textarea>
+                                                  </div>
+                                                </div>
+                                                <div class="modal-row-width">
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Status: </b></p>
+                                                      <select class="selectpicker">
+                                                        <option>Completed</option>
+                                                        <option>Inprogress</option>
+                                                        <option>Defined</option>
+                                                      </select>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Priority: </b></p>
+                                                      <select class="selectpicker">
+                                                        <option>Normal</option>
+                                                        <option>Inprogress</option>
+                                                        <option>Defined</option>
+                                                      </select>
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Assignee: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Category: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Target version: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Story-Size: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Business value: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Start date: </b></p>
+                                                      
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Due date: </b></p>
+                                                      
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Done: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Spent time: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Release: </b></p>
+                                                      <input type="text" name="fname">
+                                                    </div>
+                                                  </div>
+                                                  <div class="row">
+                                                    <div class="modal-row col-lg-12">
+                                                      <p><b>Notes: </b></p>
+                                                      <textarea></textarea>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <li><a href="#" class="" data-toggle="modal" data-target="#userStoryModal"><i class="fa fa-arrows-alt"></i></a></li>
+                                        <div class="modal fade" id="userStoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Edit story</h4>
+                                              </div>
+                                              <div class="modal-body">
+
+                                                <div class="row">
+                                                  <div class="col-lg-12">
+                                                    <div class="userstory-edit-img">
+                                                      <img src="../assets/images/hazem.jpg" alt="">
+                                                    </div>
+                                                    <p><b>Added by: </b>Hazem.Hagrass</p>
+                                                    <p><b>From: </b>One year ago</p>
+                                                    <p><b>Updated: </b>One year ago</p>
+                                                  </div>
+                                                </div>
+                                               
+                                                
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Description: </b>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante. </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Status: </b>Completed </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Priority: </b>Normal </p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Assignee: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Category: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Target version: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Story-Size: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Business value: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Start date: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Due date: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Done: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Spent time: </b></p>
+                                                  </div>
+                                                </div>
+                                                <div class="row">
+                                                  <div class="modal-row col-lg-12">
+                                                    <p><b>Release: </b></p>
+                                                  </div>
+                                                </div>
+                                                
+                                                
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+                                                <div class="task-line">
+                                                  <p>Notes about the tasks</p>
+                                                  <div class="related-task-image">
+                                                     <img src="../assets/images/hazem.jpg" alt="">
+                                                  </div>
+                                                </div>
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <li><a href="#" class="toggle-btn"><i class="fa fa-arrows-v"></i></a></li>
+                                      </ul>
+                                    </div>
+                                  </div>
+
+                                  <!--<img class="thumb" ng-src="{{getImageLink(card)}}" />
+                                  <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="card.assigned_to.mail" gravatar-size="100" />
+                                  <p>
+                                      <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>  
+                                  </p>
+                                  <div id="overlay">
+                                      <img id="loading" src="http://bit.ly/pMtW1K ">
+                                      </img>
+                                  </div>-->
+                              </li>
+                              <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
+                          </ul>
+                          
+                          <!--<form editable-form name="editableForm" onaftersave="addNewCard(widget)">
+                          <span ng-show="editableForm.$visible">
+                          <div>
+                            <span class="title">subject: </span>
+                            <span editable-text="newCard.subject" e-name="subject" e-required></span>
+                          </div> 
+
+                          <div>
+                            <span class="title">priority: </span>
+                            <span editable-select="newCard.priority_id" e-name="priority_id" e-ng-options="p.id as p.name for p in priorities">
+                            </span>
+                          </div>  
+
+                          <div>
+                            <span class="title">status: </span>
+                            <span editable-select="newCard.status_id" e-name="status_id" e-ng-options="s.status_id as s.title for s in statuses">
+                            </span>
+                          </div>  
+                          </span>-->
+
+                          <!--<div class="buttons">
+                            <button type="button" class="btn btn-default" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">
+                              Add a card
+                            </button>
+                            <span ng-show="editableForm.$visible">
+                              <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                                Save
+                              </button>
+                              <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                                Cancel
+                              </button>
+                            </span>
+                          </div>
+                        </form>-->  
+                      </div>
+                  </div>
+              </li>
+              <li class="column" gridster-item="widget">
+                  <div class="box column-box" >
+                      <div class="box-header">
+                          <section>
+                              <h3>test widget</h3>
+                          </section>
+                          <div class="box-header-btns pull-right">
+                            <i>2</i>
+                              <a title="settings" ><i class="glyphicon glyphicon-cog"></i></a>
+                              <a title="Remove widget"><i class="glyphicon glyphicon-trash"></i></a>
+                          </div>
+                      </div>
+                      <div class="box-content">
+                          <ul class="connectedSortable" ui-sortable="sortableTemplates">
+                              <li class="card" id="1">
+                                  <!--<img class="thumb" ng-src="{{getImageLink()}}" />
+                                  <img class="us-member member" title="ahmed gaber" gravatar-src="ahmad.gaber@badrit.com" gravatar-size="100" />
+                                  <p>
+                                      <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">test card</h3></a>  
+                                  </p>
+                                  <div id="overlay">
+                                      <img id="loading" src="http://bit.ly/pMtW1K ">
+                                      </img>
+                                  </div>-->
+                              </li>
+                              <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
+                          </ul>
+                      </div>
+                  </div>
+              </li>
+              
+              <!--<li gridster-item="widget">
+                  <div class="box-header">
+                      <section>
+                          <h3>Project Activities</h3>
+                      </section>
+                  </div>
+                  <div class="box-content">
+                      <ul>
+                          <li ng-repeat="activity in activities track by $index">{{activity.author.name}}<br>{{activity.time}}<br>{{activity.title}}<br><div ng-bind-html="parseTrustSnippt(activity.description)"></div><br></li>
+                      </ul>
+                  </div>
+              </li>-->
+          </ul>
+      </div>
+  </div>
+
+  </div>
+  <script>
+    $('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+    })
+  </script>
+
+    

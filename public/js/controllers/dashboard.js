@@ -1,6 +1,7 @@
 angular.module('trelloRedmine')
 .controller('DashboardCtrl', ['$scope', '$timeout', '$modal', '$http', 'redmineService', '$localStorage', '$location', '$sce',
     function($scope, $timeout, $modal, $http, redmineService, $localStorage, $location, $sce) {
+        
         $scope.current_user = {};
         $scope.user_projects = [];
         $scope.current_project = {};
@@ -9,6 +10,8 @@ angular.module('trelloRedmine')
         $scope.card.attachments = [];
         $scope.activities = [];
 
+        $scope.styleUrl = 'assets/stylesheets/cards_style.css';
+        
         $scope.allowed_statuses = [8, 9, 10];
 
         $scope.setCurrentUser = function (api_key) {
@@ -51,7 +54,7 @@ angular.module('trelloRedmine')
         $scope.project_id = project_template[2];
         if(!$scope.project_id) return; 
         
-        $scope.styleUrl = 'assets/stylesheets/cards_style.css';
+        
 
         redmineService.getProjectByID($scope.project_id)
         .then(function (result) {
