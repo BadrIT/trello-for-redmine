@@ -154,6 +154,7 @@ input {
     position: relative;
     float: left;
     border-right: 1px solid rgb(21, 127, 136);
+    width: 25% !important;
 }
 
 /*-------------------------------------CARD----------------------------------------*/

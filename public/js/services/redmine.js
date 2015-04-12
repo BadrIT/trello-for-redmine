@@ -58,7 +58,6 @@ angular.module('trelloRedmine')
 
     this.getUserInfo = function (user_id) {
         var query = users_url + user_id + "/" + current_api_key;
-        console.log(query);
         return get(query);
     };
     
@@ -93,7 +92,6 @@ angular.module('trelloRedmine')
     };
 
     this.createTask = function (data) {
-        console.log(JSON.stringify(data))
         var query = '/redmine/create/issue/' + current_api_key;
         return post(query, data);
     };

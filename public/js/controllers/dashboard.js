@@ -4,7 +4,6 @@ angular.module('trelloRedmine')
         
         $scope.current_user = {};
         $scope.user_projects = [];
-        $scope.current_project = {};
         $scope.widgets = [];
         $scope.card = {};
         $scope.card.attachments = [];
@@ -13,7 +12,6 @@ angular.module('trelloRedmine')
         $scope.styleUrl = 'assets/stylesheets/cards_style.css';
         // TODO: make it dynamic
         $scope.allowed_statuses = [8, 9, 10, 11];
-       
 
         $scope.setCurrentUser = function (api_key) {
             $localStorage.current_api_key = api_key;
@@ -22,9 +20,6 @@ angular.module('trelloRedmine')
         var project_url = $location.path().split('/');
         $scope.project_id = project_url[2];
         if(!$scope.project_id) return; 
-
-
-
 
         /*$scope.allowed_statuses = [8, 9, 10];
         $scope.getUserLists = function() {
@@ -61,15 +56,7 @@ angular.module('trelloRedmine')
                 $scope.widgets[$scope.allowed_statuses[i] - 1].allowed = true;
             }
         });
-
-        
-        
-        
-
-        redmineService.getProjectByID($scope.project_id)
-        .then(function (result) {
-            $scope.current_project = result.data;
-        });
+      
 
         for(var i = 0; i < $scope.widgets.length; i++) {
             $scope.widgets[i].cards = [];
