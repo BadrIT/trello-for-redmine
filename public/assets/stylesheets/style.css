@@ -327,7 +327,7 @@ input {
 }
 
 .userstory-edit-img img {
-    height: 100%;
+    width: 100%;
 }
 
 .modal-body p {
@@ -368,4 +368,30 @@ input {
 
 .modal .task-line {
     margin-bottom: 5px;
+}
+
+.drop-box {
+    border: 1px solid;
+    width: 150px;
+    text-align: center;
+    float: left;
+    margin-left: 10px;
+    margin-top: 5px;
+    border-radius: 2px;
+    color: rgb(51, 122, 183);
+}
+
+.panel-group {
+    margin-bottom: 0 !important;
+}
+
+.panel-heading {
+    background-color: transparent !important;
+    border-color: none !important;
+    padding: 0 !important;
+}
+
+.panel {
+    background-color: transparent !important;
+    border: none !important;
 }

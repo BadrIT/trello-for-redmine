@@ -1,18 +1,24 @@
 angular.module('trelloRedmine')
 .controller('CrudCardCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget', 'card', 'redmineService', 'filterFilter', '$sce', '$upload', '$localStorage',
     function($scope, $timeout, $rootScope, $modalInstance, widget, card, redmineService, filterFilter, $sce, $upload, $localStorage) {
+        
         $scope.widget = widget;
         $scope.status_val = false;
         $scope.dropAreaState = false;
         $scope.estimateSizes = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 60, 100, 200];
+        $scope.storySize = 0;
+        $scope.businessValue = 0;
+        $scope.release = 0;
 
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
-
+        var priority_to_id = (card.priority_to) ? card.priority.id : '';
+        console.log("-- " + JSON.stringify(card))
         if (card) {
             $scope.card = card;
             $scope.newTask = {
                 subject: "",
                 description: "",
+                priority_id: priority_to_id,
                 project_id: card.project.id,
                 parent_issue_id: card.id,
                 tracker_id: 4,
@@ -25,7 +31,17 @@ angular.module('trelloRedmine')
                 desc: ''
             };
         }
+        
+        $scope.getCustomeFieldValues = function () {
+            $scope.card.custom_fields.forEach(function(field){
+                if(field.name == "Story-size") $scope.storySize = field.value;
+                if(field.name == "Business Value") $scope.businessValue = field.value;
+                if(field.name == "Release") $scope.release = field.value;
+            });
+        };
 
+        $scope.getCustomeFieldValues();
+        
         $scope.calculateProgress = function () {
             $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
         };
@@ -121,6 +137,7 @@ angular.module('trelloRedmine')
                 console.log(result);
                 if($scope.card.attachments.length == 0) {
                     $scope.card.last_image = null;
+                    $scope.card.hasAttachments = false;
                 } else {
                     $scope.getLastImage($scope.card);
                 }
@@ -145,9 +162,11 @@ angular.module('trelloRedmine')
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                         console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                     }).success(function (data, status, headers, config) {
+
                         redmineService.getIssueAttachments($scope.card.id)
                         .then(function (result) {
                             $scope.card.attachments = result.data.issue.attachments;
+                            $scope.card.hasAttachments = true;
                             $scope.getLastImage($scope.card);
                         }, function (error) {
                             console.log(error);

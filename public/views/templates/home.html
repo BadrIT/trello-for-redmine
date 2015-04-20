@@ -1,4 +1,4 @@
-<div ng-controller="DashboardCtrl">
+<div>
   <link rel="stylesheet" ng-href="{{ styleUrl }}" />    
   <div class="navbar navbar-inverse">
       <ul class="nav navbar-nav navbar-left">
@@ -53,289 +53,33 @@
                     </div>
                     <div class="box-content">
                         <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
-                            <li class="card" ng-click="editCard(widget, card)" ng-repeat="card in widget.cards" id="{{card.id}}">
+                            <li class="card" ng-repeat="card in widget.cards" id="{{card.id}}">
                               <div class="card-header heigh">
-                                <a class="id">{{card.id}}</a>
+                                <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank" class="id">{{card.id}}</a>
                                 <h5>{{card.subject}}</h5>
                               </div>
-                               <div class="card-footer">
+                              <accordion close-others="oneAtATime"><accordion-group> <accordion-heading> <i  id="accord-{{card.id}}" ng-hide="false" href="#" class=""> </accordion-heading>asd</accordion-group></accordion>
+                              <div class="card-footer">
                                 <div class="task-user">
                                   <div class="task-user-img">
                                    <img class="us-member member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="card.assigned_to.mail" gravatar-size="100" />
                                   </div>
                                     <span>{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}</span>
                                 </div>
-                                  <div class="card-btns">
-                                    <ul>
-                                      <li><a href="#" class=""><i class="fa fa-paperclip"></i></a></li>
-                                      <li><a href="#" class="" data-toggle="modal" data-target="#myModal"><i class="fa fa-wrench"></i></a></li>
-                                      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                              <h4 class="modal-title" id="myModalLabel">Edit story</h4>
-                                            </div>
-                                            <div class="modal-body">
 
-                                              <div class="row">
-                                                <div class="col-lg-12">
-                                                  <div class="userstory-edit-img">
-                                                    <img src="../assets/images/hazem.jpg" alt="">
-                                                  </div>
-                                                  <p><b>Added by: </b>Hazem.Hagrass</p>
-                                                  <p><b>From: </b>One year ago</p>
-                                                  <p><b>Updated: </b>One year ago</p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Description: </b></p>
-                                                  <textarea>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante.  
-                                                  </textarea>
-                                                </div>
-                                              </div>
-                                              <div class="modal-row-width">
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Status: </b></p>
-                                                    <select class="selectpicker">
-                                                      <option>Completed</option>
-                                                      <option>Inprogress</option>
-                                                      <option>Defined</option>
-                                                    </select>
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Priority: </b></p>
-                                                    <select class="selectpicker">
-                                                      <option>Normal</option>
-                                                      <option>Inprogress</option>
-                                                      <option>Defined</option>
-                                                    </select>
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Assignee: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Category: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Target version: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Story-Size: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Business value: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Start date: </b></p>
-                                                    
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Due date: </b></p>
-                                                    
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Done: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Spent time: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Release: </b></p>
-                                                    <input type="text" name="fname">
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Notes: </b></p>
-                                                    <textarea></textarea>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div class="task-line">
-                                                <p>Notes about the tasks</p>
-                                                <div class="related-task-image">
-                                                   <img src="../assets/images/hazem.jpg" alt="">
-                                                </div>
-                                              </div>
-                                              <div class="task-line">
-                                                <p>Notes about the tasks</p>
-                                                <div class="related-task-image">
-                                                   <img src="../assets/images/hazem.jpg" alt="">
-                                                </div>
-                                              </div>
-                                              <div class="task-line">
-                                                <p>Notes about the tasks</p>
-                                                <div class="related-task-image">
-                                                   <img src="../assets/images/hazem.jpg" alt="">
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                              <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <li><a href="#" class="" data-toggle="modal" data-target="#userStoryModal"><i class="fa fa-arrows-alt"></i></a></li>
-                                      <div class="modal fade" id="userStoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                              <h4 class="modal-title" id="myModalLabel">Edit story</h4>
-                                            </div>
-                                            <div class="modal-body">
-
-                                              <div class="row">
-                                                <div class="col-lg-12">
-                                                  <div class="userstory-edit-img">
-                                                    <img src="../assets/images/hazem.jpg" alt="">
-                                                  </div>
-                                                  <p><b>Added by: </b>Hazem.Hagrass</p>
-                                                  <p><b>From: </b>One year ago</p>
-                                                  <p><b>Updated: </b>One year ago</p>
-                                                </div>
-                                              </div>
-                                             
-                                              
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Description: </b>Pellentesque nisi neque, posuere a rutrum nec, dignissim a lectus. Morbi eget faucibus tortor. Fusce pretium dui hendrerit ipsum vulputate tempor eget id velit. Etiam ut justo enim. Etiam finibus, sapien nec ornare pellentesque, risus libero fringilla sapien, sed dapibus odio tellus non nisi. Praesent ornare aliquam orci, in varius dolor aliquet id. Nunc sodales enim nunc, at feugiat ex sollicitudin vel. Curabitur ac posuere lectus. Nulla auctor aliquam velit, ut elementum orci ultrices a. Duis aliquam dictum nibh, vitae mattis urna fermentum et. Vestibulum dui lorem, commodo et dui suscipit, commodo pellentesque ante. </p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Status: </b>Completed </p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Priority: </b>Normal </p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Assignee: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Category: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Target version: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Story-Size: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Business value: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Start date: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Due date: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Done: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Spent time: </b></p>
-                                                </div>
-                                              </div>
-                                              <div class="row">
-                                                <div class="modal-row col-lg-12">
-                                                  <p><b>Release: </b></p>
-                                                </div>
-                                              </div>
-                                              
-                                              
-                                              <div class="task-line">
-                                                <p>Notes about the tasks</p>
-                                                <div class="related-task-image">
-                                                   <img src="../assets/images/hazem.jpg" alt="">
-                                                </div>
-                                              </div>
-                                              <div class="task-line">
-                                                <p>Notes about the tasks</p>
-                                                <div class="related-task-image">
-                                                   <img src="../assets/images/hazem.jpg" alt="">
-                                                </div>
-                                              </div>
-                                              <div class="task-line">
-                                                <p>Notes about the tasks</p>
-                                                <div class="related-task-image">
-                                                   <img src="../assets/images/hazem.jpg" alt="">
-                                                </div>
-                                              </div>
-
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                              <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <li><a href="#" class="toggle-btn"><i class="fa fa-arrows-v"></i></a></li>
+                                <div class="card-btns">
+                                  <ul>
+                                    <li ng-show="card.hasAttachments" ><a href="#" class=""><i class="fa fa-paperclip"></i></a></li>
+                                    <li><a href="#" ng-click="editCard(widget, card)" class="" data-toggle="modal" data-target="#userStoryModal"><i class="fa fa-arrows-alt"></i></a></li>
+                                    <li>
+                                   <a href="#" ng-click="showCardAccordion(card.id)" class="toggle-btn"><i class="fa fa-arrows-v"></i></a
+                                    </li>
                                     </ul>
-                                    </div>
                                 </div>
-
-                                 
-                                
-                                <p>
+                              </div>
+                                <!--<p>
                                     <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>  
-                                </p>
+                                </p>-->
                                 <div id="overlay">
                                     <img id="loading" src="http://bit.ly/pMtW1K ">
                                     </img>
@@ -355,13 +99,7 @@
                           <span class="title">priority: </span>
                           <span editable-select="newCard.priority_id" e-name="priority_id" e-ng-options="p.id as p.name for p in priorities">
                           </span>
-                        </div>  
-
-                        <div>
-                          <span class="title">status: </span>
-                          <span editable-select="newCard.status_id" e-name="status_id" e-ng-options="s.status_id as s.title for s in statuses">
-                          </span>
-                        </div>  
+                        </div>   
                         </span>
                         <div class="buttons">
                           <button type="button" class="btn btn-default" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">

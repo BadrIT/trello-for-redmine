@@ -11,19 +11,14 @@ angular.module('trelloRedmine')
             priority_id : '',
             parent_issue_id : '',
             is_private: 0,
-            assigned_to_id: $localStorage.user_id
+            assigned_to_id: $localStorage.user_id,
+            estimated_hours: ''
         };
 
         $scope.isNewCard = false;
-        $scope.priorities = [];
+        
         $scope.statuses = [];
 
-        redmineService.getIssuePriorities()
-        .then(function (result) {
-            $scope.priorities = result.data.issue_priorities;
-        }, function (error) {
-            console.log(error);
-        });
 
         redmineService.getIssuesStatuses()
         .then(function (result) {
@@ -50,7 +45,7 @@ angular.module('trelloRedmine')
             });
         };
 
-        $scope.addNewCard = function(widget) {
+        $scope.addNewCard = function(widget) { 
             $scope.newCard.status_id = widget.status_id;
             redmineService.createTask($scope.newCard)
             .then(function (result) {

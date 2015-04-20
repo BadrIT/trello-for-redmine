@@ -24,12 +24,13 @@
         })
         .run( function($rootScope, $location, $localStorage) {
             // register listener to watch route changes
-            $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+            /*$rootScope.$on( "$routeChangeStart", function(event, next, current) {
+                console.log(next.templateUrl)
                 if($localStorage.current_api_key) {
                     if(next.templateUrl == "views/templates/login.html" ){
                         $location.path('/trello/' + $localStorage.first_project_id);
                     }
                 }     
-            });
+            });*/
         })
 })();
