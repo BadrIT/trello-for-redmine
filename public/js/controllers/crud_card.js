@@ -12,7 +12,7 @@ angular.module('trelloRedmine')
 
         var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
         var priority_to_id = (card.priority_to) ? card.priority.id : '';
-        console.log("-- " + JSON.stringify(card))
+
         if (card) {
             $scope.card = card;
             $scope.newTask = {
@@ -41,12 +41,6 @@ angular.module('trelloRedmine')
         };
 
         $scope.getCustomeFieldValues();
-        
-        $scope.calculateProgress = function () {
-            $scope.progress = ( $scope.subTasks.length == 0) ? 0 : parseInt(( $scope.finishedTasks / $scope.subTasks.length ) * 100);
-        };
-
-        $scope.calculateProgress();
 
         $scope.dismiss = function() {
             $modalInstance.dismiss();
@@ -56,18 +50,6 @@ angular.module('trelloRedmine')
             widget.cards.push($scope.card);
             $modalInstance.close(widget);
             $scope.updateBackend();
-        };
-
-        $scope.changeTaskStatus = function(task, state_val) {
-            if(state_val) {
-                $scope.finishedTasks++;
-                task.status_id = 14;
-            } else {
-                $scope.finishedTasks--;
-                task.status_id = 9;
-            }
-            $scope.updateTask(task);
-            $scope.calculateProgress();
         };
 
         $scope.createNewTask = function() {

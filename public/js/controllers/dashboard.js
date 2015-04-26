@@ -93,17 +93,33 @@ angular.module('trelloRedmine')
                             });
                         }
 
-                        var retrieve_user_info = function(card){
-                            if(card.assigned_to) {
-                                var assign_to_id = card.assigned_to.id;
-                                redmineService.getUserInfo(assign_to_id)
-                                .then(function (result) {
-                                    card.assigned_to = result.data;
-                                });
-                            } 
+                        var getSubTasks = function(card){
+                            var storyId = card.id;
+                            var projectId = card.project.id;
+                            var issues = [];                        
+                            var subTasks = [];
+
+                            card.finishedTasks = 0;
+                            card.subTasks = [];
+
+                            redmineService.getStoryTasks(projectId, storyId)
+                            .then(function (result) {
+                                issues = result.data.issues;
+                                angular.forEach(issues, function(issue) {    
+                                    if (issue.parent && issue.parent.id == storyId) {
+                                        if (issue.status.id == 14) card.finishedTasks++;
+                                        this.push(issue);
+                                    }
+                                }, subTasks);
+
+                                card.subTasks = subTasks;
+                            }, function (error) {
+                                console.log(error);
+                            });
                         }
+
+                        getSubTasks(card);
                         getAttachments(card);
-                        retrieve_user_info(card);
                     }
                 }
             }
@@ -153,46 +169,20 @@ angular.module('trelloRedmine')
                 console.log(error);
             });
 
-            redmineService.getStoryTasks(projectId, storyId)
-            .then(function (result) {
-                issues = result.data.issues;
-                angular.forEach(issues, function(issue) {    
-                    if (issue.parent && issue.parent.id == storyId) {
-                        if (issue.status.id == 14) $scope.finishedTasks++;
-                        this.push(issue);
+            $modal.open({
+                scope: $scope,
+                templateUrl: 'views/templates/edit_card.html',
+                controller: 'CrudCardCtrl',
+                backdropClass: "backdrop-fix",
+                resolve: {
+                    widget: function() {
+                        return widget;
+                    },
+                    card: function() {
+                        return card;
                     }
-                }, subTasks);
-
-                $scope.subTasks = subTasks;
-
-                $modal.open({
-                    scope: $scope,
-                    templateUrl: 'views/templates/edit_card.html',
-                    controller: 'CrudCardCtrl',
-                    backdropClass: "backdrop-fix",
-                    resolve: {
-                        widget: function() {
-                            return widget;
-                        },
-                        card: function() {
-                            return card;
-                        }
-                    }
-                });
-            }, function (error) {
-                console.log(error);
-            });
-
-            $scope.$watchCollection('subTasks', function(newSubTasks, oldSubTasks) {
-                if(newSubTasks.length > 0 ) {
-                    for (var i = 0; i < newSubTasks.length; i++) {
-                        if(newSubTasks[i].assigned_to) {
-                            var assign_to_id = newSubTasks[i].assigned_to.id;
-                            getUserInfo(i, assign_to_id);
-                        } 
-                    };
                 }
-            });  
+            });
         }
 
         $scope.sortableTemplates = {
@@ -215,21 +205,21 @@ angular.module('trelloRedmine')
             }
         };
 
-        $scope.updateIssue = function(issue_id, updated_data) {
+        $scope.updateIssue = function(issue_id, updated_data, card) {
             redmineService.updateIssue(issue_id, updated_data)
             .then(function (result) {
                 if(updated_data.parent) {
                     var task_index = 0;
-                    for (var i = 0; i < $scope.subTasks.length; i++) {
-                        if ($scope.subTasks[i].id == updated_data.id ){
+                    for (var i = 0; i < card.subTasks.length; i++) {
+                        if (card.subTasks[i].id == updated_data.id ){
                             task_index = i;
                             break;
                         } 
                     };
-                    $scope.subTasks[task_index] = result.config.data;
+                    card.subTasks[task_index] = result.config.data;
                     if(result.config.data.assigned_to_id) getUserInfo(task_index, result.config.data.assigned_to_id);
                     if(result.config.data.status_id) {
-                        $scope.subTasks[task_index].status.id = result.config.data.status_id;
+                        card.subTasks[task_index].status.id = result.config.data.status_id;
                     }
                 }               
             }, function (error) {
@@ -286,6 +276,15 @@ angular.module('trelloRedmine')
             });
         };
 
+        function getUserInfoByIssue(issue) {
+            if(issue.assigned_to){
+                redmineService.getUserInfo(issue.assigned_to.id)
+                .then(function (result) {
+                    issue.assigned_to = result.data;
+                });
+            }
+        }
+
         $scope.getImageLink = function(card) {
             if(card.last_image) {
                 return card.last_image.content_url;
@@ -329,10 +328,26 @@ angular.module('trelloRedmine')
             }, $scope.activities)
         });
 
-        $scope.showCardAccordion = function(id) {
+        $scope.showCardAccordion = function(card) {
             $timeout(function() {
-                angular.element("#accord-" + id).trigger('click');
+                angular.element("#accord-" + card.id).trigger('click');
             }, 100);
+        };
+
+        $scope.changeTaskStatus = function(card, task, state_val) {
+            if(state_val) {
+                card.finishedTasks++;
+                task.status_id = 14;
+            } else {
+                card.finishedTasks--;
+                task.status_id = 9;
+            }
+            $scope.updateIssue(task.id, task, card);
+            $scope.calculateProgress(card);
+        };
+
+        $scope.calculateProgress = function (task) {
+            task.progress = ( task.subTasks.length == 0) ? 0 : parseInt(( task.finishedTasks / task.subTasks.length ) * 100);
         };
     }
 ]);
