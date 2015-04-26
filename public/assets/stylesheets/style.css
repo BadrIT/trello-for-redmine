@@ -382,6 +382,8 @@ input {
 
 .panel-group {
     margin-bottom: 0 !important;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .panel-heading {
