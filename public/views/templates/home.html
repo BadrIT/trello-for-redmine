@@ -1,26 +1,26 @@
 <div>
-  <link rel="stylesheet" ng-href="{{ styleUrl }}" />    
+  <link rel="stylesheet" ng-href="{{ styleUrl }}" />
   <div class="navbar navbar-inverse">
-      <ul class="nav navbar-nav navbar-left">
-        <div class="choise-select">
-          <span>Release</span>
-          <select class="selectpicker">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
-          </select>
-        </div>
-        <div class="choise-select">
-          <span>Sprint</span>
-          <select class="selectpicker">
-            <option>Mustard</option>
-            <option>Ketchup</option>
-            <option>Relish</option>
-          </select>
-        </div>
-        <a href="#">Scrummer</a>
-      </ul>
-  </div>
+    <ul class="nav navbar-nav navbar-left">
+      <div class="choise-select">
+        <span>Release</span>
+        <select class="selectpicker">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div> <!-- end of choise-select -->
+      <div class="choise-select">
+        <span>Sprint</span>
+        <select class="selectpicker">
+          <option>Mustard</option>
+          <option>Ketchup</option>
+          <option>Relish</option>
+        </select>
+      </div> <!-- end of choise-select -->
+      <a href="#">Scrummer</a>
+    </ul>
+  </div> <!-- end of navbar -->
 
   <div class="page-header">
     <div class="col-headers col-lg-3 col-md-3 col-xs-3">
@@ -35,174 +35,169 @@
     <div class="col-headers col-lg-3 col-md-3 col-xs-3">
       <span>Accepted</span>
     </div>
-  </div>
-<div gridster="gridsterOptions">
+  </div> <!-- end of page-header -->
+
+  <div gridster="gridsterOptions">
     <div ng-model="widgets">
-        <ul>
-            <li gridster-item="widget" ng-repeat="widget in widgets | filter: {allowed: true}">
-                <div class="box column-box" ng-controller="CustomWidgetCtrl">
-                    <div class="box-header">
-                        <section>
-                            <h3>{{widget.title}}</h3>
-                        </section>
-                        <div class="box-header-btns pull-right">
-                          <i>{{widget.cards.length}}</i>
-                            <a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
-                            <a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
-                        </div>
-                    </div>
-                    <div class="box-content">
-                        <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
-                            <li class="card" ng-repeat="card in widget.cards" id="{{card.id}}">
-                              <div class="card-header heigh">
-                                <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank" class="id">{{card.id}}</a>
-                                <h5>{{card.subject}}</h5>
-                              </div>
-                              <accordion close-others="oneAtATime"><accordion-group> <accordion-heading> <i id="accord-{{card.id}}" ng-hide="false" href="#" class=""> </accordion-heading>
-
-                              <div ng-repeat="task in card.subTasks track by $index" class="task-component">
-                                <div class="task-line">
-                                  <div class="task-line-info">
-                                    <input class="pull-left" type="checkbox" ng-click="changeTaskStatus(card, task, status_val)" ng-model="status_val" ng-checked="task.status.id == 14">
-                                    <a target="_blank" href="http://{{config.host}}/issues/{{task.id}}" class="id">{{task.id}}</a>
-                                    <p>{{task.subject}}</p>
+      <ul>
+        <li gridster-item="widget" ng-repeat="widget in widgets | filter: {allowed: true}">
+          <div class="box column-box" ng-controller="CustomWidgetCtrl">
+            <div class="box-header">
+              <section>
+                <h3>{{widget.title}}</h3>
+              </section>
+              <div class="box-header-btns pull-right">
+                <i>{{widget.cards.length}}</i>
+                  <a title="settings" ng-click="openSettings(widget)"><i class="glyphicon glyphicon-cog"></i></a>
+                  <a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
+              </div>
+            </div> <!-- end of box-header -->
+            <div class="box-content">
+              <ul class="connectedSortable" ui-sortable="sortableTemplates" sortable ng-model="widget.cards" widget-status="{{widget.status_id}}">
+                <li class="card" ng-repeat="card in widget.cards" id="{{card.id}}">
+                  <div class="card-header heigh">
+                    <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank" class="id">{{card.id}}</a>
+                    <h5>{{card.subject}}</h5>
+                  </div> <!-- end of card-header -->
+                  <accordion close-others="oneAtATime">
+                    <accordion-group>
+                      <accordion-heading><i id="accord-{{card.id}}" ng-hide="false" href="#" class=""></accordion-heading>
+                      <div ng-repeat="task in card.subTasks track by $index" class="task-component">
+                        <div class="task-line">
+                          <div class="task-line-info">
+                            <input class="pull-left" type="checkbox" ng-click="changeTaskStatus(card, task, status_val)" ng-model="status_val" ng-checked="task.status.id == 14">
+                            <a target="_blank" href="http://{{config.host}}/issues/{{task.id}}" class="id">{{task.id}}</a>
+                            <p>{{task.subject}}</p>
+                          </div> <!-- end of task-line-info -->
+                          <div class="related-task-image">
+                            <img class="member" title="{{task.assigned_to.name}}" gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
+                          </div>
+                        </div> <!-- end of task-line -->
+                        <div class="related-task-icons">
+                          <ul>
+                            <li><a href="" data-toggle="modal" data-target="#relatedTask-modal{{task.id}}"><i class="fa fa-arrows-alt"></i></a></li>
+                            <li><i class="fa fa-wrench"></i></li>
+                            <li><i class="fa fa-question"></i></li>
+                            <li><a href="#" confirmed-click="deleteTask(task)" ng-confirm-click="Are you sure about deleting this task?"><i class="fa fa-trash-o"></i></a></li>
+                          </ul>
+                        </div> <!-- end of related-task-icons -->
+                        <!-- modal that contains task details -->
+                          <div class="modal fade" id="relatedTask-modal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                  <h4 class="modal-title" id="myModalLabel">{{task.subject}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <div class="row">
+                                    <div class="col-lg-12">
+                                      <div class="userstory-edit-img">
+                                         <img class="member" title="{{task.assigned_to.name}}" gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
+                                      </div>
+                                      <p><b>Added by: </b>{{task.author.name}}</p>
+                                      <p><b>From: </b>{{task.created_on}}</p>
+                                      <p><b>Updated: </b>{{task.updated_on}}</p>
+                                    </div>
                                   </div>
-                                  <div class="related-task-image">
-                                    <img class="member" title="{{task.assigned_to.name}}" gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
+                                  <div class="row">
+                                    <div class="modal-row col-lg-12">
+                                      <p><b>Description: </b>{{task.description}} </p>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="modal-row col-lg-12">
+                                      <p><b>Status: </b>{{task.status.name}} </p>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="modal-row col-lg-12">
+                                      <p><b>Priority: </b>{{task.priority.name || 'Not set'}} </p>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="modal-row col-lg-12">
+                                      <p><b>Assignee: </b>{{task.assigned_to.name}}</p>
+                                    </div>
                                   </div>
                                 </div>
-                                <div class="related-task-icons">
-                                  <ul>
-                                    <li><a href="" data-toggle="modal" data-target="#relatedTask-modal"><i class="fa fa-arrows-alt"></i></li>
-                                        <div class="modal fade" id="relatedTask-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">{{task.subject}}</h4>
-                                              </div>
-                                              <div class="modal-body">
-
-                                                <div class="row">
-                                                  <div class="col-lg-12">
-                                                    <div class="userstory-edit-img">
-                                                       <img class="member" title="{{task.assigned_to.name}}" gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
-                                                    </div>
-                                                    <p><b>Added by: </b>{{task.author.name}}</p>
-                                                    <p><b>From: </b>{{task.created_on}}</p>
-                                                    <p><b>Updated: </b>{{task.updated_on}}</p>
-                                                  </div>
-                                                </div>
-                                               
-                                                
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Description: </b>{{task.description}} </p>
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Status: </b>{{task.status.name}} </p>
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Priority: </b>{{task.priority.name || 'Not set'}} </p>
-                                                  </div>
-                                                </div>
-                                                <div class="row">
-                                                  <div class="modal-row col-lg-12">
-                                                    <p><b>Assignee: </b>{{task.assigned_to.name}}</p>
-                                                  </div>
-                                                </div>
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                    <li><i class="fa fa-wrench"></i></li>
-                                    <li><i class="fa fa-question"></i></li>
-                                    <li><a href="#" confirmed-click="deleteTask(task)" ng-confirm-click="Are you sure about deleting this task?"></a><i class="fa fa-trash-o"></i></li>
-                                  </ul>
-                                </div>
-                                
-                              </div>
-                              </accordion-group></accordion>
-                              <div class="card-footer">
-                                <div class="task-user">
-                                  <div class="task-user-img">
-                                   <img class="us-member member" title="{{card.assigned_to.name}}" gravatar-src="card.assigned_to.mail" gravatar-size="100" />
-                                  </div>
-                                    <span>{{card.assigned_to.name}}</span>
-                                </div>
-
-                                <div class="card-btns">
-                                  <ul>
-                                    <li ng-show="card.hasAttachments" ><a href="#" class=""><i class="fa fa-paperclip"></i></a></li>
-                                    <li><a href="#" ng-click="editCard(widget, card)" class="" data-toggle="modal" data-target="#userStoryModal"><i class="fa fa-arrows-alt"></i></a></li>
-                                    <li>
-                                   <a href="#" ng-click="showCardAccordion(card)" class="toggle-btn"><i class="fa fa-arrows-v"></i></a
-                                    </li>
-                                    </ul>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                                 </div>
                               </div>
-                                <!--<p>
-                                    <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>  
-                                </p>-->
-                                <div id="overlay">
-                                    <img id="loading" src="http://bit.ly/pMtW1K ">
-                                    </img>
-                                </div>
-                            </li>
-                            <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
-                        </ul>
-                        
-                        <form editable-form name="editableForm" onaftersave="addNewCard(widget)">
-                        <span ng-show="editableForm.$visible">
-                        <div>
-                          <span class="title">subject: </span>
-                          <span editable-text="newCard.subject" e-name="subject" e-required></span>
-                        </div> 
-
-                        <div>
-                          <span class="title">priority: </span>
-                          <span editable-select="newCard.priority_id" e-name="priority_id" e-ng-options="p.id as p.name for p in priorities">
-                          </span>
-                        </div>   
-                        </span>
-                        <div class="buttons">
-                          <button type="button" class="btn btn-default" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">
-                            Add a card
-                          </button>
-                          <span ng-show="editableForm.$visible">
-                            <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-                              Save
-                            </button>
-                            <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
-                              Cancel
-                            </button>
-                          </span>
-                        </div>
-                      </form>  
-                    </div>
-                </div>
-            </li>
-           <!-- <li gridster-item="widget">
-                <div class="box-header">
-                    <section>
-                        <h3>Project Activities</h3>
-                    </section>
-                </div>
-                <div class="box-content">
-                    <ul>
-                        <li ng-repeat="activity in activities track by $index">{{activity.author.name}}<br>{{activity.time}}<br>{{activity.title}}<br><div ng-bind-html="parseTrustSnippt(activity.description)"></div><br></li>
-                    </ul>
-                </div>
-            </li> -->
-        </ul>
-    </div>
-</div>
-</div>
+                            </div>
+                          </div> <!-- end of modal -->
+                        <!-- end of modal -->
+                      </div> <!-- end of task card.subTasks -->
+                    </accordion-group>
+                  </accordion>
+                  <div class="card-footer">
+                    <div class="task-user">
+                      <div class="task-user-img">
+                       <img class="us-member member" title="{{card.assigned_to.name}}" gravatar-src="card.assigned_to.mail" gravatar-size="100" />
+                      </div>
+                      <span>{{card.assigned_to.name}}</span>
+                    </div> <!-- end of task-user -->
+                    <div class="card-btns">
+                      <ul>
+                        <li ng-show="card.hasAttachments" ><a href="#" class=""><i class="fa fa-paperclip"></i></a></li>
+                        <li><a href="#" ng-click="editCard(widget, card)" class="" data-toggle="modal" data-target="#userStoryModal"><i class="fa fa-arrows-alt"></i></a></li>
+                        <li><a href="#" ng-click="showCardAccordion(card)" class="toggle-btn"><i class="fa fa-arrows-v"></i></a></li>
+                      </ul>
+                    </div> <!-- end of card-btns -->
+                  </div> <!-- end of card-footer -->
+                    <!--<p>
+                        <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>  
+                    </p>-->
+                  <div id="overlay">
+                    <img id="loading" src="http://bit.ly/pMtW1K "></img>
+                  </div> <!-- end of overlay -->
+                </li> <!-- end of card -->
+                <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
+              </ul>
+              <form editable-form name="editableForm" onaftersave="addNewCard(widget)">
+                <span ng-show="editableForm.$visible">
+                  <div>
+                    <span class="title">subject: </span>
+                    <span editable-text="newCard.subject" e-name="subject" e-required></span>
+                  </div>
+                  <div>
+                    <span class="title">priority: </span>
+                    <span editable-select="newCard.priority_id" e-name="priority_id" e-ng-options="p.id as p.name for p in priorities">
+                    </span>
+                  </div>
+                </span> <!-- end of editableForm -->
+                <div class="buttons">
+                  <button type="button" class="btn btn-default" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">
+                    Add a card
+                  </button>
+                  <span ng-show="editableForm.$visible">
+                    <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                      Save
+                    </button>
+                    <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                      Cancel
+                    </button>
+                  </span> <!-- end of editableForm -->
+                </div> <!-- end of buttons -->
+              </form>
+            </div> <!-- end of box-content -->
+          </div> <!-- end of box -->
+        </li> <!-- end of widget -->
+       <!-- <li gridster-item="widget">
+            <div class="box-header">
+                <section>
+                    <h3>Project Activities</h3>
+                </section>
+            </div>
+            <div class="box-content">
+                <ul>
+                    <li ng-repeat="activity in activities track by $index">{{activity.author.name}}<br>{{activity.time}}<br>{{activity.title}}<br><div ng-bind-html="parseTrustSnippt(activity.description)"></div><br></li>
+                </ul>
+            </div>
+        </li> -->
+      </ul>
+    </div> <!-- end of widgets -->
+  </div> <!-- end of gridsterOptions -->
+</div> <!-- end of largest container -->
