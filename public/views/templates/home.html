@@ -156,30 +156,34 @@
                 </li> <!-- end of card -->
                 <li ng-show="widget.cards.length===0" style="background-color: #CCEEFA; visibility: hidden;">&nbsp;</li>
               </ul>
-              <form editable-form name="editableForm" onaftersave="addNewCard(widget)">
+              <form editable-form name="editableForm" onaftersave="addNewCard(widget)" >
                 <span ng-show="editableForm.$visible">
-                  <div>
-                    <span class="title">subject: </span>
-                    <span editable-text="newCard.subject" e-name="subject" e-required></span>
+                  <div class="addNew-form">
+                    <div>
+                      <span class="title">subject: </span>
+                      <span editable-text="newCard.subject" e-name="subject" e-required></span>
+                    </div>
+                    <div>
+                      <span class="title">priority: </span>
+                      <span editable-select="newCard.priority_id" e-name="priority_id" e-ng-options="p.id as p.name for p in priorities">
+                      </span>
+                    </div>
+                    <span ng-show="editableForm.$visible">
+                      <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                        Save
+                      </button>
+                      <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                        Cancel
+                      </button>
+                    </span> <!-- end of editableForm -->
                   </div>
-                  <div>
-                    <span class="title">priority: </span>
-                    <span editable-select="newCard.priority_id" e-name="priority_id" e-ng-options="p.id as p.name for p in priorities">
-                    </span>
-                  </div>
+
                 </span> <!-- end of editableForm -->
                 <div class="buttons">
                   <button type="button" class="btn btn-default" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">
                     Add a card
                   </button>
-                  <span ng-show="editableForm.$visible">
-                    <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
-                      Save
-                    </button>
-                    <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
-                      Cancel
-                    </button>
-                  </span> <!-- end of editableForm -->
+                  
                 </div> <!-- end of buttons -->
               </form>
             </div> <!-- end of box-content -->

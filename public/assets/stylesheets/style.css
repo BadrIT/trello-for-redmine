@@ -27,6 +27,17 @@ input {
     float: right;
     padding: 10px;
 }
+
+.addNew-form {
+    border: 1px solid #fff;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.addNew-form div {
+    margin-bottom: 5px;
+}
+
 .task-component{
     margin-top: 10px;
     display: table;

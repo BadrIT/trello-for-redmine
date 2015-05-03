@@ -1,7 +1,7 @@
 angular.module('trelloRedmine')
 .controller('AuthCtrl', ['$scope', 'redmineService', '$location', '$localStorage',
     function($scope, redmineService, $location, $localStorage) {
-        console.log("in login")
+    
         $scope.username = "";
         $scope.password = "";
         $scope.login = function() {
