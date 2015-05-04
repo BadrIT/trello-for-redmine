@@ -64,15 +64,6 @@ angular.module('trelloRedmine')
         };
 
         $scope.updateTask = function(task) {
-            if(task.estimated_size){
-                for (var i = task.custom_fields.length - 1; i >= 0; i--) {
-                    console.log(JSON.stringify(task))
-                    if(task.custom_fields[i].name == "Story-Size"){
-                        task.custom_fields[i].value = task.estimated_size;
-                        break;
-                    }
-                };
-            }
             $scope.updateIssue(task.id, task);
         };
 

@@ -102,7 +102,7 @@ angular.module('trelloRedmine')
     };
 
     this.getProjectMembers = function (project_id) {
-        var query = projects_url + project_id + '/memberships' + "/" + current_api_key;
+        var query = projects_url + project_id + "/memberships/" + current_api_key;
         return get(query);
     };
 

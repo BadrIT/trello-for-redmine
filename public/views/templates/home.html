@@ -87,7 +87,7 @@
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                  <h4 class="modal-title" id="myModalLabel">{{task.subject}}</h4>
+                                  <h4 class="modal-title" id="myModalLabel"><div onaftersave="updateIssue(task.id, task, card)" editable-text="task.subject">{{task.subject}}</div></h4>
                                 </div>
                                 <div class="modal-body">
                                   <div class="row">
@@ -117,7 +117,9 @@
                                   </div>
                                   <div class="row">
                                     <div class="modal-row col-lg-12">
-                                      <p><b>Assignee: </b>{{task.assigned_to.name}}</p>
+                                      <p><b>Assignee: </b> <a href="#" onaftersave="updateTask(task)" editable-select="task.assigned_to_id" e-ng-options="m.id as m.name for m in projectMembers">
+                                                {{task.assigned_to.name}}
+                                         </a></p>
                                     </div>
                                   </div>
                                 </div>

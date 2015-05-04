@@ -8,6 +8,7 @@ angular.module('trelloRedmine')
         $scope.card = {};
         $scope.card.attachments = [];
         $scope.activities = [];
+        $scope.projectMembers = [];
 
         $scope.styleUrl = 'assets/stylesheets/cards_style.css';
         // TODO: make it dynamic
@@ -23,12 +24,21 @@ angular.module('trelloRedmine')
         if(!$scope.project_id) return; 
 
         $scope.priorities = [];
+
+        redmineService.getProjectMembers($scope.project_id)
+        .then(function(result) {
+            console.log(JSON.stringify(result));
+        }, function(error) {
+            console.log(error);
+        });
+
         redmineService.getIssuePriorities()
         .then(function (result) {
             $scope.priorities = result.data.issue_priorities;
         }, function (error) {
             console.log(error);
         });
+
         /*$scope.allowed_statuses = [8, 9, 10];
         $scope.getUserLists = function() {
             $http.get('/settings/config/lists/' + $localStorage.current_api_key)
@@ -61,15 +71,28 @@ angular.module('trelloRedmine')
             for(var i = 0; i < $scope.allowed_statuses.length; i++) {
                 $scope.widgets[$scope.allowed_statuses[i] - 1].allowed = true;
             }
-        });
-      
+        }); 
 
-        for(var i = 0; i < $scope.widgets.length; i++) {
-            $scope.widgets[i].cards = [];
-        }
+        /*redmineService.getProjectMembers($scope.project_id)
+        .then(function (result) {
+            angular.forEach(result.data.memberships, function(membership) {  
+                var member = {
+                    "id": membership.user.id,
+                    "name": membership.user.name
+                };
+                this.push(member);
+            }, $scope.projectMembers);
+        }, function (error) {
+            console.log(error);
+        });*/
 
         redmineService.getProjectUserStories($scope.project_id)
         .then(function (result) {
+            
+            for(var i = 0; i < $scope.widgets.length; i++) {
+                $scope.widgets[i].cards = [];
+            }
+
             for(var key in result.data) {
                 if(result.data.hasOwnProperty(key)) {
                     $scope.widgets[key - 1].cards = result.data[key];
@@ -78,6 +101,7 @@ angular.module('trelloRedmine')
                     for(var card_key in $scope.widgets[key - 1].cards) {
                         var card = $scope.widgets[key - 1].cards[card_key];
                         card.showDetails = false;
+
                         var getAttachments = function(card) {
                             redmineService.getIssueAttachments(card.id)
                             .then(function (result) {
@@ -153,21 +177,10 @@ angular.module('trelloRedmine')
             $scope.subTasks = [];
             $scope.progress = 0;
             $scope.finishedTasks = 0;
-            $scope.projectMembers = [];
+         
             $scope.attachments = [];
             
-            redmineService.getProjectMembers(projectId)
-            .then(function (result) {
-                angular.forEach(result.data.memberships, function(membership) {  
-                    var member = {
-                        "id": membership.user.id,
-                        "name": membership.user.name
-                    };
-                    this.push(member);
-                }, $scope.projectMembers);
-            }, function (error) {
-                console.log(error);
-            });
+          
 
             $modal.open({
                 scope: $scope,
