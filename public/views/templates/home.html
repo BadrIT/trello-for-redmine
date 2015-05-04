@@ -78,14 +78,13 @@
 
                         <div class="related-task-icons">
                           <ul>
-                            <li><a href="" data-toggle="modal"><i class="fa fa-plus"></i></a></li>
                             <li><a href="" data-toggle="modal" data-target="#relatedTask-modal{{task.id}}"><i class="fa fa-arrows-alt"></i></a></li>
                             <li><a href="#" confirmed-click="deleteTask(task)" ng-confirm-click="Are you sure about deleting this task?"><i class="fa fa-trash-o"></i></a></li>
                           </ul>
                         </div> <!-- end of related-task-icons -->
 
                         <!-- modal that contains task details -->
-                          <div class="modal fade" id="relatedTask-modal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="relatedTask-modal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -130,7 +129,7 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
+                        </div>
                         <!-- end of modal -->
                       </div> <!-- end of task card.subTasks -->
                     </accordion-group>
@@ -145,11 +144,39 @@
                     </div> <!-- end of task-user -->
                     <div class="card-btns">
                       <ul>
+                        <li><a href="" data-toggle="modal" data-target="#addSubtask-modal"><i class="fa fa-plus"></i></a></li>
                         <li ng-show="card.hasAttachments" ><a href="#" class=""><i class="fa fa-paperclip"></i></a></li>
                         <li><a href="#" ng-click="editCard(widget, card)" class="" data-toggle="modal" data-target="#userStoryModal"><i class="fa fa-arrows-alt"></i></a></li>
                         <li><a href="#" ng-click="showCardAccordion(card)" class="toggle-btn"><i class="fa fa-arrows-v"></i></a></li>
                       </ul>
                     </div> <!-- end of card-btns -->
+                    
+                    <!--******************************** ADD SUB TASK MODAL ***************************************-->
+                    <div class="modal fade" id="addSubtask-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header newTask-header">
+                              <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
+                              <span><a href="#" onaftersave="updateTask(card)" editable-text="card.subject">{{card.subject}}</a></span>
+                              <!--<img style="width: 50%; height: 50%; " ng-src="{{getImageLink(card)}}" />-->
+                          </div>
+                          <div class="modal-body">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                  <input class="modal-textInput" type="text" name="fname">
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
                   </div> <!-- end of card-footer -->
                   
                     <!--<p>
