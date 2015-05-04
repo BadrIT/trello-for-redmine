@@ -101,7 +101,7 @@ angular.module('trelloRedmine')
                     for(var card_key in $scope.widgets[key - 1].cards) {
                         var card = $scope.widgets[key - 1].cards[card_key];
                         card.showDetails = false;
-
+                        console.log(card)
                         var getAttachments = function(card) {
                             redmineService.getIssueAttachments(card.id)
                             .then(function (result) {
@@ -180,6 +180,8 @@ angular.module('trelloRedmine')
          
             $scope.attachments = [];
 
+            $scope.calculateProgress(card);
+            
             $modal.open({
                 scope: $scope,
                 templateUrl: 'views/templates/edit_card.html',

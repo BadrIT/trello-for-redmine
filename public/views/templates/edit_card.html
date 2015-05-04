@@ -17,10 +17,10 @@
         </div>
         <div class="row">
             <div class="modal-section progress-section col-lg-6">
-                <p><b>Progress:</b><span>20%</span></p>
+                <p><b>Progress:</b><span>{{card.progress}}%</span></p>
             </div>
             <div class="modal-section progress-section col-lg-6">
-                <p><b>Done:</b><span>{{card.done_ratio}}</span></p>
+                <p><b>Done:</b><span>{{card.done_ratio}}%</span></p>
             </div>
         </div>
         <div class="row">
@@ -28,11 +28,11 @@
                 <table>
                     <tr>
                         <td style="width:30%;"><b class="blue-text">Description:</b></td>
-                        <td>Integrate all functions</td>
+                        <td>{{card.description}}</td>
                     </tr>
                     <tr>
                         <td style="width:30%;"><b class="blue-text">Assignee:</b></td>
-                        <td></td>
+                        <td>{{card.assigned_to.name}}</td>
                     </tr>
                     <tr>
                         <td style="width:30%;"><b class="blue-text">Story-size:</b></td>
@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <td style="width:30%;"><b class="blue-text">Start date:</b></td>
-                        <td>2015/03/05</td>
+                        <td>{{card.start_date}}</td>
                     </tr>
                     <tr>
                         <td style="width:30%;"><b class="blue-text">Release:</b></td>
