@@ -33,7 +33,7 @@
       <span>Completed</span>
     </div>
     <div class="col-headers col-lg-3 col-md-3 col-xs-3">
-      <span>Accepted</span>
+      <span>Activities</span>
     </div>
   </div> <!-- end of page-header -->
 
@@ -59,6 +59,7 @@
                     <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank" class="id">{{card.id}}</a>
                     <h5>{{card.subject}}</h5>
                   </div> <!-- end of card-header -->
+
                   <accordion close-others="oneAtATime">
                     <accordion-group>
                       <accordion-heading><i id="accord-{{card.id}}" ng-hide="false" href="#" class=""></accordion-heading>
@@ -69,69 +70,72 @@
                             <a target="_blank" href="http://{{config.host}}/issues/{{task.id}}" class="id">{{task.id}}</a>
                             <p>{{task.subject}}</p>
                           </div> <!-- end of task-line-info -->
+
                           <div class="related-task-image">
                             <img class="member" title="{{task.assigned_to.name}}" gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
                           </div>
                         </div> <!-- end of task-line -->
+
                         <div class="related-task-icons">
                           <ul>
+                            <li><a href="" data-toggle="modal"><i class="fa fa-plus"></i></a></li>
                             <li><a href="" data-toggle="modal" data-target="#relatedTask-modal{{task.id}}"><i class="fa fa-arrows-alt"></i></a></li>
-                            <li><i class="fa fa-wrench"></i></li>
-                            <li><i class="fa fa-question"></i></li>
                             <li><a href="#" confirmed-click="deleteTask(task)" ng-confirm-click="Are you sure about deleting this task?"><i class="fa fa-trash-o"></i></a></li>
                           </ul>
                         </div> <!-- end of related-task-icons -->
+
                         <!-- modal that contains task details -->
                           <div class="modal fade" id="relatedTask-modal{{task.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                  <h4 class="modal-title" id="myModalLabel">{{task.subject}}</h4>
+                                    <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
+                                    <span><a href="#" onaftersave="updateTask(card)" editable-text="card.subject">{{card.subject}}</a></span>
+                                    <!--<img style="width: 50%; height: 50%; " ng-src="{{getImageLink(card)}}" />-->
                                 </div>
                                 <div class="modal-body">
                                   <div class="row">
                                     <div class="col-lg-12">
-                                      <div class="userstory-edit-img">
-                                         <img class="member" title="{{task.assigned_to.name}}" gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
-                                      </div>
-                                      <p><b>Added by: </b>{{task.author.name}}</p>
-                                      <p><b>From: </b>{{task.created_on}}</p>
-                                      <p><b>Updated: </b>{{task.updated_on}}</p>
+                                        <div class="userstory-edit-img">
+                                            <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
+                                        </div>
+                                        <p><b>Added by: </b> {{card.author.name}}</p>
+                                        <p><b>From: </b> {{card.created_on}}</p>
+                                        <p><b>Updated: </b> {{card.updated_on}}</p>
                                     </div>
                                   </div>
                                   <div class="row">
                                     <div class="modal-row col-lg-12">
-                                      <p><b>Description: </b>{{task.description}} </p>
+                                        <table>
+                                          <tr>
+                                              <td style="width:30%;"><b class="blue-text">Description:</b></td>
+                                              <td>Integrate all functions</td>
+                                          </tr>
+                                          <tr>
+                                              <td style="width:30%;"><b class="blue-text">Assignee:</b></td>
+                                              <td></td>
+                                          </tr>
+                                          <tr>
+                                              <td style="width:30%;"><b class="blue-text">Status:</b></td>
+                                              <td>0</td>
+                                          </tr>
+                                        </table>
                                     </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="modal-row col-lg-12">
-                                      <p><b>Status: </b>{{task.status.name}} </p>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="modal-row col-lg-12">
-                                      <p><b>Priority: </b>{{task.priority.name || 'Not set'}} </p>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                    <div class="modal-row col-lg-12">
-                                      <p><b>Assignee: </b>{{task.assigned_to.name}}</p>
-                                    </div>
-                                  </div>
+                                 </div>
                                 </div>
+                                
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                   <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                                 </div>
                               </div>
                             </div>
-                          </div> <!-- end of modal -->
+                          </div>
                         <!-- end of modal -->
                       </div> <!-- end of task card.subTasks -->
                     </accordion-group>
                   </accordion>
+
                   <div class="card-footer">
                     <div class="task-user">
                       <div class="task-user-img">
@@ -147,6 +151,7 @@
                       </ul>
                     </div> <!-- end of card-btns -->
                   </div> <!-- end of card-footer -->
+                  
                     <!--<p>
                         <a ng-href="http://{{config.host}}/issues/{{card.id}}" target="_blank">{{card.subject}}</h3></a>  
                     </p>-->
@@ -180,7 +185,7 @@
 
                 </span> <!-- end of editableForm -->
                 <div class="buttons">
-                  <button type="button" class="btn btn-default" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">
+                  <button type="button" class="btn btn-default add-card-btn" ng-show="!editableForm.$visible" ng-click="editableForm.$show()">
                     Add a card
                   </button>
                   
@@ -189,18 +194,30 @@
             </div> <!-- end of box-content -->
           </div> <!-- end of box -->
         </li> <!-- end of widget -->
-       <!-- <li gridster-item="widget">
+       
+       <li gridster-item="widget">
+          <div class="box column-box" ng-controller="CustomWidgetCtrl">
             <div class="box-header">
                 <section>
                     <h3>Project Activities</h3>
                 </section>
             </div>
-            <div class="box-content">
-                <ul>
+            <div class="box-content activity-box-content">
+                <!--<ul>
                     <li ng-repeat="activity in activities track by $index">{{activity.author.name}}<br>{{activity.time}}<br>{{activity.title}}<br><div ng-bind-html="parseTrustSnippt(activity.description)"></div><br></li>
-                </ul>
+                </ul>-->
+                <div class="activity-details">
+                  <b>User name</b>
+                  <p>abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia </p>
+                </div>
+                <div class="activity-img">
+                  <img src=" " alt="">
+                </div>
             </div>
-        </li> -->
+          </div>
+
+        </li>
+
       </ul>
     </div> <!-- end of widgets -->
   </div> <!-- end of gridsterOptions -->

@@ -1,4 +1,4 @@
-<div class="modal-content">
+
     <div class="modal-header">
         <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
         <span><a href="#" onaftersave="updateTask(card)" editable-text="card.subject">{{card.subject}}</a></span>
@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="modal-section col-lg-12">
                 <div class="userstory-edit-img">
                     <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
                 </div>
@@ -16,59 +16,48 @@
             </div>
         </div>
         <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Description: </b>{{card.description || 'Not set'}}</p>
+            <div class="modal-section progress-section col-lg-6">
+                <p><b>Progress:</b><span>20%</span></p>
+            </div>
+            <div class="modal-section progress-section col-lg-6">
+                <p><b>Done:</b><span>50%</span></p>
             </div>
         </div>
         <div class="row">
             <div class="modal-row col-lg-12">
-                <p><b>Priority: </b> {{card.priority.name || 'Not set'}}</p>
+                <table>
+                    <tr>
+                        <td style="width:30%;"><b class="blue-text">Description:</b></td>
+                        <td>Integrate all functions</td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;"><b class="blue-text">Assignee:</b></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;"><b class="blue-text">Story-size:</b></td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;"><b class="blue-text">Business value:</b></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;"><b class="blue-text">Start date:</b></td>
+                        <td>2015/03/05</td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;"><b class="blue-text">Release:</b></td>
+                        <td>15.5</td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Assignee: </b> {{card.assigned_to.firstname}}  {{card.assigned_to.lastname}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Story-Size: </b> {{storySize}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Business value: </b> {{businessValue}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Start date: </b> {{card.start_date}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Progress: </b> {{progress}}%</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Done: </b>{{card.done_ratio}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>Release: </b>{{release}}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="modal-row col-lg-12">
-                <p><b>estimate hours: </b>{{card.estimated_hours || 'Not set'}}</p>
-            </div>
-        </div>
+
         <div class="row">
             <div class="modal-row col-lg-12">    
                 <div>
-                    <p><b>Attachments: </b></p><div ng-file-drop="" ng-file-select="" ng-model="files" ng-model-rejected="rejFiles" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" class="drop-box" ng-multiple="true" allow-dir="true">
+                    <p><b>Attachments: </b></p><div ng-file-drop="" ng-file-select="" ng-model="files" ng-model-rejected="rejFiles" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" class="drop-box attach-btn" ng-multiple="true" allow-dir="true">
                     Drop or select files
                     </div>
                     <div ng-no-file-drop="" class="drop-box">File Farg&amp;Drop not supported on your browser</div>
@@ -88,9 +77,7 @@
             </div>
         </div>
     </div>
-</div>
-
-     
+    
 <!--<div class="modal-body">
             <div class="row">
                 <div class="col-lg-9 col-md-9">

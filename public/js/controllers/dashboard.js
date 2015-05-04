@@ -11,7 +11,7 @@ angular.module('trelloRedmine')
 
         $scope.styleUrl = 'assets/stylesheets/cards_style.css';
         // TODO: make it dynamic
-        $scope.allowed_statuses = [8, 9, 10, 11];
+        $scope.allowed_statuses = [8, 9, 10];
 
         $scope.setCurrentUser = function (api_key) {
             $localStorage.current_api_key = api_key;

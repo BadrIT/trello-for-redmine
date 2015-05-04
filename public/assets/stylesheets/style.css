@@ -32,10 +32,37 @@ input {
     border: 1px solid #fff;
     padding: 10px;
     border-radius: 3px;
+    background: #dfeff4;
+
+}
+
+.addNew-form span {
+    font-style: normal;
+}
+
+.card p {
+    text-align: left;
+}
+
+.editable-click, a.editable-click {
+    color: black;
+  border-bottom: none;
 }
 
 .addNew-form div {
     margin-bottom: 5px;
+}
+
+.editable-wrap {
+  width: 70% !important;
+  margin-left: 10px !important;
+}
+
+.add-card-btn {
+  background-color: #92b06a ;
+  font-style: normal;
+  color: #fff;
+  border: none;
 }
 
 .task-component{
@@ -237,7 +264,6 @@ input {
 }
 
 /*-------------------------------------------*/
-
 .card-header a {
     float: right;
 }
@@ -406,6 +432,82 @@ input {
 .panel {
     background-color: transparent !important;
     border: none !important;
+}
+
+.modal-row table {
+    width: 100%;
+}
+
+.modal-row table tr td { 
+    padding: 5px !important;
+    border: 1px solid rgb(202, 202, 202);
+    text-align: left;
+    font-style: normal;
+}
+
+.modal-section p span {
+    font-size: 50px;
+    margin-left: 20px;
+    vertical-align: middle;
+    color: #fff;
+
+}
+
+.progress-section {
+    background-color: #337ab7;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+.progress-section p b {
+    color: #fff !important;
+}
+
+.blue-text {
+    color: #337ab7;
+    float: left;
+    font-style: normal;
+}
+
+.attach-btn {
+    border-radius: 3px;
+    color: #fff;
+    background: #92b06a;
+}
+
+.modal-header {
+    border-bottom: 5px solid #FFCF54;
+}
+
+/*-------------------------- Activities ---------------------------*/
+.activity-box-content {
+    background: #fff;
+    margin-bottom: 10px !important;
+    padding: 15px !important;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+    width: 95%;
+    margin-top: 10px;
+    margin-left: 2.5%;
+    font-style: normal;
+}
+
+.activity-details {
+    float: left;
+    width: 70%;
+}
+
+.activity-details b {
+    color: #4298b5;
+}
+
+.activity-img {
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    float: right;
+    display: inline-block;
+    overflow: hidden;
 }
 
 /* Googlish scroll bars (works only in webkit based broswers, chrome/safari) */
