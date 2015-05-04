@@ -98,9 +98,9 @@
                                         <div class="userstory-edit-img">
                                             <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
                                         </div>
-                                        <p><b>Added by: </b> {{card.author.name}}</p>
-                                        <p><b>From: </b> {{card.created_on}}</p>
-                                        <p><b>Updated: </b> {{card.updated_on}}</p>
+                                        <p><b>Added by: </b> {{task.author.name}}</p>
+                                        <p><b>From: </b> {{task.created_on}}</p>
+                                        <p><b>Updated: </b> {{task.updated_on}}</p>
                                     </div>
                                   </div>
                                   <div class="row">
@@ -108,15 +108,15 @@
                                         <table>
                                           <tr>
                                               <td style="width:30%;"><b class="blue-text">Description:</b></td>
-                                              <td>Integrate all functions</td>
+                                              <td>{{task.description}}</td>
                                           </tr>
                                           <tr>
                                               <td style="width:30%;"><b class="blue-text">Assignee:</b></td>
-                                              <td></td>
+                                              <td>{{task.assigned_to.name}}</td>
                                           </tr>
                                           <tr>
                                               <td style="width:30%;"><b class="blue-text">Status:</b></td>
-                                              <td>0</td>
+                                              <td>{{task.status.name}}</td>
                                           </tr>
                                         </table>
                                     </div>
@@ -212,9 +212,11 @@
                 <!--<ul>
                     <li ng-repeat="activity in activities track by $index">{{activity.author.name}}<br>{{activity.time}}<br>{{activity.title}}<br><div ng-bind-html="parseTrustSnippt(activity.description)"></div><br></li>
                 </ul>-->
-                <div class="activity-details">
-                  <b>User name</b>
-                  <p>abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia abo samia </p>
+                <div ng-repeat="activity in activities track by $index" class="activity-details">
+                  <b>{{activity.title}}</b>
+                  <b>{{activity.time}}</b>
+                  <b>{{activity.author.name}}</b>
+                  <p><div ng-bind-html="parseTrustSnippt(activity.description)"></div></p>
                 </div>
                 <div class="activity-img">
                   <img src=" " alt="">

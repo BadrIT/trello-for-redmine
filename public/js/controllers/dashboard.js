@@ -179,8 +179,6 @@ angular.module('trelloRedmine')
             $scope.finishedTasks = 0;
          
             $scope.attachments = [];
-            
-          
 
             $modal.open({
                 scope: $scope,
