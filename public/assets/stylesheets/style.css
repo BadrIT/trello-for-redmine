@@ -28,6 +28,10 @@ input {
     padding: 10px;
 }
 
+.btn {
+    font-style: normal !important;
+}
+
 .addNew-form {
     border: 1px solid #fff;
     padding: 10px;
@@ -477,6 +481,23 @@ input {
 
 .modal-header {
     border-bottom: 5px solid #FFCF54;
+}
+
+.modal-header span a {
+    font-style: normal;
+    font-weight: bold;
+}
+
+.modal-body .modal-textInput {
+    width: 100%;
+}
+
+.newTask-header {
+    border-bottom: 1px solid rgb(226, 226, 226) !important;
+}
+
+.modal-content {
+    width: 420px !important;
 }
 
 /*-------------------------- Activities ---------------------------*/
