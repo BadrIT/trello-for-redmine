@@ -9,6 +9,7 @@ angular.module('trelloRedmine')
         $scope.card.attachments = [];
         $scope.activities = [];
         $scope.projectMembers = [];
+        $scope.subject = "";
 
         $scope.styleUrl = 'assets/stylesheets/cards_style.css';
         // TODO: make it dynamic
@@ -165,8 +166,54 @@ angular.module('trelloRedmine')
             $scope.widgets = [];
         };
 
+        $scope.newTask = {
+            subject: "",
+            description: "",
+            priority_id: 0,
+            project_id: $scope.project_id,
+            parent_issue_id: 0,
+            tracker_id: 4,
+            assigned_to_id: 0
+        };
+
+        $scope.createNewTask = function(card) {
+
+            var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
+            var priority_to_id = (card.priority) ? card.priority.id : '';
+            
+            $scope.newTask.priority_id = priority_to_id;
+            $scope.newTask.assigned_to_id = assigned_to_id;
+            $scope.newTask.parent_issue_id = card.id;
+
+            console.log($scope.newTask)
+
+            /*redmineService.createTask($scope.newTask)
+            .then(function (result) {
+                var issue = result.data.issue;
+                card.subTasks.push(issue);
+                $scope.calculateProgress(card);
+            }, function (error) {
+                console.log(error);
+            }); */
+        };
+
         $scope.startIndex = -1;
         $scope.moved = false;
+
+        $scope.addNewSubTask = function(card) {
+            $scope.card = card;
+            $modal.open({
+                scope: $scope,
+                templateUrl: 'views/templates/add_subtask.html',
+                backdropClass: "backdrop-fix",
+                resolve: {
+                    card: function() {
+                        return card;
+                    }
+                }
+            });
+        }
+
 
         $scope.editCard = function(widget, card) { 
             // I think it need more restructure to improve performence 
@@ -297,6 +344,14 @@ angular.module('trelloRedmine')
                 });
             }
         }
+
+        $scope.deleteTask = function(card, task) {
+            // TODO: find way to handle success and error
+            var task_index = card.subTasks.indexOf(task);
+            card.subTasks.splice(task_index, 1);
+            redmineService.deleteTask(task.id);
+            $scope.calculateProgress(card);   
+        };
 
         $scope.getImageLink = function(card) {
             if(card.last_image) {

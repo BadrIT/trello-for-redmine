@@ -11,8 +11,7 @@ angular.module('trelloRedmine')
             priority_id : '',
             parent_issue_id : '',
             is_private: 0,
-            assigned_to_id: $localStorage.user_id,
-            estimated_hours: ''
+            assigned_to_id: $localStorage.user_id
         };
 
         $scope.isNewCard = false;
@@ -52,6 +51,8 @@ angular.module('trelloRedmine')
                 var issue = result.data.issue;
                 var widget_index = $scope.widgets.indexOf(widget);
                 $scope.widgets[widget_index].cards.push(issue);
+                $scope.widgets[widget_index].cards[$scope.widgets[widget_index].cards.length - 1 ].subTasks = []; 
+                $scope.widgets[widget_index].cards[$scope.widgets[widget_index].cards.length - 1 ].attachments = [];
             }, function (error) {
                 console.log(error);
             });

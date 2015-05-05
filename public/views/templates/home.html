@@ -72,14 +72,14 @@
                           </div> <!-- end of task-line-info -->
 
                           <div class="related-task-image">
-                            <img class="member" title="{{task.assigned_to.name}}" gravatar-src="'{{task.assigned_to.mail}}'" gravatar-size="100" />
+                            <img class="member" title="{{task.assigned_to.name}}" gravatar-src="task.assigned_to.mail" gravatar-size="100" />
                           </div>
                         </div> <!-- end of task-line -->
 
                         <div class="related-task-icons">
                           <ul>
                             <li><a href="" data-toggle="modal" data-target="#relatedTask-modal{{task.id}}"><i class="fa fa-arrows-alt"></i></a></li>
-                            <li><a href="#" confirmed-click="deleteTask(task)" ng-confirm-click="Are you sure about deleting this task?"><i class="fa fa-trash-o"></i></a></li>
+                            <li><a href="#" confirmed-click="deleteTask(card, task)" ng-confirm-click="Are you sure about deleting this task?"><i class="fa fa-trash-o"></i></a></li>
                           </ul>
                         </div> <!-- end of related-task-icons -->
 
@@ -95,7 +95,7 @@
                                   <div class="row">
                                     <div class="col-lg-12">
                                         <div class="userstory-edit-img">
-                                            <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="'{{card.assigned_to.mail}}'" gravatar-size="100" />
+                                            <img class="member" title="{{card.assigned_to.firstname}} {{card.assigned_to.lastname}}" gravatar-src="card.assigned_to.mail" gravatar-size="100" />
                                         </div>
                                         <p><b>Added by: </b> {{task.author.name}}</p>
                                         <p><b>From: </b> {{task.created_on}}</p>
@@ -120,13 +120,13 @@
                                         </table>
                                     </div>
                                   </div>
-                                  <div class="row">
+                                  <!--<div class="row">
                                     <div class="modal-row col-lg-12">
                                       <p><b>Assignee: </b> <a href="#" onaftersave="updateTask(task)" editable-select="task.assigned_to_id" e-ng-options="m.id as m.name for m in projectMembers">
                                                 {{task.assigned_to.name}}
                                          </a></p>
                                     </div>
-                                  </div>
+                                  </div>-->
                                 </div>
                                 
                                 <div class="modal-footer">
@@ -150,39 +150,16 @@
                     </div> <!-- end of task-user -->
                     <div class="card-btns">
                       <ul>
-                        <li><a href="" data-toggle="modal" data-target="#addSubtask-modal"><i class="fa fa-plus"></i></a></li>
+                        <li><a href="" ng-click="addNewSubTask(card)" data-toggle="modal" data-target="#addSubtask-modal"><i class="fa fa-plus"></i></a></li>
+
                         <li ng-show="card.hasAttachments" ><a href="#" class=""><i class="fa fa-paperclip"></i></a></li>
+
                         <li><a href="#" ng-click="editCard(widget, card)" class="" data-toggle="modal" data-target="#userStoryModal"><i class="fa fa-arrows-alt"></i></a></li>
+
                         <li><a href="#" ng-click="showCardAccordion(card)" class="toggle-btn"><i class="fa fa-arrows-v"></i></a></li>
+
                       </ul>
                     </div> <!-- end of card-btns -->
-                    
-                    <!--******************************** ADD SUB TASK MODAL ***************************************-->
-                    <div class="modal fade" id="addSubtask-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header newTask-header">
-                              <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
-                              <span><a href="#" onaftersave="updateTask(card)" editable-text="card.subject">{{card.subject}}</a></span>
-                              <!--<img style="width: 50%; height: 50%; " ng-src="{{getImageLink(card)}}" />-->
-                          </div>
-                          <div class="modal-body">
-                            <div class="row">
-                              <div class="col-lg-12">
-                                  <input class="modal-textInput" type="text" name="fname">
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
                   </div> <!-- end of card-footer -->
                   
                     <!--<p>
@@ -235,11 +212,11 @@
                     <h3>Project Activities</h3>
                 </section>
             </div>
-            <div class="box-content activity-box-content">
+            <div ng-repeat="activity in activities track by $index" class="box-content activity-box-content">
                 <!--<ul>
                     <li ng-repeat="activity in activities track by $index">{{activity.author.name}}<br>{{activity.time}}<br>{{activity.title}}<br><div ng-bind-html="parseTrustSnippt(activity.description)"></div><br></li>
                 </ul>-->
-                <div ng-repeat="activity in activities track by $index" class="activity-details">
+                <div  class="activity-details">
                   <b>{{activity.title}}</b>
                   <b>{{activity.time}}</b>
                   <b>{{activity.author.name}}</b>

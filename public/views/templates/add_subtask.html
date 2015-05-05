@@ -1,0 +1,19 @@
+<div class="modal-header newTask-header">
+    <button type="button" class="close" ng-click="dismiss()" aria-hidden="true">&times;</button>
+    <span>
+    Add new subtask
+    </span>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-lg-12">
+      <input class="modal-textInput" type="text" ng-model="newTask.subject">
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <button type="button" ng-click="createNewTask(card)" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+</div>
+    

@@ -52,28 +52,11 @@ angular.module('trelloRedmine')
             $scope.updateBackend();
         };
 
-        $scope.createNewTask = function() {
-            redmineService.createTask($scope.newTask)
-            .then(function (result) {
-                var issue = result.data.issue;
-                $scope.subTasks.push(issue);
-                $scope.calculateProgress();
-            }, function (error) {
-                console.log(error);
-            });
-        };
-
         $scope.updateTask = function(task) {
             $scope.updateIssue(task.id, task);
         };
 
-        $scope.deleteTask = function(task) {
-            // TODO: find way to handle success and error
-            var task_index = $scope.subTasks.indexOf(task);
-            $scope.subTasks.splice(task_index, 1);
-            redmineService.deleteTask(task.id);
-            $scope.calculateProgress();   
-        };
+        
 
         $scope.showName = function(task) {
             var selected = filterFilter($scope.projectMembers, {id: task.assigned_to.id});

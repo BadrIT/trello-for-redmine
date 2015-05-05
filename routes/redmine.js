@@ -178,11 +178,29 @@ router.post('/create/issue/:api_key', function (req, res, next) {
 
 // delete an issue
 router.delete('/issues/:issue_id/:api_key', function (req, res, next) {
+
+	console.log("KEY ............... " + req.session.current_api_key);
+	console.log("KEY2 .............. " + req.params.api_key);
+	console.log("ISSUEs .............. " + req.params.issue_id);
+
+
 	setApiKey(req.session.current_api_key ||  req.params.api_key);
+
+	console.log();
+	
+	/*request.del({
+		headers: {'X-Redmine-API-Key':req.session.current_api_key ||  req.params.api_key},
+		url:     'http://redmine.badrit.com/attachments/' + attachment_id +'.json'
+	}, function(error, response, body){
+		res.json(body);
+	});*/
+
 	redmine.deleteIssue(req.params.issue_id)
 	.success(function () {
+		console.log("-----------------------")
 		res.status(200);
 	}).error(function (err) {
+		console.log("++++++++++++++++++++++++++")
 		console.log(err);
 		res.status(404).json(err);
 	});
