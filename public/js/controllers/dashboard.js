@@ -19,6 +19,10 @@ angular.module('trelloRedmine')
             $localStorage.current_api_key = api_key;
         };
 
+        $scope.dismiss = function() {
+            $modalInstance.dismiss();
+        };
+
         var project_url = $location.path().split('/');
         $scope.project_id = project_url[2];
 
@@ -177,7 +181,7 @@ angular.module('trelloRedmine')
         };
 
         $scope.createNewTask = function(card) {
-
+  
             var assigned_to_id = (card.assigned_to) ? card.assigned_to.id : '';
             var priority_to_id = (card.priority) ? card.priority.id : '';
             
@@ -185,16 +189,16 @@ angular.module('trelloRedmine')
             $scope.newTask.assigned_to_id = assigned_to_id;
             $scope.newTask.parent_issue_id = card.id;
 
-            console.log($scope.newTask)
-
-            /*redmineService.createTask($scope.newTask)
+            $scope.dismiss();
+            
+            redmineService.createTask($scope.newTask)
             .then(function (result) {
                 var issue = result.data.issue;
                 card.subTasks.push(issue);
                 $scope.calculateProgress(card);
             }, function (error) {
                 console.log(error);
-            }); */
+            });
         };
 
         $scope.startIndex = -1;
@@ -202,7 +206,7 @@ angular.module('trelloRedmine')
 
         $scope.addNewSubTask = function(card) {
             $scope.card = card;
-            $modal.open({
+            $modalInstance = $modal.open({
                 scope: $scope,
                 templateUrl: 'views/templates/add_subtask.html',
                 backdropClass: "backdrop-fix",
@@ -213,7 +217,6 @@ angular.module('trelloRedmine')
                 }
             });
         }
-
 
         $scope.editCard = function(widget, card) { 
             // I think it need more restructure to improve performence 
